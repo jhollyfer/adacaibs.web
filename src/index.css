@@ -112,11 +112,11 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-adacaibs-yellow rounded-full;
+    @apply bg-yellow-400 rounded-full;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-adacaibs-teal;
+    @apply bg-teal-400;
   }
 
   /* Animações suaves para elementos */
@@ -144,16 +144,16 @@
 
   .highlight-text::after {
     content: '';
-    @apply absolute bottom-1 left-0 w-full h-2 bg-adacaibs-yellow -z-10 rounded-sm opacity-50;
+    @apply absolute bottom-1 left-0 w-full h-2 bg-yellow-400 -z-10 rounded-sm opacity-50;
   }
 
   .menu-active {
-    @apply relative text-adacaibs-yellow;
+    @apply relative;
   }
 
   .menu-active::after {
     content: '';
-    @apply absolute -bottom-1 left-0 w-full h-0.5 bg-adacaibs-yellow rounded-full;
+    @apply absolute -bottom-1 left-0 w-full h-0.5 bg-yellow-400 rounded-full;
   }
 }
 

@@ -1,15 +1,21 @@
-
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import Layout from '@/components/layout/Layout';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, Calendar, Clock, Share, Download, Headphones } from 'lucide-react';
+import Layout from "@/components/layout/Layout";
+import { Button } from "@/components/ui/button";
+import {
+  ArrowLeft,
+  Calendar,
+  Clock,
+  Download,
+  Headphones,
+  Share,
+} from "lucide-react";
+import { Link, useParams } from "react-router-dom";
 
 // Mock data for a single podcast
 const mockPodcast = {
   id: 1,
-  title: 'Acessibilidade na Educação',
-  description: 'Conversamos com especialistas sobre os desafios da acessibilidade no ambiente escolar e como superá-los.',
+  title: "Acessibilidade na Educação",
+  description:
+    "Conversamos com especialistas sobre os desafios da acessibilidade no ambiente escolar e como superá-los.",
   content: `
     <p>Neste episódio, discutimos os desafios enfrentados por estudantes surdos no ambiente escolar e como educadores, instituições e a sociedade podem trabalhar juntos para criar um ambiente mais inclusivo.</p>
     
@@ -27,20 +33,20 @@ const mockPodcast = {
     
     <p>Além da Dra. Ana Silva, contamos também com a participação de Carlos Mendes, ex-aluno da rede pública que compartilha sua experiência pessoal como estudante surdo.</p>
   `,
-  date: '15 de maio de 2023',
-  duration: '45 min',
-  hosts: ['Maria Santos', 'João Lima'],
-  guests: ['Dra. Ana Silva', 'Carlos Mendes'],
-  audioUrl: 'https://example.com/podcast1.mp3',
-  image: '/lovable-uploads/8ab9495a-6e4e-4a6e-983e-adfcede7b8f7.png',
-  tags: ['Educação', 'Acessibilidade', 'Inclusão']
+  date: "15 de maio de 2023",
+  duration: "45 min",
+  hosts: ["Maria Santos", "João Lima"],
+  guests: ["Dra. Ana Silva", "Carlos Mendes"],
+  audioUrl: "https://example.com/podcast1.mp3",
+  image: "/default.webp",
+  tags: ["Educação", "Acessibilidade", "Inclusão"],
 };
 
 const PodcastDetails = () => {
   const { id } = useParams();
   // In a real app, you would fetch the podcast based on the ID
   // For now, we'll just use our mock data
-  
+
   return (
     <Layout>
       <div className="container mx-auto px-4 py-12">
@@ -49,42 +55,42 @@ const PodcastDetails = () => {
             <ArrowLeft className="mr-2 h-4 w-4" /> Voltar para podcasts
           </Link>
         </Button>
-        
+
         <article className="max-w-4xl mx-auto">
           <header className="mb-8">
             <h1 className="text-4xl font-bold mb-4">{mockPodcast.title}</h1>
             <div className="flex flex-wrap gap-4 mb-6">
               <div className="flex items-center text-gray-700">
-                <Calendar className="h-5 w-5 mr-2 text-primary" /> 
+                <Calendar className="h-5 w-5 mr-2 text-primary" />
                 <span>{mockPodcast.date}</span>
               </div>
               <div className="flex items-center text-gray-700">
-                <Clock className="h-5 w-5 mr-2 text-primary" /> 
+                <Clock className="h-5 w-5 mr-2 text-primary" />
                 <span>{mockPodcast.duration}</span>
               </div>
             </div>
-            
+
             <div className="flex items-center mb-6">
               <p className="text-gray-700">
-                <strong>Apresentadores:</strong> {mockPodcast.hosts.join(', ')}
+                <strong>Apresentadores:</strong> {mockPodcast.hosts.join(", ")}
               </p>
             </div>
-            
+
             <div className="flex items-center mb-6">
               <p className="text-gray-700">
-                <strong>Convidados:</strong> {mockPodcast.guests.join(', ')}
+                <strong>Convidados:</strong> {mockPodcast.guests.join(", ")}
               </p>
             </div>
           </header>
-          
+
           <div className="mb-8">
-            <img 
-              src={mockPodcast.image} 
-              alt={mockPodcast.title} 
+            <img
+              src={mockPodcast.image}
+              alt={mockPodcast.title}
               className="w-full h-auto rounded-lg"
             />
           </div>
-          
+
           <div className="bg-gray-100 p-4 rounded-lg mb-8">
             <div className="flex justify-between items-center">
               <Button size="lg" className="flex items-center">
@@ -100,18 +106,18 @@ const PodcastDetails = () => {
               </div>
             </div>
           </div>
-          
-          <div 
+
+          <div
             className="prose prose-lg max-w-none mb-8"
             dangerouslySetInnerHTML={{ __html: mockPodcast.content }}
           />
-          
+
           <div className="border-t pt-6 mb-8">
             <h4 className="font-medium mb-2">Tags:</h4>
             <div className="flex flex-wrap gap-2">
-              {mockPodcast.tags.map(tag => (
-                <span 
-                  key={tag} 
+              {mockPodcast.tags.map((tag) => (
+                <span
+                  key={tag}
                   className="px-3 py-1 bg-gray-100 rounded-full text-sm"
                 >
                   {tag}
@@ -119,9 +125,11 @@ const PodcastDetails = () => {
               ))}
             </div>
           </div>
-          
+
           <div className="border-t pt-6">
-            <h3 className="text-xl font-semibold mb-4">Compartilhar este podcast</h3>
+            <h3 className="text-xl font-semibold mb-4">
+              Compartilhar este podcast
+            </h3>
             <div className="flex gap-4">
               <Button variant="outline" size="sm">
                 Compartilhar no Facebook

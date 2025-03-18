@@ -1,52 +1,72 @@
-
-import React from 'react';
-import AdminLayout from '@/components/admin/layout/AdminLayout';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Search, Edit, Trash2, Calendar, Clock, MapPin, Users } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import AdminLayout from "@/components/admin/layout/AdminLayout";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Calendar,
+  Clock,
+  Edit,
+  MapPin,
+  Plus,
+  Search,
+  Trash2,
+  Users,
+} from "lucide-react";
 
 // Mock data for events
 const mockEvents = [
   {
     id: 1,
-    title: 'Workshop de LIBRAS para Iniciantes',
-    date: '10 de junho de 2023',
-    time: '14:00 - 18:00',
-    location: 'Sede da ADACAIBS',
+    title: "Workshop de LIBRAS para Iniciantes",
+    date: "10 de junho de 2023",
+    time: "14:00 - 18:00",
+    location: "Sede da ADACAIBS",
     capacity: 30,
     registeredCount: 18,
-    category: 'Workshop',
-    status: 'upcoming',
-    image: '/lovable-uploads/2c677ecc-7661-46d3-abee-3612a042a88d.png'
+    category: "Workshop",
+    status: "upcoming",
+    image: "/default.webp",
   },
   {
     id: 2,
-    title: 'Torneio Esportivo Inclusivo',
-    date: '25 de junho de 2023',
-    time: '09:00 - 17:00',
-    location: 'Quadra Municipal',
+    title: "Torneio Esportivo Inclusivo",
+    date: "25 de junho de 2023",
+    time: "09:00 - 17:00",
+    location: "Quadra Municipal",
     capacity: 50,
     registeredCount: 32,
-    category: 'Esporte',
-    status: 'upcoming',
-    image: '/lovable-uploads/516afdeb-e44c-4cf0-81a2-d0951e9348f5.png'
+    category: "Esporte",
+    status: "upcoming",
+    image: "/default.webp",
   },
   {
     id: 3,
-    title: 'Encontro de Famílias',
-    date: '05 de maio de 2023',
-    time: '15:00 - 19:00',
-    location: 'Parque Municipal',
+    title: "Encontro de Famílias",
+    date: "05 de maio de 2023",
+    time: "15:00 - 19:00",
+    location: "Parque Municipal",
     capacity: 40,
     registeredCount: 40,
-    category: 'Comunidade',
-    status: 'past',
-    image: '/lovable-uploads/4f5be063-22d2-4152-a822-3eb9ff523206.png'
-  }
+    category: "Comunidade",
+    status: "past",
+    image: "/default.webp",
+  },
 ];
 
 const EventForm = ({ event = null, onSubmit }) => {
@@ -63,47 +83,66 @@ const EventForm = ({ event = null, onSubmit }) => {
           <label htmlFor="title" className="block text-sm font-medium mb-1">
             Título do Evento
           </label>
-          <Input id="title" defaultValue={event?.title || ''} placeholder="Digite o título do evento" />
+          <Input
+            id="title"
+            defaultValue={event?.title || ""}
+            placeholder="Digite o título do evento"
+          />
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label htmlFor="date" className="block text-sm font-medium mb-1">
               Data
             </label>
-            <Input id="date" type="date" defaultValue={event?.date || ''} />
+            <Input id="date" type="date" defaultValue={event?.date || ""} />
           </div>
           <div>
             <label htmlFor="time" className="block text-sm font-medium mb-1">
               Horário
             </label>
-            <Input id="time" defaultValue={event?.time || ''} placeholder="Ex: 14:00 - 18:00" />
+            <Input
+              id="time"
+              defaultValue={event?.time || ""}
+              placeholder="Ex: 14:00 - 18:00"
+            />
           </div>
         </div>
-        
+
         <div>
           <label htmlFor="location" className="block text-sm font-medium mb-1">
             Local
           </label>
-          <Input id="location" defaultValue={event?.location || ''} placeholder="Nome do local" />
+          <Input
+            id="location"
+            defaultValue={event?.location || ""}
+            placeholder="Nome do local"
+          />
         </div>
-        
+
         <div>
           <label htmlFor="address" className="block text-sm font-medium mb-1">
             Endereço
           </label>
-          <Input id="address" defaultValue={event?.address || ''} placeholder="Endereço completo" />
+          <Input
+            id="address"
+            defaultValue={event?.address || ""}
+            placeholder="Endereço completo"
+          />
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="category" className="block text-sm font-medium mb-1">
+            <label
+              htmlFor="category"
+              className="block text-sm font-medium mb-1"
+            >
               Categoria
             </label>
-            <select 
-              id="category" 
+            <select
+              id="category"
               className="w-full border rounded-md p-2"
-              defaultValue={event?.category || ''}
+              defaultValue={event?.category || ""}
             >
               <option value="">Selecione uma categoria</option>
               <option value="Workshop">Workshop</option>
@@ -115,20 +154,26 @@ const EventForm = ({ event = null, onSubmit }) => {
             </select>
           </div>
           <div>
-            <label htmlFor="capacity" className="block text-sm font-medium mb-1">
+            <label
+              htmlFor="capacity"
+              className="block text-sm font-medium mb-1"
+            >
               Capacidade
             </label>
-            <Input 
-              id="capacity" 
-              type="number" 
-              defaultValue={event?.capacity || ''} 
-              placeholder="Número máximo de participantes" 
+            <Input
+              id="capacity"
+              type="number"
+              defaultValue={event?.capacity || ""}
+              placeholder="Número máximo de participantes"
             />
           </div>
         </div>
-        
+
         <div>
-          <label htmlFor="description" className="block text-sm font-medium mb-1">
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium mb-1"
+          >
             Descrição
           </label>
           <textarea
@@ -136,10 +181,10 @@ const EventForm = ({ event = null, onSubmit }) => {
             rows={4}
             className="w-full border rounded-md p-2"
             placeholder="Digite a descrição do evento"
-            defaultValue={event?.description || ''}
+            defaultValue={event?.description || ""}
           ></textarea>
         </div>
-        
+
         <div>
           <label htmlFor="content" className="block text-sm font-medium mb-1">
             Conteúdo Detalhado
@@ -149,10 +194,10 @@ const EventForm = ({ event = null, onSubmit }) => {
             rows={6}
             className="w-full border rounded-md p-2"
             placeholder="Conteúdo detalhado do evento (pode usar HTML)"
-            defaultValue={event?.content || ''}
+            defaultValue={event?.content || ""}
           ></textarea>
         </div>
-        
+
         <div>
           <label htmlFor="image" className="block text-sm font-medium mb-1">
             Imagem do Evento
@@ -161,22 +206,22 @@ const EventForm = ({ event = null, onSubmit }) => {
           {event?.image && (
             <div className="mt-2">
               <p className="text-sm text-gray-500 mb-1">Imagem atual:</p>
-              <img 
-                src={event.image} 
-                alt="Preview" 
+              <img
+                src={event.image}
+                alt="Preview"
                 className="h-24 w-auto rounded-md"
               />
             </div>
           )}
         </div>
       </div>
-      
+
       <div className="flex justify-end gap-3">
         <Button type="button" variant="outline">
           Cancelar
         </Button>
         <Button type="submit">
-          {event ? 'Atualizar Evento' : 'Criar Evento'}
+          {event ? "Atualizar Evento" : "Criar Evento"}
         </Button>
       </div>
     </form>
@@ -212,15 +257,18 @@ const Events = () => {
             <div className="mb-6 flex justify-between items-center">
               <div className="relative max-w-sm">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-                <Input
-                  placeholder="Buscar eventos..."
-                  className="pl-8"
-                />
+                <Input placeholder="Buscar eventos..." className="pl-8" />
               </div>
               <div className="flex gap-2">
-                <Button variant="outline" size="sm">Todos</Button>
-                <Button variant="outline" size="sm">Próximos</Button>
-                <Button variant="outline" size="sm">Passados</Button>
+                <Button variant="outline" size="sm">
+                  Todos
+                </Button>
+                <Button variant="outline" size="sm">
+                  Próximos
+                </Button>
+                <Button variant="outline" size="sm">
+                  Passados
+                </Button>
               </div>
             </div>
 
@@ -241,14 +289,16 @@ const Events = () => {
                     <TableRow key={event.id}>
                       <TableCell className="font-medium">
                         <div className="flex items-center gap-3">
-                          <img 
-                            src={event.image} 
-                            alt={event.title} 
-                            className="h-12 w-20 object-cover rounded-md" 
+                          <img
+                            src={event.image}
+                            alt={event.title}
+                            className="h-12 w-20 object-cover rounded-md"
                           />
                           <div>
                             <div>{event.title}</div>
-                            <Badge variant="outline" className="mt-1">{event.category}</Badge>
+                            <Badge variant="outline" className="mt-1">
+                              {event.category}
+                            </Badge>
                           </div>
                         </div>
                       </TableCell>
@@ -273,18 +323,20 @@ const Events = () => {
                       <TableCell>
                         <div className="flex items-center">
                           <Users className="h-4 w-4 mr-1 text-gray-500" />
-                          <span>{event.registeredCount}/{event.capacity}</span>
+                          <span>
+                            {event.registeredCount}/{event.capacity}
+                          </span>
                         </div>
                       </TableCell>
                       <TableCell>
                         <span
                           className={`px-2 py-1 rounded-full text-xs ${
-                            event.status === 'upcoming'
-                              ? 'bg-green-100 text-green-800'
-                              : 'bg-gray-100 text-gray-800'
+                            event.status === "upcoming"
+                              ? "bg-green-100 text-green-800"
+                              : "bg-gray-100 text-gray-800"
                           }`}
                         >
-                          {event.status === 'upcoming' ? 'Próximo' : 'Passado'}
+                          {event.status === "upcoming" ? "Próximo" : "Passado"}
                         </span>
                       </TableCell>
                       <TableCell className="text-right">
@@ -299,13 +351,17 @@ const Events = () => {
                               <DialogHeader>
                                 <DialogTitle>Editar Evento</DialogTitle>
                               </DialogHeader>
-                              <EventForm 
+                              <EventForm
                                 event={event}
                                 onSubmit={() => console.log("Form submitted")}
                               />
                             </DialogContent>
                           </Dialog>
-                          <Button variant="ghost" size="icon" className="text-red-500">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-red-500"
+                          >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>

@@ -1,31 +1,30 @@
-
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  FileText, 
-  Calendar, 
-  Video, 
-  Headphones, 
-  Image, 
-  MessageSquare, 
-  Users,
-  Settings,
-  LogOut
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Logo } from "@/components/logo";
 import {
-  SidebarProvider,
   Sidebar,
   SidebarContent,
-  SidebarTrigger,
-  SidebarHeader,
   SidebarFooter,
+  SidebarHeader,
   SidebarMenu,
-  SidebarMenuItem,
   SidebarMenuButton,
-  SidebarSeparator
-} from '@/components/ui/sidebar';
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarSeparator,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import {
+  Calendar,
+  FileText,
+  Headphones,
+  Image,
+  LayoutDashboard,
+  LogOut,
+  MessageSquare,
+  Settings,
+  Users,
+  Video,
+} from "lucide-react";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 
 interface AdminSidebarProps {
   children: React.ReactNode;
@@ -33,65 +32,66 @@ interface AdminSidebarProps {
 
 const AdminSidebar = ({ children }: AdminSidebarProps) => {
   const location = useLocation();
-  
+
   const menuItems = [
     {
-      title: 'Dashboard',
+      title: "Dashboard",
       icon: LayoutDashboard,
-      path: '/admin',
+      path: "/admin",
     },
     {
-      title: 'Notícias',
+      title: "Notícias",
       icon: FileText,
-      path: '/admin/noticias',
+      path: "/admin/noticias",
     },
     {
-      title: 'Eventos',
+      title: "Eventos",
       icon: Calendar,
-      path: '/admin/eventos',
+      path: "/admin/eventos",
     },
     {
-      title: 'Podcasts',
+      title: "Podcasts",
       icon: Headphones,
-      path: '/admin/podcasts',
+      path: "/admin/podcasts",
     },
     {
-      title: 'Vídeos',
+      title: "Vídeos",
       icon: Video,
-      path: '/admin/videos',
+      path: "/admin/videos",
     },
     {
-      title: 'Galeria',
+      title: "Galeria",
       icon: Image,
-      path: '/admin/galeria',
+      path: "/admin/galeria",
     },
     {
-      title: 'Depoimentos',
+      title: "Depoimentos",
       icon: MessageSquare,
-      path: '/admin/depoimentos',
+      path: "/admin/depoimentos",
     },
     {
-      title: 'Usuários',
+      title: "Usuários",
       icon: Users,
-      path: '/admin/usuarios',
+      path: "/admin/usuarios",
     },
   ];
-  
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-gray-100">
         <Sidebar>
           <SidebarHeader className="flex items-center justify-center p-4">
             <Link to="/" className="flex items-center space-x-2">
-              <img
+              {/* <img
                 src="/lovable-uploads/8ab9495a-6e4e-4a6e-983e-adfcede7b8f7.png"
                 alt="ADACAIBS Logo"
                 className="h-8"
-              />
-              <span className="font-semibold text-lg">ADACAIBS CRM</span>
+              /> */}
+              {/* <span className="font-semibold text-lg">ADACAIBS CRM</span> */}
+              <Logo className="w-full max-w-[300px] md:max-w-[400px] xl:max-w-[557px]" />
             </Link>
           </SidebarHeader>
-          
+
           <SidebarContent>
             <SidebarMenu>
               {menuItems.map((item) => (
@@ -109,7 +109,7 @@ const AdminSidebar = ({ children }: AdminSidebarProps) => {
               ))}
             </SidebarMenu>
           </SidebarContent>
-          
+
           <SidebarFooter>
             <SidebarSeparator />
             <SidebarMenu>
@@ -132,7 +132,7 @@ const AdminSidebar = ({ children }: AdminSidebarProps) => {
             </SidebarMenu>
           </SidebarFooter>
         </Sidebar>
-        
+
         <main className="flex-1 p-6 md:p-8 pt-16">
           <div className="h-full">
             <div className="absolute left-4 top-4">

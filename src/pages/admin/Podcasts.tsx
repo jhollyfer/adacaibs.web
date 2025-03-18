@@ -1,42 +1,61 @@
-
-import React from 'react';
-import AdminLayout from '@/components/admin/layout/AdminLayout';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Search, Edit, Trash2, Calendar, Clock, Headphones } from 'lucide-react';
+import AdminLayout from "@/components/admin/layout/AdminLayout";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Calendar,
+  Clock,
+  Edit,
+  Headphones,
+  Plus,
+  Search,
+  Trash2,
+} from "lucide-react";
 
 // Mock data for podcasts
 const mockPodcasts = [
   {
     id: 1,
-    title: 'Acessibilidade na Educação',
-    date: '15 de maio de 2023',
-    duration: '45 min',
-    hosts: ['Maria Santos', 'João Lima'],
+    title: "Acessibilidade na Educação",
+    date: "15 de maio de 2023",
+    duration: "45 min",
+    hosts: ["Maria Santos", "João Lima"],
     listens: 324,
-    image: '/lovable-uploads/8ab9495a-6e4e-4a6e-983e-adfcede7b8f7.png'
+    image: "/default.webp",
   },
   {
     id: 2,
-    title: 'LIBRAS no Cotidiano',
-    date: '22 de abril de 2023',
-    duration: '38 min',
-    hosts: ['João Lima', 'Carlos Mendes'],
+    title: "LIBRAS no Cotidiano",
+    date: "22 de abril de 2023",
+    duration: "38 min",
+    hosts: ["João Lima", "Carlos Mendes"],
     listens: 246,
-    image: '/lovable-uploads/516afdeb-e44c-4cf0-81a2-d0951e9348f5.png'
+    image: "/default.webp",
   },
   {
     id: 3,
-    title: 'Tecnologias Assistivas',
-    date: '10 de março de 2023',
-    duration: '52 min',
-    hosts: ['Maria Santos', 'Ana Clara'],
+    title: "Tecnologias Assistivas",
+    date: "10 de março de 2023",
+    duration: "52 min",
+    hosts: ["Maria Santos", "Ana Clara"],
     listens: 189,
-    image: '/lovable-uploads/9d2c2843-520b-4d4e-ae96-7c656883a10e.png'
-  }
+    image: "/default.webp",
+  },
 ];
 
 const PodcastForm = ({ podcast = null, onSubmit }) => {
@@ -53,40 +72,62 @@ const PodcastForm = ({ podcast = null, onSubmit }) => {
           <label htmlFor="title" className="block text-sm font-medium mb-1">
             Título do Podcast
           </label>
-          <Input id="title" defaultValue={podcast?.title || ''} placeholder="Digite o título do podcast" />
+          <Input
+            id="title"
+            defaultValue={podcast?.title || ""}
+            placeholder="Digite o título do podcast"
+          />
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label htmlFor="date" className="block text-sm font-medium mb-1">
               Data
             </label>
-            <Input id="date" type="date" defaultValue={podcast?.date || ''} />
+            <Input id="date" type="date" defaultValue={podcast?.date || ""} />
           </div>
           <div>
-            <label htmlFor="duration" className="block text-sm font-medium mb-1">
+            <label
+              htmlFor="duration"
+              className="block text-sm font-medium mb-1"
+            >
               Duração
             </label>
-            <Input id="duration" defaultValue={podcast?.duration || ''} placeholder="Ex: 45 min" />
+            <Input
+              id="duration"
+              defaultValue={podcast?.duration || ""}
+              placeholder="Ex: 45 min"
+            />
           </div>
         </div>
-        
+
         <div>
           <label htmlFor="hosts" className="block text-sm font-medium mb-1">
             Apresentadores
           </label>
-          <Input id="hosts" defaultValue={podcast?.hosts?.join(', ') || ''} placeholder="Ex: Maria Santos, João Lima" />
+          <Input
+            id="hosts"
+            defaultValue={podcast?.hosts?.join(", ") || ""}
+            placeholder="Ex: Maria Santos, João Lima"
+          />
         </div>
-        
+
         <div>
           <label htmlFor="guests" className="block text-sm font-medium mb-1">
             Convidados
           </label>
-          <Input id="guests" defaultValue={podcast?.guests?.join(', ') || ''} placeholder="Ex: Dr. Carlos Silva, Ana Beatriz" />
+          <Input
+            id="guests"
+            defaultValue={podcast?.guests?.join(", ") || ""}
+            placeholder="Ex: Dr. Carlos Silva, Ana Beatriz"
+          />
         </div>
-        
+
         <div>
-          <label htmlFor="description" className="block text-sm font-medium mb-1">
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium mb-1"
+          >
             Descrição
           </label>
           <textarea
@@ -94,10 +135,10 @@ const PodcastForm = ({ podcast = null, onSubmit }) => {
             rows={4}
             className="w-full border rounded-md p-2"
             placeholder="Digite a descrição do podcast"
-            defaultValue={podcast?.description || ''}
+            defaultValue={podcast?.description || ""}
           ></textarea>
         </div>
-        
+
         <div>
           <label htmlFor="audioFile" className="block text-sm font-medium mb-1">
             Arquivo de Áudio
@@ -109,7 +150,7 @@ const PodcastForm = ({ podcast = null, onSubmit }) => {
             </div>
           )}
         </div>
-        
+
         <div>
           <label htmlFor="image" className="block text-sm font-medium mb-1">
             Imagem
@@ -118,22 +159,22 @@ const PodcastForm = ({ podcast = null, onSubmit }) => {
           {podcast?.image && (
             <div className="mt-2">
               <p className="text-sm text-gray-500 mb-1">Imagem atual:</p>
-              <img 
-                src={podcast.image} 
-                alt="Preview" 
+              <img
+                src={podcast.image}
+                alt="Preview"
                 className="h-24 w-auto rounded-md"
               />
             </div>
           )}
         </div>
       </div>
-      
+
       <div className="flex justify-end gap-3">
         <Button type="button" variant="outline">
           Cancelar
         </Button>
         <Button type="submit">
-          {podcast ? 'Atualizar Podcast' : 'Publicar Podcast'}
+          {podcast ? "Atualizar Podcast" : "Publicar Podcast"}
         </Button>
       </div>
     </form>
@@ -169,10 +210,7 @@ const Podcasts = () => {
             <div className="mb-6 flex justify-between items-center">
               <div className="relative max-w-sm">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-                <Input
-                  placeholder="Buscar podcasts..."
-                  className="pl-8"
-                />
+                <Input placeholder="Buscar podcasts..." className="pl-8" />
               </div>
             </div>
 
@@ -192,10 +230,10 @@ const Podcasts = () => {
                     <TableRow key={podcast.id}>
                       <TableCell className="font-medium">
                         <div className="flex items-center gap-3">
-                          <img 
-                            src={podcast.image} 
-                            alt={podcast.title} 
-                            className="h-10 w-10 object-cover rounded-md" 
+                          <img
+                            src={podcast.image}
+                            alt={podcast.title}
+                            className="h-10 w-10 object-cover rounded-md"
                           />
                           <span>{podcast.title}</span>
                         </div>
@@ -213,7 +251,7 @@ const Podcasts = () => {
                         </div>
                       </TableCell>
                       <TableCell>
-                        <span>{podcast.hosts.join(', ')}</span>
+                        <span>{podcast.hosts.join(", ")}</span>
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center">
@@ -233,13 +271,17 @@ const Podcasts = () => {
                               <DialogHeader>
                                 <DialogTitle>Editar Podcast</DialogTitle>
                               </DialogHeader>
-                              <PodcastForm 
+                              <PodcastForm
                                 podcast={podcast}
                                 onSubmit={() => console.log("Form submitted")}
                               />
                             </DialogContent>
                           </Dialog>
-                          <Button variant="ghost" size="icon" className="text-red-500">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-red-500"
+                          >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>

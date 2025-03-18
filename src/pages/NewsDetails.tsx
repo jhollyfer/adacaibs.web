@@ -1,14 +1,12 @@
-
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import Layout from '@/components/layout/Layout';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, Calendar, User, Tag } from 'lucide-react';
+import Layout from "@/components/layout/Layout";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, Calendar, Tag, User } from "lucide-react";
+import { Link, useParams } from "react-router-dom";
 
 // Mock data for a single news item
 const mockNewsItem = {
   id: 1,
-  title: 'Evento de Integração na Praça Central',
+  title: "Evento de Integração na Praça Central",
   content: `
     <p>No último final de semana, a ADACAIBS realizou um evento de integração que reuniu mais de 100 pessoas da comunidade surda e ouvinte na Praça Central da cidade. O evento, que contou com diversas atividades inclusivas, teve como objetivo promover a interação entre pessoas surdas e ouvintes, além de divulgar o trabalho da associação.</p>
     
@@ -26,18 +24,18 @@ const mockNewsItem = {
     
     <p>Diante do sucesso do evento, a ADACAIBS já planeja realizar novas edições em outros bairros da cidade, com o objetivo de ampliar o alcance de suas ações e promover a inclusão social em diferentes comunidades.</p>
   `,
-  date: '15 de maio de 2023',
-  author: 'Equipe ADACAIBS',
-  image: '/lovable-uploads/2c677ecc-7661-46d3-abee-3612a042a88d.png',
-  category: 'Eventos',
-  tags: ['Inclusão', 'Evento Comunitário', 'LIBRAS']
+  date: "15 de maio de 2023",
+  author: "Equipe ADACAIBS",
+  image: "/default.webp",
+  category: "Eventos",
+  tags: ["Inclusão", "Evento Comunitário", "LIBRAS"],
 };
 
 const NewsDetails = () => {
   const { id } = useParams();
   // In a real app, you would fetch the news item based on the ID
   // For now, we'll just use our mock data
-  
+
   return (
     <Layout>
       <div className="container mx-auto px-4 py-12">
@@ -46,45 +44,45 @@ const NewsDetails = () => {
             <ArrowLeft className="mr-2 h-4 w-4" /> Voltar para notícias
           </Link>
         </Button>
-        
+
         <article className="max-w-4xl mx-auto">
           <header className="mb-8">
             <h1 className="text-4xl font-bold mb-4">{mockNewsItem.title}</h1>
             <div className="flex flex-wrap items-center text-gray-500 gap-4 mb-6">
               <div className="flex items-center">
-                <Calendar className="h-4 w-4 mr-1" /> 
+                <Calendar className="h-4 w-4 mr-1" />
                 <span>{mockNewsItem.date}</span>
               </div>
               <div className="flex items-center">
-                <User className="h-4 w-4 mr-1" /> 
+                <User className="h-4 w-4 mr-1" />
                 <span>{mockNewsItem.author}</span>
               </div>
               <div className="flex items-center">
-                <Tag className="h-4 w-4 mr-1" /> 
+                <Tag className="h-4 w-4 mr-1" />
                 <span>{mockNewsItem.category}</span>
               </div>
             </div>
           </header>
-          
+
           <div className="mb-8">
-            <img 
-              src={mockNewsItem.image} 
-              alt={mockNewsItem.title} 
+            <img
+              src={mockNewsItem.image}
+              alt={mockNewsItem.title}
               className="w-full h-auto rounded-lg"
             />
           </div>
-          
-          <div 
+
+          <div
             className="prose prose-lg max-w-none mb-8"
             dangerouslySetInnerHTML={{ __html: mockNewsItem.content }}
           />
-          
+
           <div className="border-t pt-6">
             <h4 className="font-medium mb-2">Tags:</h4>
             <div className="flex flex-wrap gap-2">
-              {mockNewsItem.tags.map(tag => (
-                <span 
-                  key={tag} 
+              {mockNewsItem.tags.map((tag) => (
+                <span
+                  key={tag}
                   className="px-3 py-1 bg-gray-100 rounded-full text-sm"
                 >
                   {tag}

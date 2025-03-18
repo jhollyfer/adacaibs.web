@@ -1,17 +1,22 @@
-
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import Layout from '@/components/layout/Layout';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { ArrowLeft, Calendar, Clock, MapPin, Users, Tag } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import Layout from "@/components/layout/Layout";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { ArrowLeft, Calendar, Clock, MapPin, Users } from "lucide-react";
+import { Link, useParams } from "react-router-dom";
 
 // Mock data for a single event
 const mockEvent = {
   id: 1,
-  title: 'Workshop de LIBRAS para Iniciantes',
-  description: 'Aprenda os fundamentos da Língua Brasileira de Sinais neste workshop destinado a iniciantes.',
+  title: "Workshop de LIBRAS para Iniciantes",
+  description:
+    "Aprenda os fundamentos da Língua Brasileira de Sinais neste workshop destinado a iniciantes.",
   content: `
     <p>Você tem interesse em aprender LIBRAS e não sabe por onde começar? Este workshop é perfeito para você!</p>
     
@@ -39,25 +44,25 @@ const mockEvent = {
     
     <p>Para garantir a qualidade do aprendizado, o workshop terá vagas limitadas. Faça sua inscrição o quanto antes para assegurar sua participação nesta experiência enriquecedora.</p>
   `,
-  date: '10 de junho de 2023',
-  time: '14:00 - 18:00',
-  location: 'Sede da ADACAIBS',
-  address: 'Rua das Flores, 123 - Centro',
-  image: '/lovable-uploads/2c677ecc-7661-46d3-abee-3612a042a88d.png',
-  category: 'Workshop',
-  status: 'upcoming',
+  date: "10 de junho de 2023",
+  time: "14:00 - 18:00",
+  location: "Sede da ADACAIBS",
+  address: "Rua das Flores, 123 - Centro",
+  image: "/default.webp",
+  category: "Workshop",
+  status: "upcoming",
   capacity: 30,
   registeredCount: 18,
-  tags: ['LIBRAS', 'Educação', 'Inclusão']
+  tags: ["LIBRAS", "Educação", "Inclusão"],
 };
 
 const EventDetails = () => {
   const { id } = useParams();
   // In a real app, you would fetch the event based on the ID
   // For now, we'll just use our mock data
-  
+
   const isPastEvent = new Date(mockEvent.date) < new Date();
-  
+
   return (
     <Layout>
       <div className="container mx-auto px-4 py-12">
@@ -66,46 +71,47 @@ const EventDetails = () => {
             <ArrowLeft className="mr-2 h-4 w-4" /> Voltar para eventos
           </Link>
         </Button>
-        
+
         <article className="max-w-4xl mx-auto">
           <header className="mb-8">
             <h1 className="text-4xl font-bold mb-4">{mockEvent.title}</h1>
             <div className="flex flex-wrap gap-4 mb-6">
               <div className="flex items-center text-gray-700">
-                <Calendar className="h-5 w-5 mr-2 text-primary" /> 
+                <Calendar className="h-5 w-5 mr-2 text-primary" />
                 <span>{mockEvent.date}</span>
               </div>
               <div className="flex items-center text-gray-700">
-                <Clock className="h-5 w-5 mr-2 text-primary" /> 
+                <Clock className="h-5 w-5 mr-2 text-primary" />
                 <span>{mockEvent.time}</span>
               </div>
               <div className="flex items-center text-gray-700">
-                <MapPin className="h-5 w-5 mr-2 text-primary" /> 
+                <MapPin className="h-5 w-5 mr-2 text-primary" />
                 <span>{mockEvent.location}</span>
               </div>
             </div>
-            
+
             <div className="flex items-center mb-6">
               <Users className="h-5 w-5 mr-2 text-primary" />
               <span className="text-gray-700">
-                {mockEvent.registeredCount} inscritos de {mockEvent.capacity} vagas disponíveis
+                {mockEvent.registeredCount} inscritos de {mockEvent.capacity}{" "}
+                vagas disponíveis
               </span>
             </div>
           </header>
-          
+
           <div className="mb-8">
-            <img 
-              src={mockEvent.image} 
-              alt={mockEvent.title} 
+            <img
+              src={mockEvent.image}
+              alt={mockEvent.title}
               className="w-full h-auto rounded-lg"
             />
           </div>
-          
-          <div 
+
+          <div
             className="prose prose-lg max-w-none mb-8"
             dangerouslySetInnerHTML={{ __html: mockEvent.content }}
           />
-          
+
           <div className="mb-8">
             <h3 className="text-xl font-semibold mb-4">Localização</h3>
             <div className="bg-gray-100 p-4 rounded-lg">
@@ -114,13 +120,13 @@ const EventDetails = () => {
               {/* In a real app, you might include an embedded map here */}
             </div>
           </div>
-          
+
           <div className="border-t pt-6 mb-8">
             <h4 className="font-medium mb-2">Tags:</h4>
             <div className="flex flex-wrap gap-2">
-              {mockEvent.tags.map(tag => (
-                <span 
-                  key={tag} 
+              {mockEvent.tags.map((tag) => (
+                <span
+                  key={tag}
                   className="px-3 py-1 bg-gray-100 rounded-full text-sm"
                 >
                   {tag}
@@ -128,7 +134,7 @@ const EventDetails = () => {
               ))}
             </div>
           </div>
-          
+
           {!isPastEvent && (
             <div className="flex justify-center mb-8">
               <Dialog>
@@ -144,15 +150,17 @@ const EventDetails = () => {
               </Dialog>
             </div>
           )}
-          
+
           {isPastEvent && (
             <div className="bg-gray-100 p-4 rounded-lg text-center mb-8">
               <p className="text-lg">Este evento já ocorreu.</p>
             </div>
           )}
-          
+
           <div className="border-t pt-6">
-            <h3 className="text-xl font-semibold mb-4">Compartilhar este evento</h3>
+            <h3 className="text-xl font-semibold mb-4">
+              Compartilhar este evento
+            </h3>
             <div className="flex gap-4">
               <Button variant="outline" size="sm">
                 Compartilhar no Facebook
@@ -180,21 +188,26 @@ const EventRegistrationForm = ({ eventTitle }: { eventTitle: string }) => {
         </label>
         <Input id="name" placeholder="Seu nome completo" required />
       </div>
-      
+
       <div className="space-y-2">
         <label htmlFor="email" className="block text-sm font-medium">
           E-mail
         </label>
-        <Input id="email" type="email" placeholder="seu.email@exemplo.com" required />
+        <Input
+          id="email"
+          type="email"
+          placeholder="seu.email@exemplo.com"
+          required
+        />
       </div>
-      
+
       <div className="space-y-2">
         <label htmlFor="phone" className="block text-sm font-medium">
           Telefone
         </label>
         <Input id="phone" placeholder="(00) 00000-0000" required />
       </div>
-      
+
       <div className="pt-4">
         <Button type="submit" className="w-full">
           Confirmar inscrição

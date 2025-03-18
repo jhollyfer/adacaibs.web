@@ -1,42 +1,53 @@
-
-import React from 'react';
-import AdminLayout from '@/components/admin/layout/AdminLayout';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Search, Edit, Trash2, Mail, User, Shield } from 'lucide-react';
+import AdminLayout from "@/components/admin/layout/AdminLayout";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Edit, Mail, Plus, Search, Shield, Trash2 } from "lucide-react";
 
 // Mock data for users
 const mockUsers = [
   {
     id: 1,
-    name: 'Ana Silva',
-    email: 'ana.silva@exemplo.com',
-    role: 'admin',
-    lastLogin: '20/05/2023 14:30',
-    status: 'active',
-    image: '/lovable-uploads/55944207-5569-43e4-8c5b-016801f47871.png'
+    name: "Ana Silva",
+    email: "ana.silva@exemplo.com",
+    role: "admin",
+    lastLogin: "20/05/2023 14:30",
+    status: "active",
+    image: "/default.webp",
   },
   {
     id: 2,
-    name: 'Carlos Mendes',
-    email: 'carlos.mendes@exemplo.com',
-    role: 'editor',
-    lastLogin: '18/05/2023 09:15',
-    status: 'active',
-    image: '/lovable-uploads/9d2c2843-520b-4d4e-ae96-7c656883a10e.png'
+    name: "Carlos Mendes",
+    email: "carlos.mendes@exemplo.com",
+    role: "editor",
+    lastLogin: "18/05/2023 09:15",
+    status: "active",
+    image: "/default.webp",
   },
   {
     id: 3,
-    name: 'Juliana Freitas',
-    email: 'juliana.freitas@exemplo.com',
-    role: 'editor',
-    lastLogin: '12/05/2023 16:45',
-    status: 'inactive',
-    image: '/lovable-uploads/4f5be063-22d2-4152-a822-3eb9ff523206.png'
-  }
+    name: "Juliana Freitas",
+    email: "juliana.freitas@exemplo.com",
+    role: "editor",
+    lastLogin: "12/05/2023 16:45",
+    status: "inactive",
+    image: "/default.webp",
+  },
 ];
 
 const UserForm = ({ user = null, onSubmit }) => {
@@ -53,49 +64,72 @@ const UserForm = ({ user = null, onSubmit }) => {
           <label htmlFor="name" className="block text-sm font-medium mb-1">
             Nome
           </label>
-          <Input id="name" defaultValue={user?.name || ''} placeholder="Nome completo" />
+          <Input
+            id="name"
+            defaultValue={user?.name || ""}
+            placeholder="Nome completo"
+          />
         </div>
-        
+
         <div>
           <label htmlFor="email" className="block text-sm font-medium mb-1">
             E-mail
           </label>
-          <Input id="email" type="email" defaultValue={user?.email || ''} placeholder="email@exemplo.com" />
+          <Input
+            id="email"
+            type="email"
+            defaultValue={user?.email || ""}
+            placeholder="email@exemplo.com"
+          />
         </div>
-        
+
         <div>
           <label htmlFor="role" className="block text-sm font-medium mb-1">
             Função
           </label>
-          <select 
-            id="role" 
+          <select
+            id="role"
             className="w-full border rounded-md p-2"
-            defaultValue={user?.role || 'editor'}
+            defaultValue={user?.role || "editor"}
           >
             <option value="admin">Administrador</option>
             <option value="editor">Editor</option>
             <option value="viewer">Visualizador</option>
           </select>
         </div>
-        
+
         {!user && (
           <>
             <div>
-              <label htmlFor="password" className="block text-sm font-medium mb-1">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium mb-1"
+              >
                 Senha
               </label>
-              <Input id="password" type="password" placeholder="Digite a senha" />
+              <Input
+                id="password"
+                type="password"
+                placeholder="Digite a senha"
+              />
             </div>
-            
+
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium mb-1">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-medium mb-1"
+              >
                 Confirmar Senha
               </label>
-              <Input id="confirmPassword" type="password" placeholder="Confirme a senha" />
+              <Input
+                id="confirmPassword"
+                type="password"
+                placeholder="Confirme a senha"
+              />
             </div>
           </>
         )}
-        
+
         <div>
           <label htmlFor="image" className="block text-sm font-medium mb-1">
             Foto de Perfil
@@ -104,22 +138,22 @@ const UserForm = ({ user = null, onSubmit }) => {
           {user?.image && (
             <div className="mt-2">
               <p className="text-sm text-gray-500 mb-1">Imagem atual:</p>
-              <img 
-                src={user.image} 
-                alt="Preview" 
+              <img
+                src={user.image}
+                alt="Preview"
                 className="h-16 w-16 object-cover rounded-full"
               />
             </div>
           )}
         </div>
       </div>
-      
+
       <div className="flex justify-end gap-3">
         <Button type="button" variant="outline">
           Cancelar
         </Button>
         <Button type="submit">
-          {user ? 'Atualizar Usuário' : 'Criar Usuário'}
+          {user ? "Atualizar Usuário" : "Criar Usuário"}
         </Button>
       </div>
     </form>
@@ -155,10 +189,7 @@ const Users = () => {
             <div className="mb-6 flex justify-between items-center">
               <div className="relative max-w-sm">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-                <Input
-                  placeholder="Buscar usuários..."
-                  className="pl-8"
-                />
+                <Input placeholder="Buscar usuários..." className="pl-8" />
               </div>
             </div>
 
@@ -179,10 +210,10 @@ const Users = () => {
                     <TableRow key={user.id}>
                       <TableCell className="font-medium">
                         <div className="flex items-center gap-3">
-                          <img 
-                            src={user.image} 
-                            alt={user.name} 
-                            className="h-8 w-8 object-cover rounded-full" 
+                          <img
+                            src={user.image}
+                            alt={user.name}
+                            className="h-8 w-8 object-cover rounded-full"
                           />
                           <span>{user.name}</span>
                         </div>
@@ -195,24 +226,31 @@ const Users = () => {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center">
-                          <Shield className={`h-4 w-4 mr-1 ${
-                            user.role === 'admin' ? 'text-red-500' : 'text-blue-500'
-                          }`} />
+                          <Shield
+                            className={`h-4 w-4 mr-1 ${
+                              user.role === "admin"
+                                ? "text-red-500"
+                                : "text-blue-500"
+                            }`}
+                          />
                           <span className="capitalize">
-                            {user.role === 'admin' ? 'Administrador' : 
-                             user.role === 'editor' ? 'Editor' : 'Visualizador'}
+                            {user.role === "admin"
+                              ? "Administrador"
+                              : user.role === "editor"
+                              ? "Editor"
+                              : "Visualizador"}
                           </span>
                         </div>
                       </TableCell>
                       <TableCell>
                         <span
                           className={`px-2 py-1 rounded-full text-xs ${
-                            user.status === 'active'
-                              ? 'bg-green-100 text-green-800'
-                              : 'bg-gray-100 text-gray-800'
+                            user.status === "active"
+                              ? "bg-green-100 text-green-800"
+                              : "bg-gray-100 text-gray-800"
                           }`}
                         >
-                          {user.status === 'active' ? 'Ativo' : 'Inativo'}
+                          {user.status === "active" ? "Ativo" : "Inativo"}
                         </span>
                       </TableCell>
                       <TableCell>
@@ -232,13 +270,17 @@ const Users = () => {
                               <DialogHeader>
                                 <DialogTitle>Editar Usuário</DialogTitle>
                               </DialogHeader>
-                              <UserForm 
+                              <UserForm
                                 user={user}
                                 onSubmit={() => console.log("Form submitted")}
                               />
                             </DialogContent>
                           </Dialog>
-                          <Button variant="ghost" size="icon" className="text-red-500">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-red-500"
+                          >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>

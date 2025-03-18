@@ -1,8 +1,6 @@
-
-import React, { useEffect } from 'react';
-import { motion, useAnimation } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { cn } from '@/lib/utils';
+import { motion, useAnimation } from "framer-motion";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
 interface FeatureCardProps {
   icon: string;
@@ -15,12 +13,12 @@ const FeatureCard = ({ icon, title, description, index }: FeatureCardProps) => {
   const controls = useAnimation();
   const [ref, inView] = useInView({
     triggerOnce: true,
-    threshold: 0.2
+    threshold: 0.2,
   });
 
   useEffect(() => {
     if (inView) {
-      controls.start('visible');
+      controls.start("visible");
     }
   }, [controls, inView]);
 
@@ -29,8 +27,8 @@ const FeatureCard = ({ icon, title, description, index }: FeatureCardProps) => {
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.5, delay: index * 0.1 }
-    }
+      transition: { duration: 0.5, delay: index * 0.1 },
+    },
   };
 
   return (
@@ -42,10 +40,13 @@ const FeatureCard = ({ icon, title, description, index }: FeatureCardProps) => {
       className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
     >
       <div className="p-6">
-        <div className="w-12 h-12 flex items-center justify-center bg-adacaibs-light rounded-lg mb-4">
-          <span className="text-adacaibs-yellow text-3xl" dangerouslySetInnerHTML={{ __html: icon }}></span>
+        <div className="w-12 h-12 flex items-center justify-center bg-white rounded-lg mb-4">
+          <span
+            className="text-yellow-500 text-3xl"
+            dangerouslySetInnerHTML={{ __html: icon }}
+          ></span>
         </div>
-        <h3 className="text-xl font-bold text-adacaibs-black mb-2">{title}</h3>
+        <h3 className="text-xl font-bold text-black mb-2">{title}</h3>
         <p className="text-gray-600">{description}</p>
       </div>
     </motion.div>
@@ -55,25 +56,28 @@ const FeatureCard = ({ icon, title, description, index }: FeatureCardProps) => {
 const Features = () => {
   const features = [
     {
-      icon: '&#9635;',
-      title: 'Fortalecer',
-      description: 'a Associação de Desenvolvimento Artístico e Cultural da Aldeia Indígena de Belém do Solimões'
+      icon: "&#9635;",
+      title: "Fortalecer",
+      description:
+        "a Associação de Desenvolvimento Artístico e Cultural da Aldeia Indígena de Belém do Solimões",
     },
     {
-      icon: '&#9783;',
-      title: 'Conservar',
-      description: 'e Proteger a biodiversidade dos ecossistemas de água doce'
+      icon: "&#9783;",
+      title: "Conservar",
+      description: "e Proteger a biodiversidade dos ecossistemas de água doce",
     },
     {
-      icon: '&#9634;',
-      title: 'Elaborar',
-      description: 'e instigar a vigilância dos lagos e documentar conhecimentos tradicionais'
+      icon: "&#9634;",
+      title: "Elaborar",
+      description:
+        "e instigar a vigilância dos lagos e documentar conhecimentos tradicionais",
     },
     {
-      icon: '&#9777;',
-      title: 'Enaltecer',
-      description: 'a sabedoria tradicional Tikuna e promover a cultura indígena'
-    }
+      icon: "&#9777;",
+      title: "Enaltecer",
+      description:
+        "a sabedoria tradicional Tikuna e promover a cultura indígena",
+    },
   ];
 
   return (

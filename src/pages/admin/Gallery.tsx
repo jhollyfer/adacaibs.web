@@ -1,43 +1,54 @@
-
-import React from 'react';
-import AdminLayout from '@/components/admin/layout/AdminLayout';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Search, Edit, Trash2, Calendar, ImageIcon } from 'lucide-react';
+import AdminLayout from "@/components/admin/layout/AdminLayout";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Calendar, Edit, ImageIcon, Plus, Search, Trash2 } from "lucide-react";
 
 // Mock data for gallery albums
 const mockAlbums = [
   {
     id: 1,
-    title: 'Workshop de LIBRAS',
-    date: '10 de junho de 2023',
+    title: "Workshop de LIBRAS",
+    date: "10 de junho de 2023",
     imageCount: 24,
-    thumbnail: '/lovable-uploads/55944207-5569-43e4-8c5b-016801f47871.png'
+    thumbnail: "/default.webp",
   },
   {
     id: 2,
-    title: 'Dia Nacional do Surdo',
-    date: '26 de setembro de 2023',
+    title: "Dia Nacional do Surdo",
+    date: "26 de setembro de 2023",
     imageCount: 36,
-    thumbnail: '/lovable-uploads/9d2c2843-520b-4d4e-ae96-7c656883a10e.png'
+    thumbnail: "/default.webp",
   },
   {
     id: 3,
-    title: 'Palestra sobre Inclusão',
-    date: '15 de abril de 2023',
+    title: "Palestra sobre Inclusão",
+    date: "15 de abril de 2023",
     imageCount: 18,
-    thumbnail: '/lovable-uploads/4f5be063-22d2-4152-a822-3eb9ff523206.png'
+    thumbnail: "/default.webp",
   },
   {
     id: 4,
-    title: 'Curso de LIBRAS para Professores',
-    date: '20 de março de 2023',
+    title: "Curso de LIBRAS para Professores",
+    date: "20 de março de 2023",
     imageCount: 42,
-    thumbnail: '/lovable-uploads/8ab9495a-6e4e-4a6e-983e-adfcede7b8f7.png'
-  }
+    thumbnail: "/default.webp",
+  },
 ];
 
 const AlbumForm = ({ album = null, onSubmit }) => {
@@ -54,18 +65,25 @@ const AlbumForm = ({ album = null, onSubmit }) => {
           <label htmlFor="title" className="block text-sm font-medium mb-1">
             Título do Álbum
           </label>
-          <Input id="title" defaultValue={album?.title || ''} placeholder="Digite o título do álbum" />
+          <Input
+            id="title"
+            defaultValue={album?.title || ""}
+            placeholder="Digite o título do álbum"
+          />
         </div>
-        
+
         <div>
           <label htmlFor="date" className="block text-sm font-medium mb-1">
             Data
           </label>
-          <Input id="date" type="date" defaultValue={album?.date || ''} />
+          <Input id="date" type="date" defaultValue={album?.date || ""} />
         </div>
-        
+
         <div>
-          <label htmlFor="description" className="block text-sm font-medium mb-1">
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium mb-1"
+          >
             Descrição
           </label>
           <textarea
@@ -73,10 +91,10 @@ const AlbumForm = ({ album = null, onSubmit }) => {
             rows={4}
             className="w-full border rounded-md p-2"
             placeholder="Digite a descrição do álbum"
-            defaultValue={album?.description || ''}
+            defaultValue={album?.description || ""}
           ></textarea>
         </div>
-        
+
         <div>
           <label htmlFor="thumbnail" className="block text-sm font-medium mb-1">
             Imagem de Capa
@@ -85,15 +103,15 @@ const AlbumForm = ({ album = null, onSubmit }) => {
           {album?.thumbnail && (
             <div className="mt-2">
               <p className="text-sm text-gray-500 mb-1">Imagem atual:</p>
-              <img 
-                src={album.thumbnail} 
-                alt="Preview" 
+              <img
+                src={album.thumbnail}
+                alt="Preview"
                 className="h-24 w-auto rounded-md"
               />
             </div>
           )}
         </div>
-        
+
         <div>
           <label htmlFor="images" className="block text-sm font-medium mb-1">
             Imagens do Álbum
@@ -106,13 +124,13 @@ const AlbumForm = ({ album = null, onSubmit }) => {
           )}
         </div>
       </div>
-      
+
       <div className="flex justify-end gap-3">
         <Button type="button" variant="outline">
           Cancelar
         </Button>
         <Button type="submit">
-          {album ? 'Atualizar Álbum' : 'Criar Álbum'}
+          {album ? "Atualizar Álbum" : "Criar Álbum"}
         </Button>
       </div>
     </form>
@@ -148,10 +166,7 @@ const Gallery = () => {
             <div className="mb-6 flex justify-between items-center">
               <div className="relative max-w-sm">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-                <Input
-                  placeholder="Buscar álbuns..."
-                  className="pl-8"
-                />
+                <Input placeholder="Buscar álbuns..." className="pl-8" />
               </div>
             </div>
 
@@ -170,10 +185,10 @@ const Gallery = () => {
                     <TableRow key={album.id}>
                       <TableCell className="font-medium">
                         <div className="flex items-center gap-3">
-                          <img 
-                            src={album.thumbnail} 
-                            alt={album.title} 
-                            className="h-12 w-20 object-cover rounded-md" 
+                          <img
+                            src={album.thumbnail}
+                            alt={album.title}
+                            className="h-12 w-20 object-cover rounded-md"
                           />
                           <span>{album.title}</span>
                         </div>
@@ -202,13 +217,17 @@ const Gallery = () => {
                               <DialogHeader>
                                 <DialogTitle>Editar Álbum</DialogTitle>
                               </DialogHeader>
-                              <AlbumForm 
+                              <AlbumForm
                                 album={album}
                                 onSubmit={() => console.log("Form submitted")}
                               />
                             </DialogContent>
                           </Dialog>
-                          <Button variant="ghost" size="icon" className="text-red-500">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-red-500"
+                          >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>

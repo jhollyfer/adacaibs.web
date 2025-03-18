@@ -1,9 +1,8 @@
-
-import React, { useEffect, useState } from 'react';
-import { motion, useAnimation } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { Star } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
+import { motion, useAnimation } from "framer-motion";
+import { Star } from "lucide-react";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
 interface TestimonialCardProps {
   quote: string;
@@ -14,16 +13,23 @@ interface TestimonialCardProps {
   index: number;
 }
 
-const TestimonialCard = ({ quote, author, role, image, rating, index }: TestimonialCardProps) => {
+const TestimonialCard = ({
+  quote,
+  author,
+  role,
+  image,
+  rating,
+  index,
+}: TestimonialCardProps) => {
   const controls = useAnimation();
   const [ref, inView] = useInView({
     triggerOnce: true,
-    threshold: 0.1
+    threshold: 0.1,
   });
 
   useEffect(() => {
     if (inView) {
-      controls.start('visible');
+      controls.start("visible");
     }
   }, [controls, inView]);
 
@@ -32,8 +38,8 @@ const TestimonialCard = ({ quote, author, role, image, rating, index }: Testimon
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, delay: index * 0.1 }
-    }
+      transition: { duration: 0.5, delay: index * 0.1 },
+    },
   };
 
   return (
@@ -42,7 +48,7 @@ const TestimonialCard = ({ quote, author, role, image, rating, index }: Testimon
       variants={variants}
       initial="hidden"
       animate={controls}
-      className="bg-adacaibs-black/95 p-6 rounded-xl shadow-lg relative"
+      className="bg-black/95 p-6 rounded-xl shadow-lg relative"
     >
       <div className="flex items-start mb-4">
         {Array.from({ length: 5 }).map((_, i) => (
@@ -50,7 +56,7 @@ const TestimonialCard = ({ quote, author, role, image, rating, index }: Testimon
             key={i}
             size={16}
             className={cn(
-              i < rating ? "text-adacaibs-yellow fill-adacaibs-yellow" : "text-gray-400"
+              i < rating ? "text-yellow-500 fill-yellow-500" : "text-gray-400"
             )}
           />
         ))}
@@ -74,51 +80,56 @@ const TestimonialCard = ({ quote, author, role, image, rating, index }: Testimon
 const Testimonials = () => {
   const testimonials = [
     {
-      quote: "O trabalho da Associação de Desenvolvimento Artístico e Cultural da Aldeia Indígena de Belém do Solimões é fundamental. A iniciativa do Festival Cultural Tradicional foi incrível! Parabéns pelo trabalho de todos vocês.",
+      quote:
+        "O trabalho da Associação de Desenvolvimento Artístico e Cultural da Aldeia Indígena de Belém do Solimões é fundamental. A iniciativa do Festival Cultural Tradicional foi incrível! Parabéns pelo trabalho de todos vocês.",
       author: "Maria Silva",
       role: "Coordenadora de Projetos Sociais",
       image: "https://randomuser.me/api/portraits/women/12.jpg",
-      rating: 5
+      rating: 5,
     },
     {
-      quote: "Fiquei impressionado com o projeto de preservação da língua indígena. É fundamental que ações como essa sejam apoiadas e ampliadas. A cultura e a identidade de um povo estão diretamente ligadas à sua língua. Excelente iniciativa!",
+      quote:
+        "Fiquei impressionado com o projeto de preservação da língua indígena. É fundamental que ações como essa sejam apoiadas e ampliadas. A cultura e a identidade de um povo estão diretamente ligadas à sua língua. Excelente iniciativa!",
       author: "João Oliveira",
       role: "Professor de Antropologia",
       image: "https://randomuser.me/api/portraits/men/32.jpg",
-      rating: 4
+      rating: 4,
     },
     {
-      quote: "Visitei a Aldeia de Belém do Solimões durante o Festival Cultural e foi uma experiência incrível! A música, a comida e a hospitalidade da comunidade são de tirar o fôlego. Recomendo a todos que queiram conhecer mais sobre a cultura indígena.",
+      quote:
+        "Visitei a Aldeia de Belém do Solimões durante o Festival Cultural e foi uma experiência incrível! A música, a comida e a hospitalidade da comunidade são de tirar o fôlego. Recomendo a todos que queiram conhecer mais sobre a cultura indígena.",
       author: "Ana Costa",
       role: "Turista e Fotógrafa",
       image: "https://randomuser.me/api/portraits/women/65.jpg",
-      rating: 5
+      rating: 5,
     },
     {
-      quote: "A Associação tem feito um trabalho incrível em nossa aldeia. Desde o apoio aos artistas até a organização de eventos culturais, tudo é feito com muito cuidado e respeito às nossas tradições. Estamos muito gratos por todo o empenho!",
+      quote:
+        "A Associação tem feito um trabalho incrível em nossa aldeia. Desde o apoio aos artistas até a organização de eventos culturais, tudo é feito com muito cuidado e respeito às nossas tradições. Estamos muito gratos por todo o empenho!",
       author: "Roberto Almeida",
       role: "Líder Comunitário",
       image: "https://randomuser.me/api/portraits/men/67.jpg",
-      rating: 5
+      rating: 5,
     },
     {
-      quote: "Participei do projeto de documentação da biodiversidade dos igarapés e fiquei impressionado com o conhecimento tradicional dos moradores da Aldeia Indígena de Belém do Solimões. Fundamental preservarmos este patrimônio!",
+      quote:
+        "Participei do projeto de documentação da biodiversidade dos igarapés e fiquei impressionado com o conhecimento tradicional dos moradores da Aldeia Indígena de Belém do Solimões. Fundamental preservarmos este patrimônio!",
       author: "Paulo Mendes",
       role: "Biólogo",
       image: "https://randomuser.me/api/portraits/men/79.jpg",
-      rating: 5
-    }
+      rating: 5,
+    },
   ];
 
   const sectionControls = useAnimation();
   const [sectionRef, sectionInView] = useInView({
     triggerOnce: true,
-    threshold: 0.1
+    threshold: 0.1,
   });
 
   useEffect(() => {
     if (sectionInView) {
-      sectionControls.start('visible');
+      sectionControls.start("visible");
     }
   }, [sectionControls, sectionInView]);
 
@@ -127,12 +138,15 @@ const Testimonials = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5 }
-    }
+      transition: { duration: 0.5 },
+    },
   };
 
   return (
-    <section ref={sectionRef} className="py-20 bg-gradient-to-b from-gray-100 to-white">
+    <section
+      ref={sectionRef}
+      className="py-20 bg-gradient-to-b from-gray-100 to-white"
+    >
       <div className="container mx-auto px-4">
         <motion.div
           variants={sectionVariants}
@@ -141,10 +155,11 @@ const Testimonials = () => {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            O que <span className="text-adacaibs-yellow">comunidade</span> fala?
+            O que <span className="text-yellow-500">comunidade</span> fala?
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Confira os depoimentos de pessoas que conhecem e participam das atividades e projetos desenvolvidos pela ADACAIBS.
+            Confira os depoimentos de pessoas que conhecem e participam das
+            atividades e projetos desenvolvidos pela ADACAIBS.
           </p>
         </motion.div>
 
