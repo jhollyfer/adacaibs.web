@@ -102,9 +102,11 @@ const Hero = () => {
 
               <Button
                 asChild
-                variant="outline"
+                variant="ghost"
                 size="lg"
-                className="text-white border-white hover:bg-white/10"
+                // className="text-black"
+
+                className="border-white"
               >
                 <Link to="/videos" className="flex items-center gap-2">
                   <Play size={18} />
@@ -112,20 +114,6 @@ const Hero = () => {
                 </Link>
               </Button>
             </motion.div>
-
-            {/* <motion.div
-              variants={itemVariants}
-              className="mt-10 text-sm text-gray-300"
-            >
-              <p className="mb-2">
-                #artenaldeia #culturavivabrasil #aldeiaindígena
-                #raízesdosolimões #orgulhoindígena
-              </p>
-              <p>
-                #raízeseculturais #tradiçãoearte #culturasqueres
-                #solimõescriativo #terrasindígenasamazônia
-              </p>
-            </motion.div> */}
           </div>
 
           <motion.div
