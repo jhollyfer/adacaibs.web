@@ -12,32 +12,32 @@ import { Plus, Search, Edit, Trash2, Calendar, Star } from 'lucide-react';
 const mockTestimonials = [
   {
     id: 1,
-    name: 'Ana Silva',
+    name: 'Maria Silva',
     role: 'Estudante',
-    content: 'Os cursos de LIBRAS da ADACAIBS transformaram minha vida. Agora posso me comunicar com meu irmão surdo de uma forma muito mais profunda.',
+    date: '10 de junho de 2023',
     rating: 5,
-    date: '15 de maio de 2023',
-    image: '/lovable-uploads/55944207-5569-43e4-8c5b-016801f47871.png',
+    testimony: 'Os cursos de LIBRAS oferecidos pela ADACAIBS mudaram minha vida. Agora posso me comunicar melhor com meu irmão surdo.',
+    avatar: '/lovable-uploads/55944207-5569-43e4-8c5b-016801f47871.png',
     status: 'published'
   },
   {
     id: 2,
-    name: 'Carlos Mendes',
+    name: 'João Oliveira',
     role: 'Professor',
-    content: 'Como educador, o workshop de LIBRAS me ajudou a tornar minhas aulas mais inclusivas. Excelente iniciativa!',
-    rating: 5,
-    date: '22 de abril de 2023',
-    image: '/lovable-uploads/9d2c2843-520b-4d4e-ae96-7c656883a10e.png',
+    date: '26 de setembro de 2023',
+    rating: 4,
+    testimony: 'A associação realiza um trabalho incrível de conscientização. Os materiais educativos são de excelente qualidade.',
+    avatar: '/lovable-uploads/9d2c2843-520b-4d4e-ae96-7c656883a10e.png',
     status: 'published'
   },
   {
     id: 3,
-    name: 'Juliana Freitas',
-    role: 'Mãe',
-    content: 'Minha filha surda se sente acolhida e respeitada em todos os eventos. A ADACAIBS realiza um trabalho incrível com a comunidade surda.',
-    rating: 4,
-    date: '10 de março de 2023',
-    image: '/lovable-uploads/4f5be063-22d2-4152-a822-3eb9ff523206.png',
+    name: 'Ana Beatriz',
+    role: 'Voluntária',
+    date: '15 de abril de 2023',
+    rating: 5,
+    testimony: 'Fazer parte da ADACAIBS como voluntária tem sido uma experiência enriquecedora. Vejo o impacto positivo na comunidade todos os dias.',
+    avatar: '/lovable-uploads/4f5be063-22d2-4152-a822-3eb9ff523206.png',
     status: 'pending'
   }
 ];
@@ -56,57 +56,76 @@ const TestimonialForm = ({ testimonial = null, onSubmit }) => {
           <label htmlFor="name" className="block text-sm font-medium mb-1">
             Nome
           </label>
-          <Input id="name" defaultValue={testimonial?.name || ''} placeholder="Nome da pessoa" />
+          <Input id="name" defaultValue={testimonial?.name || ''} placeholder="Nome completo" />
         </div>
         
         <div>
           <label htmlFor="role" className="block text-sm font-medium mb-1">
-            Cargo/Função
+            Cargo/Ocupação
           </label>
           <Input id="role" defaultValue={testimonial?.role || ''} placeholder="Ex: Estudante, Professor, etc." />
         </div>
         
         <div>
-          <label htmlFor="content" className="block text-sm font-medium mb-1">
+          <label htmlFor="rating" className="block text-sm font-medium mb-1">
+            Avaliação
+          </label>
+          <select 
+            id="rating" 
+            className="w-full border rounded-md p-2"
+            defaultValue={testimonial?.rating || 5}
+          >
+            <option value="5">5 estrelas</option>
+            <option value="4">4 estrelas</option>
+            <option value="3">3 estrelas</option>
+            <option value="2">2 estrelas</option>
+            <option value="1">1 estrela</option>
+          </select>
+        </div>
+        
+        <div>
+          <label htmlFor="testimony" className="block text-sm font-medium mb-1">
             Depoimento
           </label>
           <textarea
-            id="content"
+            id="testimony"
             rows={4}
             className="w-full border rounded-md p-2"
             placeholder="Digite o depoimento"
-            defaultValue={testimonial?.content || ''}
+            defaultValue={testimonial?.testimony || ''}
           ></textarea>
         </div>
         
         <div>
-          <label htmlFor="rating" className="block text-sm font-medium mb-1">
-            Avaliação (1-5)
+          <label htmlFor="avatar" className="block text-sm font-medium mb-1">
+            Foto de Perfil
           </label>
-          <Input 
-            id="rating" 
-            type="number" 
-            min="1" 
-            max="5" 
-            defaultValue={testimonial?.rating || 5} 
-          />
-        </div>
-        
-        <div>
-          <label htmlFor="image" className="block text-sm font-medium mb-1">
-            Foto
-          </label>
-          <Input id="image" type="file" accept="image/*" />
-          {testimonial?.image && (
+          <Input id="avatar" type="file" accept="image/*" />
+          {testimonial?.avatar && (
             <div className="mt-2">
               <p className="text-sm text-gray-500 mb-1">Imagem atual:</p>
               <img 
-                src={testimonial.image} 
+                src={testimonial.avatar} 
                 alt="Preview" 
-                className="h-24 w-24 object-cover rounded-full"
+                className="h-16 w-16 object-cover rounded-full"
               />
             </div>
           )}
+        </div>
+        
+        <div>
+          <label htmlFor="status" className="block text-sm font-medium mb-1">
+            Status
+          </label>
+          <select 
+            id="status" 
+            className="w-full border rounded-md p-2"
+            defaultValue={testimonial?.status || 'pending'}
+          >
+            <option value="published">Publicado</option>
+            <option value="pending">Pendente</option>
+            <option value="rejected">Rejeitado</option>
+          </select>
         </div>
       </div>
       
@@ -166,6 +185,7 @@ const Testimonials = () => {
                     <TableHead>Depoimento</TableHead>
                     <TableHead>Avaliação</TableHead>
                     <TableHead>Status</TableHead>
+                    <TableHead>Data</TableHead>
                     <TableHead className="text-right">Ações</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -175,32 +195,26 @@ const Testimonials = () => {
                       <TableCell className="font-medium">
                         <div className="flex items-center gap-3">
                           <img 
-                            src={testimonial.image} 
+                            src={testimonial.avatar} 
                             alt={testimonial.name} 
-                            className="h-10 w-10 object-cover rounded-full" 
+                            className="h-8 w-8 object-cover rounded-full" 
                           />
                           <div>
                             <div>{testimonial.name}</div>
-                            <div className="text-sm text-gray-500">{testimonial.role}</div>
+                            <div className="text-xs text-gray-500">{testimonial.role}</div>
                           </div>
                         </div>
                       </TableCell>
                       <TableCell>
-                        <p className="truncate max-w-xs">{testimonial.content}</p>
-                        <div className="text-xs text-gray-500 mt-1">
-                          <Calendar className="h-3 w-3 inline mr-1" />
-                          {testimonial.date}
-                        </div>
+                        <p className="truncate max-w-xs">{testimonial.testimony}</p>
                       </TableCell>
                       <TableCell>
-                        <div className="flex items-center">
-                          {Array.from({ length: 5 }).map((_, index) => (
+                        <div className="flex">
+                          {[...Array(5)].map((_, i) => (
                             <Star
-                              key={index}
+                              key={i}
                               className={`h-4 w-4 ${
-                                index < testimonial.rating
-                                  ? 'text-yellow-500 fill-yellow-500'
-                                  : 'text-gray-300'
+                                i < testimonial.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'
                               }`}
                             />
                           ))}
@@ -211,11 +225,20 @@ const Testimonials = () => {
                           className={`px-2 py-1 rounded-full text-xs ${
                             testimonial.status === 'published'
                               ? 'bg-green-100 text-green-800'
-                              : 'bg-yellow-100 text-yellow-800'
+                              : testimonial.status === 'pending'
+                              ? 'bg-yellow-100 text-yellow-800'
+                              : 'bg-red-100 text-red-800'
                           }`}
                         >
-                          {testimonial.status === 'published' ? 'Publicado' : 'Pendente'}
+                          {testimonial.status === 'published' ? 'Publicado' : 
+                           testimonial.status === 'pending' ? 'Pendente' : 'Rejeitado'}
                         </span>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center text-sm">
+                          <Calendar className="h-3.5 w-3.5 mr-1 text-gray-500" />
+                          <span>{testimonial.date}</span>
+                        </div>
                       </TableCell>
                       <TableCell className="text-right">
                         <div className="flex justify-end gap-2">

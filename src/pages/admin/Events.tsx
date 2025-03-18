@@ -5,9 +5,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Search, Edit, Trash2, Calendar, Clock, MapPin, Users } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 // Mock data for events
 const mockEvents = [
@@ -18,42 +18,34 @@ const mockEvents = [
     time: '14:00 - 18:00',
     location: 'Sede da ADACAIBS',
     capacity: 30,
-    registrations: 18,
+    registeredCount: 18,
+    category: 'Workshop',
     status: 'upcoming',
     image: '/lovable-uploads/2c677ecc-7661-46d3-abee-3612a042a88d.png'
   },
   {
     id: 2,
-    title: 'Palestra sobre Inclusão na Educação',
-    date: '25 de julho de 2023',
-    time: '19:00 - 21:00',
-    location: 'Auditório Municipal',
-    capacity: 100,
-    registrations: 62,
+    title: 'Torneio Esportivo Inclusivo',
+    date: '25 de junho de 2023',
+    time: '09:00 - 17:00',
+    location: 'Quadra Municipal',
+    capacity: 50,
+    registeredCount: 32,
+    category: 'Esporte',
     status: 'upcoming',
-    image: '/lovable-uploads/55944207-5569-43e4-8c5b-016801f47871.png'
-  },
-  {
-    id: 3,
-    title: 'Curso Básico de LIBRAS - Módulo 1',
-    date: '15 de março de 2023',
-    time: '18:30 - 20:30',
-    location: 'Sede da ADACAIBS',
-    capacity: 25,
-    registrations: 25,
-    status: 'past',
     image: '/lovable-uploads/516afdeb-e44c-4cf0-81a2-d0951e9348f5.png'
   },
   {
-    id: 4,
-    title: 'Encontro da Comunidade Surda',
-    date: '10 de abril de 2023',
-    time: '10:00 - 16:00',
-    location: 'Parque Central',
-    capacity: 150,
-    registrations: 87,
+    id: 3,
+    title: 'Encontro de Famílias',
+    date: '05 de maio de 2023',
+    time: '15:00 - 19:00',
+    location: 'Parque Municipal',
+    capacity: 40,
+    registeredCount: 40,
+    category: 'Comunidade',
     status: 'past',
-    image: '/lovable-uploads/9d2c2843-520b-4d4e-ae96-7c656883a10e.png'
+    image: '/lovable-uploads/4f5be063-22d2-4152-a822-3eb9ff523206.png'
   }
 ];
 
@@ -85,7 +77,7 @@ const EventForm = ({ event = null, onSubmit }) => {
             <label htmlFor="time" className="block text-sm font-medium mb-1">
               Horário
             </label>
-            <Input id="time" type="time" defaultValue={event?.time || ''} />
+            <Input id="time" defaultValue={event?.time || ''} placeholder="Ex: 14:00 - 18:00" />
           </div>
         </div>
         
@@ -93,14 +85,46 @@ const EventForm = ({ event = null, onSubmit }) => {
           <label htmlFor="location" className="block text-sm font-medium mb-1">
             Local
           </label>
-          <Input id="location" defaultValue={event?.location || ''} placeholder="Digite o local do evento" />
+          <Input id="location" defaultValue={event?.location || ''} placeholder="Nome do local" />
         </div>
         
         <div>
-          <label htmlFor="capacity" className="block text-sm font-medium mb-1">
-            Capacidade
+          <label htmlFor="address" className="block text-sm font-medium mb-1">
+            Endereço
           </label>
-          <Input id="capacity" type="number" defaultValue={event?.capacity || ''} placeholder="Quantidade de vagas" />
+          <Input id="address" defaultValue={event?.address || ''} placeholder="Endereço completo" />
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="category" className="block text-sm font-medium mb-1">
+              Categoria
+            </label>
+            <select 
+              id="category" 
+              className="w-full border rounded-md p-2"
+              defaultValue={event?.category || ''}
+            >
+              <option value="">Selecione uma categoria</option>
+              <option value="Workshop">Workshop</option>
+              <option value="Palestra">Palestra</option>
+              <option value="Curso">Curso</option>
+              <option value="Esporte">Esporte</option>
+              <option value="Comunidade">Comunidade</option>
+              <option value="Arte">Arte</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="capacity" className="block text-sm font-medium mb-1">
+              Capacidade
+            </label>
+            <Input 
+              id="capacity" 
+              type="number" 
+              defaultValue={event?.capacity || ''} 
+              placeholder="Número máximo de participantes" 
+            />
+          </div>
         </div>
         
         <div>
@@ -117,8 +141,21 @@ const EventForm = ({ event = null, onSubmit }) => {
         </div>
         
         <div>
+          <label htmlFor="content" className="block text-sm font-medium mb-1">
+            Conteúdo Detalhado
+          </label>
+          <textarea
+            id="content"
+            rows={6}
+            className="w-full border rounded-md p-2"
+            placeholder="Conteúdo detalhado do evento (pode usar HTML)"
+            defaultValue={event?.content || ''}
+          ></textarea>
+        </div>
+        
+        <div>
           <label htmlFor="image" className="block text-sm font-medium mb-1">
-            Imagem
+            Imagem do Evento
           </label>
           <Input id="image" type="file" accept="image/*" />
           {event?.image && (
@@ -180,114 +217,108 @@ const Events = () => {
                   className="pl-8"
                 />
               </div>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm">Todos</Button>
+                <Button variant="outline" size="sm">Próximos</Button>
+                <Button variant="outline" size="sm">Passados</Button>
+              </div>
             </div>
 
-            <Tabs defaultValue="upcoming">
-              <TabsList className="mb-6">
-                <TabsTrigger value="upcoming">Próximos</TabsTrigger>
-                <TabsTrigger value="past">Passados</TabsTrigger>
-                <TabsTrigger value="all">Todos</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="upcoming">
-                <EventsTable events={mockEvents.filter(event => event.status === 'upcoming')} />
-              </TabsContent>
-              
-              <TabsContent value="past">
-                <EventsTable events={mockEvents.filter(event => event.status === 'past')} />
-              </TabsContent>
-              
-              <TabsContent value="all">
-                <EventsTable events={mockEvents} />
-              </TabsContent>
-            </Tabs>
+            <div className="rounded-md border">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Evento</TableHead>
+                    <TableHead>Data e Hora</TableHead>
+                    <TableHead>Local</TableHead>
+                    <TableHead>Inscrições</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Ações</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {mockEvents.map((event) => (
+                    <TableRow key={event.id}>
+                      <TableCell className="font-medium">
+                        <div className="flex items-center gap-3">
+                          <img 
+                            src={event.image} 
+                            alt={event.title} 
+                            className="h-12 w-20 object-cover rounded-md" 
+                          />
+                          <div>
+                            <div>{event.title}</div>
+                            <Badge variant="outline" className="mt-1">{event.category}</Badge>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex flex-col">
+                          <div className="flex items-center text-sm">
+                            <Calendar className="h-3.5 w-3.5 mr-1 text-gray-500" />
+                            <span>{event.date}</span>
+                          </div>
+                          <div className="flex items-center text-sm text-gray-500">
+                            <Clock className="h-3.5 w-3.5 mr-1" />
+                            <span>{event.time}</span>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center">
+                          <MapPin className="h-4 w-4 mr-1 text-gray-500" />
+                          <span>{event.location}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center">
+                          <Users className="h-4 w-4 mr-1 text-gray-500" />
+                          <span>{event.registeredCount}/{event.capacity}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs ${
+                            event.status === 'upcoming'
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-gray-100 text-gray-800'
+                          }`}
+                        >
+                          {event.status === 'upcoming' ? 'Próximo' : 'Passado'}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end gap-2">
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-2xl">
+                              <DialogHeader>
+                                <DialogTitle>Editar Evento</DialogTitle>
+                              </DialogHeader>
+                              <EventForm 
+                                event={event}
+                                onSubmit={() => console.log("Form submitted")}
+                              />
+                            </DialogContent>
+                          </Dialog>
+                          <Button variant="ghost" size="icon" className="text-red-500">
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </CardContent>
         </Card>
       </div>
     </AdminLayout>
-  );
-};
-
-const EventsTable = ({ events }) => {
-  return (
-    <div className="rounded-md border">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Evento</TableHead>
-            <TableHead>Data</TableHead>
-            <TableHead>Local</TableHead>
-            <TableHead>Inscrições</TableHead>
-            <TableHead className="text-right">Ações</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {events.map((event) => (
-            <TableRow key={event.id}>
-              <TableCell className="font-medium">
-                <div className="flex items-center gap-3">
-                  <img 
-                    src={event.image} 
-                    alt={event.title} 
-                    className="h-10 w-16 object-cover rounded-md" 
-                  />
-                  <span>{event.title}</span>
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="flex flex-col">
-                  <div className="flex items-center text-sm">
-                    <Calendar className="h-3.5 w-3.5 mr-1 text-gray-500" />
-                    <span>{event.date}</span>
-                  </div>
-                  <div className="flex items-center text-sm text-gray-500">
-                    <Clock className="h-3.5 w-3.5 mr-1" />
-                    <span>{event.time}</span>
-                  </div>
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="flex items-center">
-                  <MapPin className="h-4 w-4 mr-1 text-gray-500" />
-                  <span>{event.location}</span>
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="flex items-center">
-                  <Users className="h-4 w-4 mr-1 text-gray-500" />
-                  <span>
-                    {event.registrations}/{event.capacity}
-                  </span>
-                </div>
-              </TableCell>
-              <TableCell className="text-right">
-                <div className="flex justify-end gap-2">
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-2xl">
-                      <DialogHeader>
-                        <DialogTitle>Editar Evento</DialogTitle>
-                      </DialogHeader>
-                      <EventForm 
-                        event={event}
-                        onSubmit={() => console.log("Form submitted")}
-                      />
-                    </DialogContent>
-                  </Dialog>
-                  <Button variant="ghost" size="icon" className="text-red-500">
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
   );
 };
 
