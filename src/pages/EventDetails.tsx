@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft, Calendar, Clock, MapPin, Users } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // Mock data for a single event
 const mockEvent = {
@@ -57,7 +57,6 @@ const mockEvent = {
 };
 
 const EventDetails = () => {
-  const { id } = useParams();
   // In a real app, you would fetch the event based on the ID
   // For now, we'll just use our mock data
 
@@ -179,7 +178,7 @@ const EventDetails = () => {
   );
 };
 
-const EventRegistrationForm = ({ eventTitle }: { eventTitle: string }) => {
+const EventRegistrationForm = () => {
   return (
     <form className="space-y-4 mt-4">
       <div className="space-y-2">

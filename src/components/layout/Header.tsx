@@ -7,7 +7,7 @@ import { Link, useLocation } from "react-router-dom";
 import { LogoHorizontal } from "../horizontal-logo";
 
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 

@@ -1,7 +1,7 @@
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Tag, User } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // Mock data for a single news item
 const mockNewsItem = {
@@ -32,7 +32,6 @@ const mockNewsItem = {
 };
 
 const NewsDetails = () => {
-  const { id } = useParams();
   // In a real app, you would fetch the news item based on the ID
   // For now, we'll just use our mock data
 

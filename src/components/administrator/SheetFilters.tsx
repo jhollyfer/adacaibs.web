@@ -1,9 +1,7 @@
-
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Sheet,
   SheetClose,
@@ -13,8 +11,8 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet';
-import { Filter } from 'lucide-react';
+} from "@/components/ui/sheet";
+import { Filter } from "lucide-react";
 
 interface SheetFiltersProps {
   title: string;
@@ -23,7 +21,7 @@ interface SheetFiltersProps {
     id: string;
     label: string;
     options?: { value: string; label: string }[];
-    type: 'checkbox' | 'date' | 'text';
+    type: "checkbox" | "date" | "text";
   }[];
   onApply: (filters: any) => void;
 }
@@ -50,19 +48,24 @@ export const SheetFilters = ({
           {filters.map((filter) => (
             <div key={filter.id} className="space-y-2">
               <h4 className="font-medium">{filter.label}</h4>
-              
-              {filter.type === 'checkbox' && filter.options && (
+
+              {filter.type === "checkbox" && filter.options && (
                 <div className="space-y-2">
                   {filter.options.map((option) => (
-                    <div key={option.value} className="flex items-center space-x-2">
+                    <div
+                      key={option.value}
+                      className="flex items-center space-x-2"
+                    >
                       <Checkbox id={`${filter.id}-${option.value}`} />
-                      <Label htmlFor={`${filter.id}-${option.value}`}>{option.label}</Label>
+                      <Label htmlFor={`${filter.id}-${option.value}`}>
+                        {option.label}
+                      </Label>
                     </div>
                   ))}
                 </div>
               )}
-              
-              {filter.type === 'date' && (
+
+              {filter.type === "date" && (
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor={`${filter.id}-start`}>De</Label>
@@ -74,9 +77,12 @@ export const SheetFilters = ({
                   </div>
                 </div>
               )}
-              
-              {filter.type === 'text' && (
-                <Input id={filter.id} placeholder={`Filtrar por ${filter.label.toLowerCase()}`} />
+
+              {filter.type === "text" && (
+                <Input
+                  id={filter.id}
+                  placeholder={`Filtrar por ${filter.label.toLowerCase()}`}
+                />
               )}
             </div>
           ))}

@@ -1,46 +1,59 @@
-
-import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Legend,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 const data = [
   {
-    name: 'Jan',
+    name: "Jan",
     noticias: 4,
     eventos: 2,
     podcasts: 1,
     videos: 2,
   },
   {
-    name: 'Fev',
+    name: "Fev",
     noticias: 6,
     eventos: 3,
     podcasts: 2,
     videos: 1,
   },
   {
-    name: 'Mar',
+    name: "Mar",
     noticias: 5,
     eventos: 1,
     podcasts: 3,
     videos: 0,
   },
   {
-    name: 'Abr',
+    name: "Abr",
     noticias: 3,
     eventos: 2,
     podcasts: 4,
     videos: 2,
   },
   {
-    name: 'Mai',
+    name: "Mai",
     noticias: 2,
     eventos: 1,
     podcasts: 2,
     videos: 1,
   },
   {
-    name: 'Jun',
+    name: "Jun",
     noticias: 4,
     eventos: 2,
     podcasts: 3,

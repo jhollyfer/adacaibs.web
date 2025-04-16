@@ -1,12 +1,10 @@
-
-import React from 'react';
-import Layout from '@/components/layout/Layout';
-import Hero from '@/components/home/Hero';
-import Features from '@/components/home/Features';
-import AboutSection from '@/components/home/AboutSection';
-import LatestNews from '@/components/home/LatestNews';
-import Testimonials from '@/components/home/Testimonials';
-import ContactSection from '@/components/home/ContactSection';
+import AboutSection from "@/components/home/AboutSection";
+import ContactSection from "@/components/home/ContactSection";
+import Features from "@/components/home/Features";
+import Hero from "@/components/home/Hero";
+import LatestNews from "@/components/home/LatestNews";
+import Testimonials from "@/components/home/Testimonials";
+import Layout from "@/components/layout/Layout";
 
 const Index = () => {
   return (

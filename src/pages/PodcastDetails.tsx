@@ -8,7 +8,7 @@ import {
   Headphones,
   Share,
 } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // Mock data for a single podcast
 const mockPodcast = {
@@ -43,7 +43,6 @@ const mockPodcast = {
 };
 
 const PodcastDetails = () => {
-  const { id } = useParams();
   // In a real app, you would fetch the podcast based on the ID
   // For now, we'll just use our mock data
 

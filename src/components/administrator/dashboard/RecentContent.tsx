@@ -1,62 +1,73 @@
-
-import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Edit, Eye, Trash2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Edit, Eye, Trash2 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface ContentItem {
   id: string;
   title: string;
-  type: 'Notícia' | 'Evento' | 'Podcast' | 'Vídeo' | 'Galeria';
-  status: 'Publicado' | 'Rascunho';
+  type: "Notícia" | "Evento" | "Podcast" | "Vídeo" | "Galeria";
+  status: "Publicado" | "Rascunho";
   author: string;
   date: string;
 }
 
 const recentContent: ContentItem[] = [
   {
-    id: '1',
-    title: 'Festival Cultural Tradicional reúne comunidades indígenas',
-    type: 'Notícia',
-    status: 'Publicado',
-    author: 'Maria Silva',
-    date: '17/02/2025'
+    id: "1",
+    title: "Festival Cultural Tradicional reúne comunidades indígenas",
+    type: "Notícia",
+    status: "Publicado",
+    author: "Maria Silva",
+    date: "17/02/2025",
   },
   {
-    id: '2',
-    title: 'Projeto de preservação da língua indígena é lançado',
-    type: 'Notícia',
-    status: 'Publicado',
-    author: 'João Oliveira',
-    date: '17/02/2025'
+    id: "2",
+    title: "Projeto de preservação da língua indígena é lançado",
+    type: "Notícia",
+    status: "Publicado",
+    author: "João Oliveira",
+    date: "17/02/2025",
   },
   {
-    id: '3',
-    title: 'Artesãos indígenas participam de feira nacional',
-    type: 'Notícia',
-    status: 'Publicado',
-    author: 'Ana Costa',
-    date: '17/02/2025'
+    id: "3",
+    title: "Artesãos indígenas participam de feira nacional",
+    type: "Notícia",
+    status: "Publicado",
+    author: "Ana Costa",
+    date: "17/02/2025",
   },
   {
-    id: '4',
-    title: 'Festival Indígena do Évare - Programação',
-    type: 'Evento',
-    status: 'Publicado',
-    author: 'Roberto Almeida',
-    date: '15/02/2025'
+    id: "4",
+    title: "Festival Indígena do Évare - Programação",
+    type: "Evento",
+    status: "Publicado",
+    author: "Roberto Almeida",
+    date: "15/02/2025",
   },
   {
-    id: '5',
-    title: 'Saberes tradicionais - Episódio 1',
-    type: 'Podcast',
-    status: 'Rascunho',
-    author: 'Paulo Mendes',
-    date: '10/02/2025'
-  }
+    id: "5",
+    title: "Saberes tradicionais - Episódio 1",
+    type: "Podcast",
+    status: "Rascunho",
+    author: "Paulo Mendes",
+    date: "10/02/2025",
+  },
 ];
 
 const RecentContent = () => {
@@ -107,18 +118,26 @@ const RecentContent = () => {
                 <TableCell>{item.date}</TableCell>
                 <TableCell className="text-right space-x-1">
                   <Button variant="ghost" size="icon" asChild>
-                    <Link to={`/admin/${item.type.toLowerCase()}s/edit/${item.id}`}>
+                    <Link
+                      to={`/admin/${item.type.toLowerCase()}s/edit/${item.id}`}
+                    >
                       <Edit className="h-4 w-4" />
                       <span className="sr-only">Editar</span>
                     </Link>
                   </Button>
                   <Button variant="ghost" size="icon" asChild>
-                    <Link to={`/admin/${item.type.toLowerCase()}s/view/${item.id}`}>
+                    <Link
+                      to={`/admin/${item.type.toLowerCase()}s/view/${item.id}`}
+                    >
                       <Eye className="h-4 w-4" />
                       <span className="sr-only">Visualizar</span>
                     </Link>
                   </Button>
-                  <Button variant="ghost" size="icon" className="text-red-500 hover:text-red-700">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-red-500 hover:text-red-700"
+                  >
                     <Trash2 className="h-4 w-4" />
                     <span className="sr-only">Excluir</span>
                   </Button>
