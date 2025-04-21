@@ -1,6 +1,6 @@
 import React from "react";
 
-export function Logo(props: React.SVGProps<SVGSVGElement>) {
+export function Logo(props: React.SVGProps<SVGSVGElement>): React.JSX.Element {
   return (
     <svg
       viewBox="0 0 557 560" // Mantém a proporção original
