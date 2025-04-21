@@ -122,95 +122,15 @@ export function Notice(): React.JSX.Element {
               "Título",
               "Categoria",
               "Status",
-              "Submissão",
-              // "Autor",
-              // "Visualizações",
+              "Autor",
+              "Visualizações",
+              "Data de submissão",
             ]}
             data={mockNewsItems}
           />
         </div>
       </div>
 
-      {/* Edit Dialog */}
-      {/* {selectedNews && (
-        <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-          <DialogContent className="sm:max-w-[700px]">
-            <DialogHeader>
-              <DialogTitle>Editar Notícia</DialogTitle>
-            </DialogHeader>
-            <NewsForm
-              initialData={selectedNews}
-              onSubmit={() => setIsEditOpen(false)}
-            />
-          </DialogContent>
-        </Dialog>
-      )} */}
-
-      {/* View Drawer */}
-      {/* {selectedNews && (
-        <Drawer open={isViewOpen} onOpenChange={setIsViewOpen}>
-          <DrawerContent>
-            <DrawerHeader>
-              <DrawerTitle>{selectedNews.title}</DrawerTitle>
-              <DrawerDescription>
-                <div className="flex items-center gap-4 text-sm mt-2">
-                  <div className="flex items-center">
-                    <Calendar className="h-4 w-4 mr-1" />
-                    <span>{selectedNews.date}</span>
-                  </div>
-                  <div>Autor: {selectedNews.author}</div>
-                  <div>Categoria: {selectedNews.category}</div>
-                </div>
-              </DrawerDescription>
-            </DrawerHeader>
-            <div className="p-4 md:p-6">
-              <p className="text-gray-700">
-                Conteúdo da notícia {selectedNews.id} iria aparecer aqui em uma
-                implementação real...
-              </p>
-            </div>
-            <DrawerFooter>
-              <Button variant="outline">Editar esta notícia</Button>
-              <DrawerClose asChild>
-                <Button variant="outline">Fechar</Button>
-              </DrawerClose>
-            </DrawerFooter>
-          </DrawerContent>
-        </Drawer>
-      )} */}
-
-      {/* Delete Confirmation Dialog */}
-      {/* {selectedNews && (
-        <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Confirmar Exclusão</DialogTitle>
-            </DialogHeader>
-            <div className="py-4">
-              <p>
-                Tem certeza que deseja excluir a notícia "{selectedNews.title}"?
-              </p>
-              <p className="text-gray-500 mt-2">
-                Esta ação não pode ser desfeita.
-              </p>
-            </div>
-            <div className="flex justify-end gap-4">
-              <Button variant="outline" onClick={() => setIsDeleteOpen(false)}>
-                Cancelar
-              </Button>
-              <Button
-                variant="destructive"
-                onClick={() => {
-                  // Delete logic would go here in a real implementation
-                  setIsDeleteOpen(false);
-                }}
-              >
-                Excluir
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-      )} */}
       <Sheet.Create ref={noticeCreateButtonRef} />
     </React.Fragment>
   );

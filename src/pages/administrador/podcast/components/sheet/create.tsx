@@ -25,15 +25,7 @@ import {
   FileUploaderContent,
 } from "@/components/file-uploader";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { NOTICE_CATEGORY_LIST, NOTICE_STATUS_LIST } from "@/lib/constant";
 import { cn } from "@/lib/utils";
 import { CloudUploadIcon, PaperclipIcon, TrashIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -67,13 +59,13 @@ export function Create({
       }}
     >
       <SheetTrigger className="hidden" {...props} />
-      <SheetContent className="py-4 px-6 sm:max-w-2xl">
+      <SheetContent className="py-4 px-6 sm:max-w-2xl overflow-y-auto">
         <SheetHeader className="px-0">
           <SheetTitle className="text-lg font-medium">
-            Adicionar nova
+            Adicionar novo
           </SheetTitle>
 
-          <SheetDescription>Adicione uma nova notícia</SheetDescription>
+          <SheetDescription>Adicione um novo podcast</SheetDescription>
         </SheetHeader>
 
         <Form {...form}>
@@ -100,29 +92,19 @@ export function Create({
             <div className="flex-1 w-full gap-2 inline-flex">
               <FormField
                 control={form.control}
-                name="category"
+                name="date"
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormLabel className="data-[error=true]:text-destructive">
-                      Categoria <span className="text-destructive">*</span>
+                      Data <span className="text-destructive">*</span>
                     </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Selecione uma categoria" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {NOTICE_CATEGORY_LIST.map(({ label, value }) => (
-                          <SelectItem key={value} value={value}>
-                            {label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <FormControl>
+                      <Input
+                        // type="date"
+                        placeholder="00/00/0000"
+                        {...field}
+                      />
+                    </FormControl>
                     <FormMessage className="text-right text-destructive" />
                   </FormItem>
                 )}
@@ -130,29 +112,15 @@ export function Create({
 
               <FormField
                 control={form.control}
-                name="status"
+                name="duration"
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormLabel className="data-[error=true]:text-destructive">
-                      Status <span className="text-destructive">*</span>
+                      Duração <span className="text-destructive">*</span>
                     </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Selecione um status" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {NOTICE_STATUS_LIST.map(({ label, value }) => (
-                          <SelectItem key={value} value={value}>
-                            {label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <FormControl>
+                      <Input placeholder="00:00:00" {...field} />
+                    </FormControl>
                     <FormMessage className="text-right text-destructive" />
                   </FormItem>
                 )}
@@ -161,18 +129,14 @@ export function Create({
 
             <FormField
               control={form.control}
-              name="resume"
+              name="duration"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="w-full">
                   <FormLabel className="data-[error=true]:text-destructive">
-                    Resumo <span className="text-destructive">*</span>
+                    Apresentadores <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Textarea
-                      placeholder="Adicione seu resumo aqui..."
-                      className="resize-none"
-                      {...field}
-                    />
+                    <Input placeholder="" {...field} />
                   </FormControl>
                   <FormMessage className="text-right text-destructive" />
                 </FormItem>
@@ -181,11 +145,27 @@ export function Create({
 
             <FormField
               control={form.control}
-              name="content"
+              name="duration"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel className="data-[error=true]:text-destructive">
+                    Convidados <span className="text-destructive">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-right text-destructive" />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="data-[error=true]:text-destructive">
-                    Conteúdo <span className="text-destructive">*</span>
+                    Descrição <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
                     <Textarea
@@ -197,6 +177,115 @@ export function Create({
                   <FormMessage className="text-right text-destructive" />
                 </FormItem>
               )}
+            />
+
+            <FormField
+              control={form.control}
+              name="cover"
+              // defaultValue={defaultValue}
+              // rules={{
+              //   validate: (value) => {
+              //     if (!value && required)
+              //       return column.title.concat(" é obrigatório");
+
+              //     if (required && Array.from(value).length === 0)
+              //       return "Adicione ao menos um arquivo";
+              //     return true;
+              //   },
+              // }}
+              render={({ field }) => {
+                // const hasError = !!form.formState.errors[column.slug!];
+
+                return (
+                  <FormItem>
+                    <FormLabel className="data-[error=true]:text-destructive">
+                      Audio <span className="text-destructive">*</span>
+                    </FormLabel>
+                    <FileUploader
+                      value={field.value}
+                      onValueChange={(value) => {
+                        // if (value) {
+                        //   for (const file of value) {
+                        //     mutate.mutate(file);
+                        //   }
+                        // }
+                        field.onChange(value);
+                      }}
+                      dropzoneOptions={{
+                        multiple: false,
+                        maxFiles: 1,
+                        maxSize: 4 * 1024 * 1024,
+                      }}
+                      reSelect={true}
+                      className={cn(
+                        "relative rounded-lg p-2 border border-dashed"
+                        // hasError && "border-destructive",
+                        // className
+                      )}
+                    >
+                      <FileInput>
+                        <div
+                          className={cn(
+                            "inline-flex items-center justify-center w-full gap-4 py-2"
+                            // hasError && "text-destructive"
+                          )}
+                        >
+                          <CloudUploadIcon
+                            className={cn(
+                              "w-8 h-8"
+                              // mutate.status === "pending" && "animate-ping"
+                            )}
+                          />
+                          <p className="mb-1 text-sm ">
+                            <span>
+                              {/* {mutate.status === "pending" && (
+                                <strong>Realizando upload...</strong>
+                              )}
+                              {!(mutate.status === "pending") && (
+                                <>
+                                  <strong>Clique para fazer upload</strong> ou
+                                  arraste e solte.
+                                </>
+                              )} */}
+                              <strong>Clique para fazer upload</strong> ou
+                              arraste e solte.
+                            </span>
+                          </p>
+                        </div>
+                      </FileInput>
+                      {field?.value?.length > 0 && (
+                        <FileUploaderContent>
+                          {(field.value as File[]).map((file, index) => (
+                            <div
+                              key={index}
+                              className="inline-flex gap-2 items-center justify-between"
+                            >
+                              <div className="inline-flex items-center gap-2">
+                                <PaperclipIcon className="h-4 w-4 stroke-current" />
+                                {/* <span>{file.originalname}</span> */}
+                                <span>{file.name}</span>
+                              </div>
+                              <Button
+                                variant={"ghost"}
+                                size={"icon"}
+                                type="button"
+                                // onClick={() => {
+                                //   const payload =
+                                //     form.getValues(String(column?.slug)) ?? [];
+                                //   payload.splice(index, 1);
+                                //   form.setValue(String(column?.slug), payload);
+                                // }}
+                              >
+                                <TrashIcon className="w-4 h-4 stroke-current" />
+                              </Button>
+                            </div>
+                          ))}
+                        </FileUploaderContent>
+                      )}
+                    </FileUploader>
+                  </FormItem>
+                );
+              }}
             />
 
             <FormField
@@ -306,25 +395,6 @@ export function Create({
                   </FormItem>
                 );
               }}
-            />
-
-            <FormField
-              control={form.control}
-              name="tags"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="data-[error=true]:text-destructive">
-                    Tags <span className="text-destructive">*</span>
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Digite o título da notícia"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-right text-destructive" />
-                </FormItem>
-              )}
             />
 
             <SheetFooter className="inline-flex flex-1 justify-end w-full px-0">

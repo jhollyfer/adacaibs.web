@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,18 +14,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Notice } from "@/lib/model";
+import { Podcast } from "@/lib/model";
 import { EllipsisIcon, EyeIcon, PencilIcon, TrashIcon } from "lucide-react";
 import React from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Sheet } from "./sheet";
 interface Props {
-  data: Notice[];
+  data: Podcast[];
   labels: string[];
 }
 
 export function Table({ data, labels }: Props): React.ReactElement {
-  const noticeUpdateButtonRef = React.useRef<HTMLButtonElement | null>(null);
+  const podcastUpdateButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
   const location = useLocation();
   const [, setSearchParams] = useSearchParams(
@@ -53,12 +52,9 @@ export function Table({ data, labels }: Props): React.ReactElement {
             return (
               <TableRow key={row.id}>
                 <TableCell>{row.title}</TableCell>
-                <TableCell>{row.category}</TableCell>
-                <TableCell>
-                  <Badge variant="outline">{row?.status}</Badge>
-                </TableCell>
-                <TableCell>{"Administrador"}</TableCell>
-                <TableCell>{"100 visualizações"}</TableCell>
+                <TableCell>{row.presenters?.join(", ")}</TableCell>
+                <TableCell>{"100 ouvintes"}</TableCell>
+
                 <TableCell>
                   {new Intl.DateTimeFormat("pt-BR", {
                     dateStyle: "long",
@@ -81,7 +77,7 @@ export function Table({ data, labels }: Props): React.ReactElement {
                             state.set("id", row.id!);
                             return state;
                           });
-                          // noticeUpdateButtonRef?.current?.click();
+                          // podcastUpdateButtonRef?.current?.click();
                         }}
                       >
                         <EyeIcon className="w-4 h-4" />
@@ -95,7 +91,7 @@ export function Table({ data, labels }: Props): React.ReactElement {
                             state.set("id", row.id!);
                             return state;
                           });
-                          noticeUpdateButtonRef?.current?.click();
+                          podcastUpdateButtonRef?.current?.click();
                         }}
                       >
                         <PencilIcon className="w-4 h-4" />
@@ -123,7 +119,7 @@ export function Table({ data, labels }: Props): React.ReactElement {
           })}
         </TableBody>
       </Root>
-      <Sheet.Update ref={noticeUpdateButtonRef} />
+      <Sheet.Update ref={podcastUpdateButtonRef} />
     </React.Fragment>
   );
 }

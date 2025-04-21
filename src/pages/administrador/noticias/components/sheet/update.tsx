@@ -38,7 +38,7 @@ import { cn } from "@/lib/utils";
 import { CloudUploadIcon, PaperclipIcon, TrashIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 
-export function Create({
+export function Update({
   ...props
 }: React.ComponentProps<typeof SheetTrigger>): React.JSX.Element {
   const [open, setOpen] = React.useState<boolean>(false);
@@ -70,10 +70,10 @@ export function Create({
       <SheetContent className="py-4 px-6 sm:max-w-2xl">
         <SheetHeader className="px-0">
           <SheetTitle className="text-lg font-medium">
-            Adicionar nova
+            Atualizar notícia
           </SheetTitle>
 
-          <SheetDescription>Adicione uma nova notícia</SheetDescription>
+          <SheetDescription>Atualize sua notícia</SheetDescription>
         </SheetHeader>
 
         <Form {...form}>

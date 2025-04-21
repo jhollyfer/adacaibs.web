@@ -17,6 +17,13 @@ const NoticePage = React.lazy(async () => {
   };
 });
 
+const PodcastPage = React.lazy(async () => {
+  const module = await import("@/pages/administrador/podcast");
+  return {
+    default: module.Podcast,
+  };
+});
+
 export const route: RouteObject = {
   path: "/administrador",
   // index: true,
@@ -34,6 +41,10 @@ export const route: RouteObject = {
     {
       path: "noticias",
       element: <NoticePage />,
+    },
+    {
+      path: "podcasts",
+      element: <PodcastPage />,
     },
   ],
 };
