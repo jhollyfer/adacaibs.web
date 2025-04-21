@@ -27,6 +27,7 @@ import {
   Search,
   Trash2,
 } from "lucide-react";
+import React from "react";
 
 // Mock data for videos
 const mockVideos = [
@@ -59,25 +60,15 @@ const mockVideos = [
   },
 ];
 
-const VideoForm = ({ video = null, onSubmit }) => {
-  // In a real app, this would handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit();
-  };
-
+const VideoForm = (): React.JSX.Element => {
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form className="space-y-6">
       <div className="space-y-4">
         <div>
           <label htmlFor="title" className="block text-sm font-medium mb-1">
             Título do Vídeo
           </label>
-          <Input
-            id="title"
-            defaultValue={video?.title || ""}
-            placeholder="Digite o título do vídeo"
-          />
+          <Input id="title" placeholder="Digite o título do vídeo" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -85,7 +76,7 @@ const VideoForm = ({ video = null, onSubmit }) => {
             <label htmlFor="date" className="block text-sm font-medium mb-1">
               Data
             </label>
-            <Input id="date" type="date" defaultValue={video?.date || ""} />
+            <Input id="date" type="date" />
           </div>
           <div>
             <label
@@ -94,11 +85,7 @@ const VideoForm = ({ video = null, onSubmit }) => {
             >
               Duração
             </label>
-            <Input
-              id="duration"
-              defaultValue={video?.duration || ""}
-              placeholder="Ex: 15 min"
-            />
+            <Input id="duration" placeholder="Ex: 15 min" />
           </div>
         </div>
 
@@ -111,7 +98,6 @@ const VideoForm = ({ video = null, onSubmit }) => {
           </label>
           <Input
             id="instructor"
-            defaultValue={video?.instructor || ""}
             placeholder="Nome do instrutor ou apresentador"
           />
         </div>
@@ -122,7 +108,6 @@ const VideoForm = ({ video = null, onSubmit }) => {
           </label>
           <Input
             id="videoUrl"
-            defaultValue={video?.videoUrl || ""}
             placeholder="Ex: https://www.youtube.com/watch?v=..."
           />
         </div>
@@ -139,7 +124,7 @@ const VideoForm = ({ video = null, onSubmit }) => {
             rows={4}
             className="w-full border rounded-md p-2"
             placeholder="Digite a descrição do vídeo"
-            defaultValue={video?.description || ""}
+            // defaultValue={video?.description || ""}
           ></textarea>
         </div>
 
@@ -148,7 +133,7 @@ const VideoForm = ({ video = null, onSubmit }) => {
             Thumbnail
           </label>
           <Input id="thumbnail" type="file" accept="image/*" />
-          {video?.thumbnail && (
+          {/* {video?.thumbnail && (
             <div className="mt-2">
               <p className="text-sm text-gray-500 mb-1">Thumbnail atual:</p>
               <img
@@ -157,7 +142,7 @@ const VideoForm = ({ video = null, onSubmit }) => {
                 className="h-24 w-auto rounded-md"
               />
             </div>
-          )}
+          )} */}
         </div>
       </div>
 
@@ -166,14 +151,14 @@ const VideoForm = ({ video = null, onSubmit }) => {
           Cancelar
         </Button>
         <Button type="submit">
-          {video ? "Atualizar Vídeo" : "Publicar Vídeo"}
+          {/* {video ? "Atualizar Vídeo" : "Publicar Vídeo"} */}
         </Button>
       </div>
     </form>
   );
 };
 
-const Videos = () => {
+const Videos = (): React.JSX.Element => {
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -189,7 +174,7 @@ const Videos = () => {
               <DialogHeader>
                 <DialogTitle>Adicionar Novo Vídeo</DialogTitle>
               </DialogHeader>
-              <VideoForm onSubmit={() => console.log("Form submitted")} />
+              <VideoForm />
             </DialogContent>
           </Dialog>
         </div>
@@ -268,10 +253,10 @@ const Videos = () => {
                               <DialogHeader>
                                 <DialogTitle>Editar Vídeo</DialogTitle>
                               </DialogHeader>
-                              <VideoForm
+                              {/* <VideoForm
                                 video={video}
                                 onSubmit={() => console.log("Form submitted")}
-                              />
+                              /> */}
                             </DialogContent>
                           </Dialog>
                           <Button

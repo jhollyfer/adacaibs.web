@@ -18,6 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Calendar, Edit, Plus, Search, Star, Trash2 } from "lucide-react";
+import React from "react";
 
 // Mock data for testimonials
 const mockTestimonials = [
@@ -56,47 +57,29 @@ const mockTestimonials = [
   },
 ];
 
-const TestimonialForm = ({ testimonial = null, onSubmit }) => {
-  // In a real app, this would handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit();
-  };
-
+const TestimonialForm = (): React.JSX.Element => {
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={console.log} className="space-y-6">
       <div className="space-y-4">
         <div>
           <label htmlFor="name" className="block text-sm font-medium mb-1">
             Nome
           </label>
-          <Input
-            id="name"
-            defaultValue={testimonial?.name || ""}
-            placeholder="Nome completo"
-          />
+          <Input id="name" placeholder="Nome completo" />
         </div>
 
         <div>
           <label htmlFor="role" className="block text-sm font-medium mb-1">
             Cargo/Ocupação
           </label>
-          <Input
-            id="role"
-            defaultValue={testimonial?.role || ""}
-            placeholder="Ex: Estudante, Professor, etc."
-          />
+          <Input id="role" placeholder="Ex: Estudante, Professor, etc." />
         </div>
 
         <div>
           <label htmlFor="rating" className="block text-sm font-medium mb-1">
             Avaliação
           </label>
-          <select
-            id="rating"
-            className="w-full border rounded-md p-2"
-            defaultValue={testimonial?.rating || 5}
-          >
+          <select id="rating" className="w-full border rounded-md p-2">
             <option value="5">5 estrelas</option>
             <option value="4">4 estrelas</option>
             <option value="3">3 estrelas</option>
@@ -114,7 +97,6 @@ const TestimonialForm = ({ testimonial = null, onSubmit }) => {
             rows={4}
             className="w-full border rounded-md p-2"
             placeholder="Digite o depoimento"
-            defaultValue={testimonial?.testimony || ""}
           ></textarea>
         </div>
 
@@ -123,7 +105,7 @@ const TestimonialForm = ({ testimonial = null, onSubmit }) => {
             Foto de Perfil
           </label>
           <Input id="avatar" type="file" accept="image/*" />
-          {testimonial?.avatar && (
+          {/* {testimonial?.avatar && (
             <div className="mt-2">
               <p className="text-sm text-gray-500 mb-1">Imagem atual:</p>
               <img
@@ -132,18 +114,14 @@ const TestimonialForm = ({ testimonial = null, onSubmit }) => {
                 className="h-16 w-16 object-cover rounded-full"
               />
             </div>
-          )}
+          )} */}
         </div>
 
         <div>
           <label htmlFor="status" className="block text-sm font-medium mb-1">
             Status
           </label>
-          <select
-            id="status"
-            className="w-full border rounded-md p-2"
-            defaultValue={testimonial?.status || "pending"}
-          >
+          <select id="status" className="w-full border rounded-md p-2">
             <option value="published">Publicado</option>
             <option value="pending">Pendente</option>
             <option value="rejected">Rejeitado</option>
@@ -156,14 +134,14 @@ const TestimonialForm = ({ testimonial = null, onSubmit }) => {
           Cancelar
         </Button>
         <Button type="submit">
-          {testimonial ? "Atualizar Depoimento" : "Adicionar Depoimento"}
+          {/* {testimonial ? "Atualizar Depoimento" : "Adicionar Depoimento"} */}
         </Button>
       </div>
     </form>
   );
 };
 
-const Testimonials = () => {
+const Testimonials = (): React.JSX.Element => {
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -179,7 +157,7 @@ const Testimonials = () => {
               <DialogHeader>
                 <DialogTitle>Adicionar Novo Depoimento</DialogTitle>
               </DialogHeader>
-              <TestimonialForm onSubmit={() => console.log("Form submitted")} />
+              <TestimonialForm />
             </DialogContent>
           </Dialog>
         </div>
@@ -280,10 +258,7 @@ const Testimonials = () => {
                               <DialogHeader>
                                 <DialogTitle>Editar Depoimento</DialogTitle>
                               </DialogHeader>
-                              <TestimonialForm
-                                testimonial={testimonial}
-                                onSubmit={() => console.log("Form submitted")}
-                              />
+                              <TestimonialForm />
                             </DialogContent>
                           </Dialog>
                           <Button

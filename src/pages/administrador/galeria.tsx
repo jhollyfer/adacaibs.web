@@ -18,6 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Calendar, Edit, ImageIcon, Plus, Search, Trash2 } from "lucide-react";
+import React from "react";
 
 // Mock data for gallery albums
 const mockAlbums = [
@@ -51,32 +52,22 @@ const mockAlbums = [
   },
 ];
 
-const AlbumForm = ({ album = null, onSubmit }) => {
-  // In a real app, this would handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit();
-  };
-
+const AlbumForm = (): React.JSX.Element => {
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={console.log} className="space-y-6">
       <div className="space-y-4">
         <div>
           <label htmlFor="title" className="block text-sm font-medium mb-1">
             Título do Álbum
           </label>
-          <Input
-            id="title"
-            defaultValue={album?.title || ""}
-            placeholder="Digite o título do álbum"
-          />
+          <Input id="title" placeholder="Digite o título do álbum" />
         </div>
 
         <div>
           <label htmlFor="date" className="block text-sm font-medium mb-1">
             Data
           </label>
-          <Input id="date" type="date" defaultValue={album?.date || ""} />
+          <Input id="date" type="date" />
         </div>
 
         <div>
@@ -91,7 +82,6 @@ const AlbumForm = ({ album = null, onSubmit }) => {
             rows={4}
             className="w-full border rounded-md p-2"
             placeholder="Digite a descrição do álbum"
-            defaultValue={album?.description || ""}
           ></textarea>
         </div>
 
@@ -100,7 +90,7 @@ const AlbumForm = ({ album = null, onSubmit }) => {
             Imagem de Capa
           </label>
           <Input id="thumbnail" type="file" accept="image/*" />
-          {album?.thumbnail && (
+          {/* {album?.thumbnail && (
             <div className="mt-2">
               <p className="text-sm text-gray-500 mb-1">Imagem atual:</p>
               <img
@@ -109,7 +99,7 @@ const AlbumForm = ({ album = null, onSubmit }) => {
                 className="h-24 w-auto rounded-md"
               />
             </div>
-          )}
+          )} */}
         </div>
 
         <div>
@@ -117,11 +107,11 @@ const AlbumForm = ({ album = null, onSubmit }) => {
             Imagens do Álbum
           </label>
           <Input id="images" type="file" accept="image/*" multiple />
-          {album && (
+          {/* {album && (
             <div className="mt-2 text-sm text-gray-500">
               {album.imageCount} imagens já enviadas
             </div>
-          )}
+          )} */}
         </div>
       </div>
 
@@ -130,14 +120,14 @@ const AlbumForm = ({ album = null, onSubmit }) => {
           Cancelar
         </Button>
         <Button type="submit">
-          {album ? "Atualizar Álbum" : "Criar Álbum"}
+          {/* {album ? "Atualizar Álbum" : "Criar Álbum"} */}
         </Button>
       </div>
     </form>
   );
 };
 
-const Gallery = () => {
+const Gallery = (): React.JSX.Element => {
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -153,7 +143,7 @@ const Gallery = () => {
               <DialogHeader>
                 <DialogTitle>Criar Novo Álbum</DialogTitle>
               </DialogHeader>
-              <AlbumForm onSubmit={() => console.log("Form submitted")} />
+              <AlbumForm />
             </DialogContent>
           </Dialog>
         </div>
@@ -217,10 +207,7 @@ const Gallery = () => {
                               <DialogHeader>
                                 <DialogTitle>Editar Álbum</DialogTitle>
                               </DialogHeader>
-                              <AlbumForm
-                                album={album}
-                                onSubmit={() => console.log("Form submitted")}
-                              />
+                              <AlbumForm />
                             </DialogContent>
                           </Dialog>
                           <Button

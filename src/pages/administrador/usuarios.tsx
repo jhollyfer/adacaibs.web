@@ -18,6 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Edit, Mail, Plus, Search, Shield, Trash2 } from "lucide-react";
+import React from "react";
 
 // Mock data for users
 const mockUsers = [
@@ -50,55 +51,38 @@ const mockUsers = [
   },
 ];
 
-const UserForm = ({ user = null, onSubmit }) => {
+const UserForm = (): React.JSX.Element => {
   // In a real app, this would handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit();
-  };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={console.log} className="space-y-6">
       <div className="space-y-4">
         <div>
           <label htmlFor="name" className="block text-sm font-medium mb-1">
             Nome
           </label>
-          <Input
-            id="name"
-            defaultValue={user?.name || ""}
-            placeholder="Nome completo"
-          />
+          <Input id="name" placeholder="Nome completo" />
         </div>
 
         <div>
           <label htmlFor="email" className="block text-sm font-medium mb-1">
             E-mail
           </label>
-          <Input
-            id="email"
-            type="email"
-            defaultValue={user?.email || ""}
-            placeholder="email@exemplo.com"
-          />
+          <Input id="email" type="email" placeholder="email@exemplo.com" />
         </div>
 
         <div>
           <label htmlFor="role" className="block text-sm font-medium mb-1">
             Função
           </label>
-          <select
-            id="role"
-            className="w-full border rounded-md p-2"
-            defaultValue={user?.role || "editor"}
-          >
+          <select id="role" className="w-full border rounded-md p-2">
             <option value="admin">Administrador</option>
             <option value="editor">Editor</option>
             <option value="viewer">Visualizador</option>
           </select>
         </div>
 
-        {!user && (
+        {/* {!user && (
           <>
             <div>
               <label
@@ -128,14 +112,14 @@ const UserForm = ({ user = null, onSubmit }) => {
               />
             </div>
           </>
-        )}
+        )} */}
 
         <div>
           <label htmlFor="image" className="block text-sm font-medium mb-1">
             Foto de Perfil
           </label>
           <Input id="image" type="file" accept="image/*" />
-          {user?.image && (
+          {/* {user?.image && (
             <div className="mt-2">
               <p className="text-sm text-gray-500 mb-1">Imagem atual:</p>
               <img
@@ -144,7 +128,7 @@ const UserForm = ({ user = null, onSubmit }) => {
                 className="h-16 w-16 object-cover rounded-full"
               />
             </div>
-          )}
+          )} */}
         </div>
       </div>
 
@@ -153,14 +137,14 @@ const UserForm = ({ user = null, onSubmit }) => {
           Cancelar
         </Button>
         <Button type="submit">
-          {user ? "Atualizar Usuário" : "Criar Usuário"}
+          {/* {user ? "Atualizar Usuário" : "Criar Usuário"} */}
         </Button>
       </div>
     </form>
   );
 };
 
-const Users = () => {
+const Users = (): React.JSX.Element => {
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -176,7 +160,7 @@ const Users = () => {
               <DialogHeader>
                 <DialogTitle>Adicionar Novo Usuário</DialogTitle>
               </DialogHeader>
-              <UserForm onSubmit={() => console.log("Form submitted")} />
+              <UserForm />
             </DialogContent>
           </Dialog>
         </div>
@@ -271,8 +255,8 @@ const Users = () => {
                                 <DialogTitle>Editar Usuário</DialogTitle>
                               </DialogHeader>
                               <UserForm
-                                user={user}
-                                onSubmit={() => console.log("Form submitted")}
+                              // user={user}
+                              // onSubmit={() => console.log("Form submitted")}
                               />
                             </DialogContent>
                           </Dialog>

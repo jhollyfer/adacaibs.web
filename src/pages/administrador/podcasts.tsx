@@ -26,6 +26,7 @@ import {
   Search,
   Trash2,
 } from "lucide-react";
+import React from "react";
 
 // Mock data for podcasts
 const mockPodcasts = [
@@ -58,25 +59,15 @@ const mockPodcasts = [
   },
 ];
 
-const PodcastForm = ({ podcast = null, onSubmit }) => {
-  // In a real app, this would handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit();
-  };
-
+const PodcastForm = (): React.JSX.Element => {
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={console.log} className="space-y-6">
       <div className="space-y-4">
         <div>
           <label htmlFor="title" className="block text-sm font-medium mb-1">
             Título do Podcast
           </label>
-          <Input
-            id="title"
-            defaultValue={podcast?.title || ""}
-            placeholder="Digite o título do podcast"
-          />
+          <Input id="title" placeholder="Digite o título do podcast" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -84,7 +75,7 @@ const PodcastForm = ({ podcast = null, onSubmit }) => {
             <label htmlFor="date" className="block text-sm font-medium mb-1">
               Data
             </label>
-            <Input id="date" type="date" defaultValue={podcast?.date || ""} />
+            <Input id="date" type="date" />
           </div>
           <div>
             <label
@@ -93,11 +84,7 @@ const PodcastForm = ({ podcast = null, onSubmit }) => {
             >
               Duração
             </label>
-            <Input
-              id="duration"
-              defaultValue={podcast?.duration || ""}
-              placeholder="Ex: 45 min"
-            />
+            <Input id="duration" placeholder="Ex: 45 min" />
           </div>
         </div>
 
@@ -105,22 +92,14 @@ const PodcastForm = ({ podcast = null, onSubmit }) => {
           <label htmlFor="hosts" className="block text-sm font-medium mb-1">
             Apresentadores
           </label>
-          <Input
-            id="hosts"
-            defaultValue={podcast?.hosts?.join(", ") || ""}
-            placeholder="Ex: Maria Santos, João Lima"
-          />
+          <Input id="hosts" placeholder="Ex: Maria Santos, João Lima" />
         </div>
 
         <div>
           <label htmlFor="guests" className="block text-sm font-medium mb-1">
             Convidados
           </label>
-          <Input
-            id="guests"
-            defaultValue={podcast?.guests?.join(", ") || ""}
-            placeholder="Ex: Dr. Carlos Silva, Ana Beatriz"
-          />
+          <Input id="guests" placeholder="Ex: Dr. Carlos Silva, Ana Beatriz" />
         </div>
 
         <div>
@@ -135,7 +114,6 @@ const PodcastForm = ({ podcast = null, onSubmit }) => {
             rows={4}
             className="w-full border rounded-md p-2"
             placeholder="Digite a descrição do podcast"
-            defaultValue={podcast?.description || ""}
           ></textarea>
         </div>
 
@@ -144,11 +122,11 @@ const PodcastForm = ({ podcast = null, onSubmit }) => {
             Arquivo de Áudio
           </label>
           <Input id="audioFile" type="file" accept="audio/*" />
-          {podcast?.audioUrl && (
+          {/* {podcast?.audioUrl && (
             <div className="mt-2 text-sm text-gray-500">
               Arquivo atual: podcast-{podcast.id}.mp3
             </div>
-          )}
+          )} */}
         </div>
 
         <div>
@@ -156,7 +134,7 @@ const PodcastForm = ({ podcast = null, onSubmit }) => {
             Imagem
           </label>
           <Input id="image" type="file" accept="image/*" />
-          {podcast?.image && (
+          {/* {podcast?.image && (
             <div className="mt-2">
               <p className="text-sm text-gray-500 mb-1">Imagem atual:</p>
               <img
@@ -165,7 +143,7 @@ const PodcastForm = ({ podcast = null, onSubmit }) => {
                 className="h-24 w-auto rounded-md"
               />
             </div>
-          )}
+          )} */}
         </div>
       </div>
 
@@ -174,14 +152,14 @@ const PodcastForm = ({ podcast = null, onSubmit }) => {
           Cancelar
         </Button>
         <Button type="submit">
-          {podcast ? "Atualizar Podcast" : "Publicar Podcast"}
+          {/* {podcast ? "Atualizar Podcast" : "Publicar Podcast"} */}
         </Button>
       </div>
     </form>
   );
 };
 
-const Podcasts = () => {
+const Podcasts = (): React.JSX.Element => {
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -197,7 +175,7 @@ const Podcasts = () => {
               <DialogHeader>
                 <DialogTitle>Criar Novo Podcast</DialogTitle>
               </DialogHeader>
-              <PodcastForm onSubmit={() => console.log("Form submitted")} />
+              <PodcastForm />
             </DialogContent>
           </Dialog>
         </div>
@@ -272,8 +250,8 @@ const Podcasts = () => {
                                 <DialogTitle>Editar Podcast</DialogTitle>
                               </DialogHeader>
                               <PodcastForm
-                                podcast={podcast}
-                                onSubmit={() => console.log("Form submitted")}
+                              // podcast={podcast}
+                              // onSubmit={() => console.log("Form submitted")}
                               />
                             </DialogContent>
                           </Dialog>

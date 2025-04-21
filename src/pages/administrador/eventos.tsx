@@ -28,6 +28,7 @@ import {
   Trash2,
   Users,
 } from "lucide-react";
+import React from "react";
 
 // Mock data for events
 const mockEvents = [
@@ -69,25 +70,15 @@ const mockEvents = [
   },
 ];
 
-const EventForm = ({ event = null, onSubmit }) => {
-  // In a real app, this would handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit();
-  };
-
+const EventForm = (): React.JSX.Element => {
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={console.log} className="space-y-6">
       <div className="space-y-4">
         <div>
           <label htmlFor="title" className="block text-sm font-medium mb-1">
             Título do Evento
           </label>
-          <Input
-            id="title"
-            defaultValue={event?.title || ""}
-            placeholder="Digite o título do evento"
-          />
+          <Input id="title" placeholder="Digite o título do evento" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -95,17 +86,13 @@ const EventForm = ({ event = null, onSubmit }) => {
             <label htmlFor="date" className="block text-sm font-medium mb-1">
               Data
             </label>
-            <Input id="date" type="date" defaultValue={event?.date || ""} />
+            <Input id="date" type="date" />
           </div>
           <div>
             <label htmlFor="time" className="block text-sm font-medium mb-1">
               Horário
             </label>
-            <Input
-              id="time"
-              defaultValue={event?.time || ""}
-              placeholder="Ex: 14:00 - 18:00"
-            />
+            <Input id="time" placeholder="Ex: 14:00 - 18:00" />
           </div>
         </div>
 
@@ -113,22 +100,14 @@ const EventForm = ({ event = null, onSubmit }) => {
           <label htmlFor="location" className="block text-sm font-medium mb-1">
             Local
           </label>
-          <Input
-            id="location"
-            defaultValue={event?.location || ""}
-            placeholder="Nome do local"
-          />
+          <Input id="location" placeholder="Nome do local" />
         </div>
 
         <div>
           <label htmlFor="address" className="block text-sm font-medium mb-1">
             Endereço
           </label>
-          <Input
-            id="address"
-            defaultValue={event?.address || ""}
-            placeholder="Endereço completo"
-          />
+          <Input id="address" placeholder="Endereço completo" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -139,11 +118,7 @@ const EventForm = ({ event = null, onSubmit }) => {
             >
               Categoria
             </label>
-            <select
-              id="category"
-              className="w-full border rounded-md p-2"
-              defaultValue={event?.category || ""}
-            >
+            <select id="category" className="w-full border rounded-md p-2">
               <option value="">Selecione uma categoria</option>
               <option value="Workshop">Workshop</option>
               <option value="Palestra">Palestra</option>
@@ -163,7 +138,6 @@ const EventForm = ({ event = null, onSubmit }) => {
             <Input
               id="capacity"
               type="number"
-              defaultValue={event?.capacity || ""}
               placeholder="Número máximo de participantes"
             />
           </div>
@@ -181,7 +155,6 @@ const EventForm = ({ event = null, onSubmit }) => {
             rows={4}
             className="w-full border rounded-md p-2"
             placeholder="Digite a descrição do evento"
-            defaultValue={event?.description || ""}
           ></textarea>
         </div>
 
@@ -194,7 +167,6 @@ const EventForm = ({ event = null, onSubmit }) => {
             rows={6}
             className="w-full border rounded-md p-2"
             placeholder="Conteúdo detalhado do evento (pode usar HTML)"
-            defaultValue={event?.content || ""}
           ></textarea>
         </div>
 
@@ -203,7 +175,7 @@ const EventForm = ({ event = null, onSubmit }) => {
             Imagem do Evento
           </label>
           <Input id="image" type="file" accept="image/*" />
-          {event?.image && (
+          {/* {event?.image && (
             <div className="mt-2">
               <p className="text-sm text-gray-500 mb-1">Imagem atual:</p>
               <img
@@ -212,7 +184,7 @@ const EventForm = ({ event = null, onSubmit }) => {
                 className="h-24 w-auto rounded-md"
               />
             </div>
-          )}
+          )} */}
         </div>
       </div>
 
@@ -221,14 +193,14 @@ const EventForm = ({ event = null, onSubmit }) => {
           Cancelar
         </Button>
         <Button type="submit">
-          {event ? "Atualizar Evento" : "Criar Evento"}
+          {/* {event ? "Atualizar Evento" : "Criar Evento"} */}
         </Button>
       </div>
     </form>
   );
 };
 
-const Events = () => {
+const Events = (): React.JSX.Element => {
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -244,7 +216,7 @@ const Events = () => {
               <DialogHeader>
                 <DialogTitle>Criar Novo Evento</DialogTitle>
               </DialogHeader>
-              <EventForm onSubmit={() => console.log("Form submitted")} />
+              <EventForm />
             </DialogContent>
           </Dialog>
         </div>
@@ -351,10 +323,7 @@ const Events = () => {
                               <DialogHeader>
                                 <DialogTitle>Editar Evento</DialogTitle>
                               </DialogHeader>
-                              <EventForm
-                                event={event}
-                                onSubmit={() => console.log("Form submitted")}
-                              />
+                              <EventForm />
                             </DialogContent>
                           </Dialog>
                           <Button
