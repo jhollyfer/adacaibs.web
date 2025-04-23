@@ -26,7 +26,8 @@ const mockNewsItem = {
   `,
   date: "15 de maio de 2023",
   author: "Equipe ADACAIBS",
-  image: "/default.webp",
+  image:
+    "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
   category: "Eventos",
   tags: ["Inclusão", "Evento Comunitário", "Comunicação"],
 };

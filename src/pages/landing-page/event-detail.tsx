@@ -48,7 +48,8 @@ const mockEvent = {
   time: "14:00 - 18:00",
   location: "Sede da ADACAIBS",
   address: "Rua das Flores, 123 - Centro",
-  image: "/default.webp",
+  image:
+    "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
   category: "Workshop",
   status: "upcoming",
   capacity: 30,

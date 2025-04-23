@@ -19,7 +19,8 @@ const mockVideos = [
       "Neste vídeo, ensinamos expressões básicas em Comunicação para iniciantes.",
     date: "20 de junho de 2023",
     duration: "15 min",
-    thumbnail: "/default.webp",
+    thumbnail:
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
     tags: ["Comunicação", "Iniciante", "Aprendizado"],
   },
   {
@@ -29,7 +30,8 @@ const mockVideos = [
       "Cobertura da nossa celebração do Dia Nacional do Surdo com depoimentos e apresentações.",
     date: "26 de setembro de 2023",
     duration: "22 min",
-    thumbnail: "/default.webp",
+    thumbnail:
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
     tags: ["Eventos", "Celebração", "Comunidade"],
   },
   {
@@ -39,7 +41,8 @@ const mockVideos = [
       "Uma conversa inspiradora com Carlos Silva, líder ativo na comunidade surda de nossa região.",
     date: "05 de abril de 2023",
     duration: "30 min",
-    thumbnail: "/default.webp",
+    thumbnail:
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
     tags: ["Entrevista", "Liderança", "Inspiração"],
   },
 ];

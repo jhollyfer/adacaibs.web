@@ -20,7 +20,8 @@ const mockNews = [
     excerpt:
       "ADACAIBS realizou um evento de integração que reuniu mais de 100 pessoas da comunidade surda e ouvinte.",
     date: "15 de maio de 2023",
-    image: "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/DSC07709.jpg",
+    image:
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
     category: "Eventos",
   },
   {
@@ -29,7 +30,8 @@ const mockNews = [
     excerpt:
       "Workshop gratuito de Comunicação oferecido pela associação contou com mais de 50 participantes.",
     date: "28 de abril de 2023",
-    image: "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/DSC07709.jpg",
+    image:
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
     category: "Educação",
   },
   {
@@ -38,7 +40,8 @@ const mockNews = [
     excerpt:
       "ADACAIBS organizou o primeiro campeonato esportivo inclusivo da região, promovendo integração através do esporte.",
     date: "10 de março de 2023",
-    image: "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/DSC07709.jpg",
+    image:
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
     category: "Esportes",
   },
   // {

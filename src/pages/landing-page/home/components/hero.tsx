@@ -49,7 +49,7 @@ export function Hero(): React.JSX.Element {
         <img
           // src="/home-bg.png"
           // src="/default.webp"
-          src="https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/DSC05867.jpg"
+          src="https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/fc25a103-0283-4e1f-a5cb-901d8b138893.webp"
           alt="Aldeia Indígena de Belém do Solimões"
           className="w-full h-full object-cover"
         />

@@ -19,7 +19,8 @@ const mockPodcasts = [
       "Conversamos com especialistas sobre os desafios da acessibilidade no ambiente escolar.",
     date: "15 de maio de 2023",
     duration: "45 min",
-    image: "/default.webp",
+    image:
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
     tags: ["Educação", "Acessibilidade", "Inclusão"],
   },
   {
@@ -29,7 +30,8 @@ const mockPodcasts = [
       "A importância da Língua Brasileira de Sinais na comunicação diária e como aprendê-la.",
     date: "22 de abril de 2023",
     duration: "38 min",
-    image: "/default.webp",
+    image:
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
     tags: ["Comunicação", "Comunicação", "Inclusão"],
   },
   {
@@ -39,7 +41,8 @@ const mockPodcasts = [
       "Exploramos as novas tecnologias que estão revolucionando a vida das pessoas com deficiência auditiva.",
     date: "10 de março de 2023",
     duration: "52 min",
-    image: "/default.webp",
+    image:
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
     tags: ["Tecnologia", "Acessibilidade", "Inovação"],
   },
 ];

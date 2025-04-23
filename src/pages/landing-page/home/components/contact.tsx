@@ -88,7 +88,7 @@ export function Contact(): React.JSX.Element {
             <div className="absolute -inset-4 bg-yellow-500/20 rounded-xl -z-10 blur-xl"></div>
             <img
               // src="/default.webp"
-              src="https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/WhatsApp%20Image%202025-04-22%20at%2021.45.19.jpeg"
+              src="https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/6e7f9b0c-3f41-4aaf-9448-45b3f7b9c6fa.webp"
               alt="Rio Solimões"
               className="w-full h-full object-cover rounded-xl"
             />

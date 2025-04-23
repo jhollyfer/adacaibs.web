@@ -8,29 +8,44 @@ const mockGallery = [
     id: 1,
     title: "Workshop de Comunicação",
     date: "10 de junho de 2023",
-    thumbnail: "/default.webp",
-    images: ["/default.webp", "/default.webp", "/default.webp"],
+    thumbnail:
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
+    images: [
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
+    ],
   },
   {
     id: 2,
     title: "Dia Nacional do Surdo",
     date: "26 de setembro de 2023",
-    thumbnail: "/default.webp",
-    images: ["/default.webp", "/default.webp", "/default.webp"],
+    thumbnail:
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
+    images: [
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
+    ],
   },
   {
     id: 3,
     title: "Palestra sobre Inclusão",
     date: "15 de abril de 2023",
-    thumbnail: "/default.webp",
-    images: ["/default.webp", "/default.webp", "/default.webp"],
+    thumbnail:
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
+    images: [
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
+    ],
   },
   // {
   //   id: 4,
   //   title: "Curso de Comunicação para Professores",
   //   date: "20 de março de 2023",
-  //   thumbnail: "/default.webp",
-  //   images: ["/default.webp", "/default.webp", "/default.webp"],
+  //   thumbnail: "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
+  //   images: ["https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp", "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp", "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp"],
   // },
 ];
 

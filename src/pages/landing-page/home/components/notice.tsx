@@ -87,7 +87,8 @@ export function NoticeCard({
 export function Notice(): React.JSX.Element {
   const news = [
     {
-      image: "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/DSC07475.jpg",
+      image:
+        "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
       category: "Festival",
       date: "17 de fevereiro de 2025",
       title:
@@ -97,7 +98,8 @@ export function Notice(): React.JSX.Element {
       link: "/noticias/festival-cultural-tradicional",
     },
     {
-      image: "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/DSC07475.jpg",
+      image:
+        "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
       category: "Projeto",
       date: "17 de fevereiro de 2025",
       title: "Projeto de preservação da língua indígena é lançado na aldeia",
@@ -106,7 +108,8 @@ export function Notice(): React.JSX.Element {
       link: "/noticias/projeto-preservacao-lingua",
     },
     {
-      image: "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/DSC07475.jpg",
+      image:
+        "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
       category: "Artesanato",
       date: "17 de fevereiro de 2025",
       title:

@@ -36,7 +36,8 @@ const mockVideo = {
   date: "20 de junho de 2023",
   duration: "15 min",
   instructor: "Ana Beatriz Santos",
-  videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+  videoUrl:
+    "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
   thumbnail: "/lovable-uploads/516afdeb-e44c-4cf0-81a2-d0951e9348f5.png",
   views: 3240,
   likes: 287,

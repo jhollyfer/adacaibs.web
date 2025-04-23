@@ -34,7 +34,8 @@ const mockEvents: EventType[] = [
     date: "10 de junho de 2023",
     time: "14:00 - 18:00",
     location: "Sede da ADACAIBS",
-    image: "/default.webp",
+    image:
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
     category: "Workshop",
     status: "upcoming",
   },
@@ -46,7 +47,8 @@ const mockEvents: EventType[] = [
     date: "25 de junho de 2023",
     time: "09:00 - 17:00",
     location: "Quadra Municipal",
-    image: "/default.webp",
+    image:
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
     category: "Esporte",
     status: "upcoming",
   },
@@ -58,7 +60,8 @@ const mockEvents: EventType[] = [
     date: "15 de julho de 2023",
     time: "10:00 - 20:00",
     location: "Galeria Central",
-    image: "/default.webp",
+    image:
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
     category: "Arte",
     status: "upcoming",
   },
@@ -70,7 +73,8 @@ const mockEvents: EventType[] = [
     date: "05 de maio de 2023",
     time: "15:00 - 19:00",
     location: "Parque Municipal",
-    image: "/default.webp",
+    image:
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
     category: "Comunidade",
     status: "past",
   },
@@ -82,7 +86,8 @@ const mockEvents: EventType[] = [
     date: "20 de abril de 2023",
     time: "19:00 - 21:00",
     location: "Auditório Central",
-    image: "/default.webp",
+    image:
+      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
     category: "Palestra",
     status: "past",
   },
