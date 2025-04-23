@@ -87,7 +87,7 @@ export function NoticeCard({
 export function Notice(): React.JSX.Element {
   const news = [
     {
-      image: "/default.webp",
+      image: "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/DSC07475.jpg",
       category: "Festival",
       date: "17 de fevereiro de 2025",
       title:
@@ -97,7 +97,7 @@ export function Notice(): React.JSX.Element {
       link: "/noticias/festival-cultural-tradicional",
     },
     {
-      image: "/default.webp",
+      image: "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/DSC07475.jpg",
       category: "Projeto",
       date: "17 de fevereiro de 2025",
       title: "Projeto de preservação da língua indígena é lançado na aldeia",
@@ -106,7 +106,7 @@ export function Notice(): React.JSX.Element {
       link: "/noticias/projeto-preservacao-lingua",
     },
     {
-      image: "/default.webp",
+      image: "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/DSC07475.jpg",
       category: "Artesanato",
       date: "17 de fevereiro de 2025",
       title:

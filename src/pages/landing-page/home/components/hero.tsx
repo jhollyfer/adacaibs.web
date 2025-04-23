@@ -48,7 +48,8 @@ export function Hero(): React.JSX.Element {
       <div className="absolute inset-0 z-0">
         <img
           // src="/home-bg.png"
-          src="/default.webp"
+          // src="/default.webp"
+          src="https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/DSC05867.jpg"
           alt="Aldeia Indígena de Belém do Solimões"
           className="w-full h-full object-cover"
         />

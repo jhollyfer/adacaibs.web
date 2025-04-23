@@ -50,7 +50,8 @@ export function About(): React.JSX.Element {
           <motion.div variants={itemVariants} className="relative">
             <div className="absolute -inset-4 bg-yellow-500/20 rounded-xl -z-10 blur-xl"></div>
             <img
-              src="/default.webp"
+              // src="/default.webp"
+              src="https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/DSC07709.jpg"
               alt="Mapa da região"
               className="rounded-xl shadow-2xl w-full object-cover"
             />
@@ -74,8 +75,9 @@ export function About(): React.JSX.Element {
               Aldeia Indígena de Belém do Solimões) é uma organização indígena
               sem fins lucrativos, criada com o objetivo de preservar a cultura
               indígena Ticuna, promover a educação e fomentar a sustentabilidade
-              ambiental na região do Alto Solimões, situada na tríplice
-              fronteira entre Brasil, Colômbia e Peru.
+              ambiental na região do Alto Solimões, situada na comunidade
+              indígena de Belém do Solimões, na Tríplice Fronteira na fronteira
+              entre Brasil, Colômbia e Peru.
             </motion.p>
 
             <motion.p
