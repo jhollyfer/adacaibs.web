@@ -3,7 +3,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { motion } from "framer-motion";
 import {
-  Clock,
   Facebook,
   Instagram,
   Mail,
@@ -101,9 +100,9 @@ export function Contact(): React.JSX.Element {
               <div>
                 <h3 className="font-medium">Endereço</h3>
                 <p className="text-gray-700">
-                  Rua das Flores, 123 - Centro
+                  Distrito Indígena Belém do Solimões - Bairro 1 de Maio
                   <br />
-                  Cidade - Estado, CEP 00000-000
+                  Tabatinga - Amazonas, CEP 69640-000
                 </p>
               </div>
             </div>
@@ -112,8 +111,7 @@ export function Contact(): React.JSX.Element {
               <Phone className="h-6 w-6 text-primary mt-0.5 mr-3" />
               <div>
                 <h3 className="font-medium">Telefone</h3>
-                <p className="text-gray-700">(00) 0000-0000</p>
-                <p className="text-gray-700">(00) 90000-0000 (WhatsApp)</p>
+                <p className="text-gray-700">(92) 99162-5552</p>
               </div>
             </div>
 
@@ -121,18 +119,18 @@ export function Contact(): React.JSX.Element {
               <Mail className="h-6 w-6 text-primary mt-0.5 mr-3" />
               <div>
                 <h3 className="font-medium">E-mail</h3>
-                <p className="text-gray-700">contato@adacaibs.org.br</p>
+                <p className="text-gray-700">radioaumaadacaibs@gmail.com</p>
               </div>
             </div>
 
-            <div className="flex items-start">
+            {/* <div className="flex items-start">
               <Clock className="h-6 w-6 text-primary mt-0.5 mr-3" />
               <div>
                 <h3 className="font-medium">Horário de atendimento</h3>
                 <p className="text-gray-700">Segunda a sexta: 09:00 - 18:00</p>
                 <p className="text-gray-700">Sábado: 09:00 - 12:00</p>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="mt-8">

@@ -1,10 +1,10 @@
+import { LogoHorizontal } from "@/components/horizontal-logo";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { LogoHorizontal } from "../../horizontal-logo";
 
 export function Header(): React.JSX.Element {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -19,9 +19,9 @@ export function Header(): React.JSX.Element {
     { name: "Sobre nós", path: "/sobre" },
     { name: "Notícias", path: "/noticias" },
     // { name: "Eventos", path: "/eventos" },
-    { name: "Podcasts", path: "/podcasts" },
-    { name: "Vídeos", path: "/videos" },
-    { name: "Galeria", path: "/galeria" },
+    // { name: "Podcasts", path: "/podcasts" },
+    // { name: "Vídeos", path: "/videos" },
+    // { name: "Galeria", path: "/galeria" },
     { name: "Contato", path: "/contato" },
   ];
 

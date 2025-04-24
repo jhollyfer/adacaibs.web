@@ -1,4 +1,4 @@
-import { Layout } from "@/components/layout";
+import { Layout } from "@/layouts";
 import React from "react";
 import { RouteObject } from "react-router-dom";
 
@@ -91,7 +91,8 @@ export const route: RouteObject = {
       element: <NoticePage />,
     },
     {
-      path: "noticias/:id",
+      // path: "noticias/:id",
+      path: "noticias/:slug",
       element: <NoticeDetailPage />,
     },
     {

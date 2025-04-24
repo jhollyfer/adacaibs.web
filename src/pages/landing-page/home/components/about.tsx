@@ -52,6 +52,7 @@ export function About(): React.JSX.Element {
             <img
               // src="/default.webp"
               src="https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/a1df24f5-2d41-4763-9d94-1f7b2025d32b.webp"
+              loading="lazy"
               alt="Mapa da região"
               className="rounded-xl shadow-2xl w-full object-cover"
             />

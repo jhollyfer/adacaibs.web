@@ -89,6 +89,7 @@ export function Contact(): React.JSX.Element {
             <img
               // src="/default.webp"
               src="https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/6e7f9b0c-3f41-4aaf-9448-45b3f7b9c6fa.webp"
+              loading="lazy"
               alt="Rio Solimões"
               className="w-full h-full object-cover rounded-xl"
             />

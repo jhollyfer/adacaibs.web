@@ -1,5 +1,5 @@
-import { Layout } from "@/components/layout";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { Layout } from "@/layouts";
 import React from "react";
 import { RouteObject } from "react-router-dom";
 
@@ -24,6 +24,13 @@ const PodcastPage = React.lazy(async () => {
   };
 });
 
+const VideoPage = React.lazy(async () => {
+  const module = await import("@/pages/administrador/video");
+  return {
+    default: module.Video,
+  };
+});
+
 export const route: RouteObject = {
   path: "/administrador",
   // index: true,
@@ -45,6 +52,10 @@ export const route: RouteObject = {
     {
       path: "podcasts",
       element: <PodcastPage />,
+    },
+    {
+      path: "videos",
+      element: <VideoPage />,
     },
   ],
 };

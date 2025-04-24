@@ -11,75 +11,23 @@ import { Input } from "@/components/ui/input";
 import { Calendar, ChevronRight, Search } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
-
-// Mock data for news items
-const mockNews = [
-  {
-    id: 1,
-    title: "Evento de Integração na Praça Central",
-    excerpt:
-      "ADACAIBS realizou um evento de integração que reuniu mais de 100 pessoas da comunidade surda e ouvinte.",
-    date: "15 de maio de 2023",
-    image:
-      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
-    category: "Eventos",
-  },
-  {
-    id: 2,
-    title: "Workshop de Língua de Sinais foi um Sucesso",
-    excerpt:
-      "Workshop gratuito de Comunicação oferecido pela associação contou com mais de 50 participantes.",
-    date: "28 de abril de 2023",
-    image:
-      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
-    category: "Educação",
-  },
-  {
-    id: 3,
-    title: "Campeonato Esportivo Inclusivo",
-    excerpt:
-      "ADACAIBS organizou o primeiro campeonato esportivo inclusivo da região, promovendo integração através do esporte.",
-    date: "10 de março de 2023",
-    image:
-      "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
-    category: "Esportes",
-  },
-  // {
-  //   id: 4,
-  //   title: "Parceria com Secretaria Municipal de Educação",
-  //   excerpt:
-  //     "Nova parceria permitirá levar oficinas de Comunicação a todas as escolas municipais a partir do próximo semestre.",
-  //   date: "22 de fevereiro de 2023",
-  //   image: "/default.webp",
-  //   category: "Parcerias",
-  // },
-  // {
-  //   id: 5,
-  //   title: "Inauguração da Nova Sede da ADACAIBS",
-  //   excerpt:
-  //     "Com instalações modernas e acessíveis, a nova sede permitirá ampliar as atividades da associação.",
-  //   date: "05 de janeiro de 2023",
-  //   image: "/default.webp",
-  //   category: "Institucional",
-  // },
-];
+import { MOCK_NEWS } from "./mock";
 
 export function Notice(): React.JSX.Element {
   const [searchTerm, setSearchTerm] = React.useState("");
-  const [filteredNews, setFilteredNews] = React.useState(mockNews);
+  const [filteredNews, setFilteredNews] = React.useState(MOCK_NEWS);
 
   function handleSearch(event: React.ChangeEvent<HTMLInputElement>): void {
     const term = event.target.value;
     setSearchTerm(term);
 
     if (term.trim() === "") {
-      setFilteredNews(mockNews);
+      setFilteredNews(MOCK_NEWS);
     } else {
-      const results = mockNews.filter(
-        (item) =>
-          item.title.toLowerCase().includes(term.toLowerCase()) ||
-          item.excerpt.toLowerCase().includes(term.toLowerCase()) ||
-          item.category.toLowerCase().includes(term.toLowerCase())
+      const results = MOCK_NEWS.filter(
+        (item) => item.title.toLowerCase().includes(term.toLowerCase())
+        // item.excerpt.toLowerCase().includes(term.toLowerCase()) ||
+        // item.category.toLowerCase().includes(term.toLowerCase())
       );
       setFilteredNews(results);
     }
@@ -120,6 +68,7 @@ export function Notice(): React.JSX.Element {
                 <img
                   src={news.image}
                   alt={news.title}
+                  loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                 />
               </div>
@@ -135,13 +84,13 @@ export function Notice(): React.JSX.Element {
                   {news.excerpt}
                 </CardDescription>
               </CardContent>
-              <CardFooter className="flex justify-between">
-                <span className="text-sm font-medium px-2 py-1 bg-gray-100 rounded-full">
+              <CardFooter className="flex justify-end">
+                {/* <span className="text-sm font-medium px-2 py-1 bg-gray-100 rounded-full">
                   {news.category}
-                </span>
+                </span> */}
                 <Button variant="ghost" size="sm" asChild>
                   <Link
-                    to={`/noticias/${news.id}`}
+                    to={`/noticias/${news.slug}`}
                     className="flex items-center"
                   >
                     Leia mais <ChevronRight className="ml-1 h-4 w-4" />

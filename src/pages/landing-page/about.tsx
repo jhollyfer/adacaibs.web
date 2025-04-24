@@ -31,6 +31,7 @@ export function About(): React.JSX.Element {
             <img
               src="https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/a1df24f5-2d41-4763-9d94-1f7b2025d32b.webp"
               alt="ADACAIBS Logo"
+              loading="lazy"
               className="w-full h-auto mb-4"
             />
             <p className="text-lg text-gray-700 mb-4 text-justify">

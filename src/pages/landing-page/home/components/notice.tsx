@@ -4,26 +4,19 @@ import { ArrowRight } from "lucide-react";
 import React from "react";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
-
-interface NoticeCardProps {
-  image: string;
-  category: string;
-  date: string;
-  title: string;
-  excerpt: string;
-  link: string;
-  index: number;
-}
+import { MOCK_NEWS, NoticeMock } from "../../mock";
 
 export function NoticeCard({
   image,
-  category,
+  // category,
   date,
   title,
   excerpt,
-  link,
+  // link,
   index,
-}: NoticeCardProps): React.JSX.Element {
+  slug,
+}: NoticeMock & { index: number }): React.JSX.Element {
+  const link = "/noticias/" + slug;
   const controls = useAnimation();
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -57,22 +50,23 @@ export function NoticeCard({
         <img
           src={image}
           alt={title}
+          loading="lazy"
           className="w-full h-60 object-cover transform hover:scale-105 transition-transform duration-500"
         />
       </Link>
       <div className="p-6 flex flex-col flex-grow">
         <div className="flex items-center justify-between mb-4">
-          <span className="text-xs px-3 py-1 bg-white text-green-800 rounded-full font-medium">
+          {/* <span className="text-xs px-3 py-1 bg-white text-green-800 rounded-full font-medium">
             {category}
-          </span>
-          <span className="text-sm text-gray-500">{date}</span>
+          </span> */}
+          <span className="text-sm text-gray-500 ">{date}</span>
         </div>
         <Link to={link} className="group">
-          <h3 className="text-xl font-bold mb-3 group-hover:text-yellow-500 transition-colors">
+          <h3 className="text-xl font-bold mb-3 group-hover:text-yellow-500 transition-colors line-clamp-2">
             {title}
           </h3>
         </Link>
-        <p className="text-gray-600 mb-4 flex-grow">{excerpt}</p>
+        <p className="text-gray-600 mb-4 flex-grow line-clamp-3">{excerpt}</p>
         <Link
           to={link}
           className="inline-flex items-center text-yellow-500 hover:text-yellow-600 font-medium transition-colors"
@@ -85,41 +79,6 @@ export function NoticeCard({
 }
 
 export function Notice(): React.JSX.Element {
-  const news = [
-    {
-      image:
-        "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
-      category: "Festival",
-      date: "17 de fevereiro de 2025",
-      title:
-        "Festival Cultural Tradicional reúne comunidades indígenas e atrai turistas",
-      excerpt:
-        "A Aldeia Indígena de Belém do Solimões realizou, no último fim de semana, o 5° Festival Cultural Tradicional, com música, dança e artesanato local.",
-      link: "/noticias/festival-cultural-tradicional",
-    },
-    {
-      image:
-        "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
-      category: "Projeto",
-      date: "17 de fevereiro de 2025",
-      title: "Projeto de preservação da língua indígena é lançado na aldeia",
-      excerpt:
-        "A Associação de Desenvolvimento Artístico e Cultural da Aldeia Indígena de Belém do Solimões anuncia o lançamento do novo projeto voltado para a preservação e revitalização da língua materna.",
-      link: "/noticias/projeto-preservacao-lingua",
-    },
-    {
-      image:
-        "https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/7e3d9e71-73ef-4e9b-81be-81d4c0f576a3.webp",
-      category: "Artesanato",
-      date: "17 de fevereiro de 2025",
-      title:
-        "Artesãos indígenas participam de feira nacional e ganham destaque",
-      excerpt:
-        "Um grupo de artesãos da Aldeia Indígena de Belém do Solimões participou da Feira Nacional de Artesanato em São Paulo, e chamou a atenção com peças únicas feitas de materiais naturais.",
-      link: "/noticias/artesaos-feira-nacional",
-    },
-  ];
-
   const sectionControls = useAnimation();
   const [sectionRef, sectionInView] = useInView({
     triggerOnce: true,
@@ -167,7 +126,7 @@ export function Notice(): React.JSX.Element {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {news.map((item, index) => (
+          {MOCK_NEWS.map((item, index) => (
             <NoticeCard
               key={index}
               image={item.image}
@@ -177,6 +136,10 @@ export function Notice(): React.JSX.Element {
               excerpt={item.excerpt}
               link={item.link}
               index={index}
+              content={item.content}
+              gallery={item.gallery}
+              id={item.id}
+              slug={item.slug}
             />
           ))}
         </div>
