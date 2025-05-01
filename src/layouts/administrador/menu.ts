@@ -6,6 +6,7 @@ import {
   ImageIcon,
   MessageSquareIcon,
   SettingsIcon,
+  SwatchBookIcon,
   UsersIcon,
   VideoIcon,
 } from "lucide-react";
@@ -38,6 +39,11 @@ export const MenuRouteMap: MenuRoute = [
         title: "Galeria",
         url: "/administrador/galeria",
         icon: ImageIcon,
+      },
+      {
+        title: "Eventos",
+        url: "/administrador/eventos",
+        icon: SwatchBookIcon, // TODO: trocar esse icone
       },
       {
         title: "Depoimentos",
