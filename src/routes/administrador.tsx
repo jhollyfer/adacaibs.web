@@ -31,6 +31,34 @@ const VideoPage = React.lazy(async () => {
   };
 });
 
+const GalleryPage = React.lazy(async () => {
+  const module = await import("@/pages/administrador/galeria");
+  return {
+    default: module.Gallery,
+  };
+});
+
+const EventPage = React.lazy(async () => {
+  const module = await import("@/pages/administrador/events");
+  return {
+    default: module.Events,
+  };
+});
+
+const TestimonialPage = React.lazy(async () => {
+  const module = await import("@/pages/administrador/testimonial");
+  return {
+    default: module.Testimonials,
+  };
+});
+
+const UserPage = React.lazy(async () => {
+  const module = await import("@/pages/administrador/user");
+  return {
+    default: module.Users,
+  };
+});
+
 export const route: RouteObject = {
   path: "/administrador",
   // index: true,
@@ -57,5 +85,21 @@ export const route: RouteObject = {
       path: "videos",
       element: <VideoPage />,
     },
+    {
+      path: "galeria",
+      element: <GalleryPage />,
+    },
+    {
+      path: "eventos",
+      element: <EventPage />,
+    },
+    {
+      path: "depoimentos",
+      element: <TestimonialPage />,
+    },
+    {
+      path: "usuarios",
+      element: <UserPage />,
+    }
   ],
 };

@@ -91,6 +91,7 @@ export interface Video extends Base {
   date: string;
   duration: string;
   instructor: string;
+  views: number; // TODO: tem que adicionar isso no back
   url: string;
   description: string;
   thumbnail: string | null;
@@ -102,6 +103,7 @@ export interface Album extends Base {
   description: string;
   cover: string | null;
   images: string[];
+  imageCount: number; // TODO: adicionar isso no back
 }
 
 export interface Testimonial extends Base {
