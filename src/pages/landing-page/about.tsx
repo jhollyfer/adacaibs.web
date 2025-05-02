@@ -29,7 +29,7 @@ export function About(): React.JSX.Element {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           <div>
             <img
-              src="https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/a1df24f5-2d41-4763-9d94-1f7b2025d32b.webp"
+              src="https://pub-26f491708de845d2a89c0c5ff5131187.r2.dev/adacaibs-lp-contact.webp"
               alt="ADACAIBS Logo"
               loading="lazy"
               className="w-full h-auto mb-4"
