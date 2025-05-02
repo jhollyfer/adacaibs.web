@@ -15,7 +15,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Video } from "@/lib/model";
-import { Calendar, Clock, EllipsisIcon, Eye, EyeIcon, PencilIcon, PlayCircle, TrashIcon } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  EllipsisIcon,
+  Eye,
+  EyeIcon,
+  PencilIcon,
+  PlayCircle,
+  TrashIcon,
+} from "lucide-react";
 import React from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Sheet } from "./sheet";
@@ -55,7 +64,7 @@ export function Table({ data, labels }: Props): React.ReactElement {
                   <div className="flex items-center gap-3">
                     <div className="relative h-12 w-20">
                       <img
-                        src={row.thumbnail} // TODO: tratar esse erro
+                        src={row.thumbnail ?? "/default.webp"} // TODO: tratar esse erro
                         alt={row.title}
                         className="h-full w-full object-cover rounded-md"
                       />
@@ -135,13 +144,13 @@ export function Table({ data, labels }: Props): React.ReactElement {
 
                       <DropdownMenuItem
                         className="inline-flex space-x-1 w-full"
-                      // onClick={() => {
-                      // 	setSearchParams((state) => {
-                      // 		state.set('row_id', row._id);
-                      // 		return state;
-                      // 	});
-                      // 	removeRowButtonRef?.current?.click();
-                      // }}
+                        // onClick={() => {
+                        // 	setSearchParams((state) => {
+                        // 		state.set('row_id', row._id);
+                        // 		return state;
+                        // 	});
+                        // 	removeRowButtonRef?.current?.click();
+                        // }}
                       >
                         <TrashIcon className="w-4 h-4" />
                         <span>Remover</span>
