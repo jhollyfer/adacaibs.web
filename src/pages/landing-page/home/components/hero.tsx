@@ -1,7 +1,6 @@
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { motion, useAnimation } from "framer-motion";
-import { Play } from "lucide-react";
 import React from "react";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
@@ -102,7 +101,7 @@ export function Hero(): React.JSX.Element {
                 <Link to="/sobre">Leia mais</Link>
               </Button>
 
-              <Button
+              {/* <Button
                 asChild
                 variant="ghost"
                 size="lg"
@@ -114,7 +113,7 @@ export function Hero(): React.JSX.Element {
                   <Play size={18} />
                   <span>Assista ao vídeo</span>
                 </Link>
-              </Button>
+              </Button> */}
             </motion.div>
           </div>
 
