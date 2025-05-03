@@ -64,7 +64,6 @@ export const route: RouteObject = {
   path: "/administrador",
   loader: () => {
     const token = sessionStorage.getItem(AUTHENTICATION_ID);
-    console.log(token);
     if (!token || token === null) {
       return redirect("/autenticacao");
     }
