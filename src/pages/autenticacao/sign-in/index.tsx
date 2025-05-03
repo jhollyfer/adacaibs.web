@@ -17,9 +17,10 @@ import { AxiosError } from "axios";
 import { EyeClosedIcon, EyeIcon, LoaderCircleIcon } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function SignIn(): React.ReactElement {
+  const navigate = useNavigate();
   const [show, setShow] = React.useState<{
     password: boolean;
   }>({
@@ -41,6 +42,7 @@ export function SignIn(): React.ReactElement {
     },
     onSuccess(response) {
       authentication.signIn(response);
+      navigate("/administrador");
     },
   });
 
@@ -51,8 +53,6 @@ export function SignIn(): React.ReactElement {
   const onSignInHandleSubmit = form.handleSubmit(function (payload) {
     signInMutation.mutateAsync(payload);
   });
-
-  if (authentication.isAuthenticated) return <Navigate to="/administrador" />;
 
   return (
     <section className="flex flex-1 flex-col w-full h-screen items-center justify-center">

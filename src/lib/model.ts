@@ -133,4 +133,21 @@ export interface Paginated<Entity> {
   meta: Meta;
 }
 
+export interface PaginateMetaResponse<T> {
+  data: T;
+  meta: {
+    total: number;
+    per_page: number;
+    page: number;
+    last_page: number;
+    first_page: number;
+  };
+}
+
+export interface PaginateMetaQuery {
+  page: number;
+  per_page: number;
+  search?: string;
+}
+
 // export type Payload<T extends Base> = Omit<T, 'createdAt' | 'updatedAt'>

@@ -1,5 +1,6 @@
+import { AUTHENTICATION_ID } from "@/context/autenticacao";
 import React from "react";
-import { Outlet, RouteObject } from "react-router-dom";
+import { Outlet, redirect, RouteObject } from "react-router-dom";
 
 const SignInPage = React.lazy(async () => {
   const module = await import("@/pages/autenticacao/sign-in");
@@ -12,13 +13,17 @@ export const route: RouteObject = {
   path: "/autenticacao",
   // index: true,
   element: (
-    <div>
+    <div className="w-full h-screen flex justify-center items-center overflow-y-hidden">
       <Outlet />
     </div>
-    // <SidebarProvider>
-    //   <Layout.Administrator />
-    // </SidebarProvider>
   ),
+  loader: () => {
+    const token = sessionStorage.getItem(AUTHENTICATION_ID);
+    if (token || token !== null) {
+      return redirect("/administrador");
+    }
+    return null; // precisa retornar algo quando a autenticação for válida
+  },
   children: [
     {
       // path: "/",

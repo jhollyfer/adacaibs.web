@@ -5,11 +5,6 @@ import { Header } from "./header";
 import { Sidebar } from "./sidebar";
 
 export function Administrator(): React.ReactElement {
-  // const { isAuthenticated } = useAuthentication();
-
-  // if (!isAuthenticated)
-  //   return <Navigate to="/authentication/sign-in" replace />;
-
   return (
     <React.Fragment>
       <Sidebar />
