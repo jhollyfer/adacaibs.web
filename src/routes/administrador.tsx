@@ -1,7 +1,8 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { AUTHENTICATION_ID } from "@/context/autenticacao";
 import { Layout } from "@/layouts";
 import React from "react";
-import { RouteObject } from "react-router-dom";
+import { redirect, RouteObject } from "react-router-dom";
 
 const DashboardPage = React.lazy(async () => {
   const module = await import("@/pages/administrador/dashboard");
@@ -25,35 +26,35 @@ const PodcastPage = React.lazy(async () => {
 });
 
 const VideoPage = React.lazy(async () => {
-  const module = await import("@/pages/administrador/video");
+  const module = await import("@/pages/administrador/videos");
   return {
     default: module.Video,
   };
 });
 
 const GalleryPage = React.lazy(async () => {
-  const module = await import("@/pages/administrador/galeria");
+  const module = await import("@/pages/administrador/albuns");
   return {
     default: module.Gallery,
   };
 });
 
 const EventPage = React.lazy(async () => {
-  const module = await import("@/pages/administrador/events");
+  const module = await import("@/pages/administrador/eventos");
   return {
     default: module.Events,
   };
 });
 
 const TestimonialPage = React.lazy(async () => {
-  const module = await import("@/pages/administrador/testimonial");
+  const module = await import("@/pages/administrador/depoimentos");
   return {
     default: module.Testimonials,
   };
 });
 
 const UserPage = React.lazy(async () => {
-  const module = await import("@/pages/administrador/user");
+  const module = await import("@/pages/administrador/usuarios");
   return {
     default: module.Users,
   };
@@ -61,6 +62,14 @@ const UserPage = React.lazy(async () => {
 
 export const route: RouteObject = {
   path: "/administrador",
+  loader: () => {
+    const token = sessionStorage.getItem(AUTHENTICATION_ID);
+    console.log(token);
+    if (!token || token === null) {
+      return redirect("/autenticacao");
+    }
+    return null; // precisa retornar algo quando a autenticação for válida
+  },
   // index: true,
   element: (
     <SidebarProvider>
@@ -100,6 +109,6 @@ export const route: RouteObject = {
     {
       path: "usuarios",
       element: <UserPage />,
-    }
+    },
   ],
 };

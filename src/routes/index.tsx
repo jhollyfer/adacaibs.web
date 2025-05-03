@@ -1,7 +1,12 @@
 import { createBrowserRouter, RouteObject } from "react-router-dom";
-import { route as administrador } from "./administrador";
-import { route as landingPage } from "./landing-page";
+import { route as administradorRoute } from "./administrador";
+import { route as authenticationRoute } from "./autenticacao";
+import { route as landingPageRoute } from "./landing-page";
 
-const routes: RouteObject[] = [landingPage, administrador];
+const routes: RouteObject[] = [
+  landingPageRoute,
+  authenticationRoute,
+  administradorRoute,
+];
 
 export const Router = createBrowserRouter(routes);

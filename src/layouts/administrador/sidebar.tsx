@@ -15,8 +15,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-// import { useAuthentication } from "@/hooks/use-authentication";
+
 import { Menu } from "@/components/sidebar-menu";
+import { useAuthentication } from "@/hooks/autenticacao";
 import { cn } from "@/lib/utils";
 import { LogOutIcon } from "lucide-react";
 import React from "react";
@@ -24,9 +25,8 @@ import { Link } from "react-router-dom";
 import { MenuRouteMap } from "./menu";
 
 export function Sidebar(): React.JSX.Element {
-  // const { tables } = useTable();
   const { state } = useSidebar();
-  // const { signOut } = useAuthentication();
+  const authentication = useAuthentication();
 
   const menu = MenuRouteMap;
 
@@ -57,7 +57,7 @@ export function Sidebar(): React.JSX.Element {
                 <SidebarMenuItem>
                   <SidebarMenuButton
                     variant={"outline"}
-                    // onClick={signOut}
+                    onClick={() => authentication.signOut()}
                     className="w-full justify-center h-10 gap-3 rounded-lg"
                   >
                     <LogOutIcon />

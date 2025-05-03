@@ -16,13 +16,13 @@ import {
 } from "@/components/ui/table";
 import { Video } from "@/lib/model";
 import {
-  Calendar,
-  Clock,
+  CalendarIcon,
+  ClockIcon,
   EllipsisIcon,
   Eye,
   EyeIcon,
   PencilIcon,
-  PlayCircle,
+  PlayCircleIcon,
   TrashIcon,
 } from "lucide-react";
 import React from "react";
@@ -69,7 +69,7 @@ export function Table({ data, labels }: Props): React.ReactElement {
                         className="h-full w-full object-cover rounded-md"
                       />
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <PlayCircle className="h-6 w-6 text-white" />
+                        <PlayCircleIcon className="h-6 w-6 text-white" />
                       </div>
                     </div>
                     <span>{row.title}</span>
@@ -79,11 +79,11 @@ export function Table({ data, labels }: Props): React.ReactElement {
                 <TableCell>
                   <div className="flex flex-col">
                     <div className="flex items-center text-sm">
-                      <Calendar className="h-3.5 w-3.5 mr-1 text-gray-500" />
+                      <CalendarIcon className="h-3.5 w-3.5 mr-1 text-gray-500" />
                       <span>{row.date}</span>
                     </div>
                     <div className="flex items-center text-sm text-gray-500">
-                      <Clock className="h-3.5 w-3.5 mr-1" />
+                      <ClockIcon className="h-3.5 w-3.5 mr-1" />
                       <span>{row.duration}</span>
                     </div>
                   </div>
