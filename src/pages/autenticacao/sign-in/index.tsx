@@ -14,7 +14,7 @@ import { useSignInMutation } from "@/lib/tanstack/mutation/autenticacao/sign-in"
 import { AuthenticationSchema, SignInPayload } from "@/schemas/autenticacao";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
-import { EyeClosedIcon, EyeIcon } from "lucide-react";
+import { EyeClosedIcon, EyeIcon, LoaderCircleIcon } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Navigate } from "react-router-dom";
@@ -131,13 +131,12 @@ export function SignIn(): React.ReactElement {
           <Button
             type="submit"
             className="w-full "
-            // disabled={signInMutation.status === "pending"}
+            disabled={signInMutation.status === "pending"}
           >
-            Entrar
-            {/* {signInMutation.status === "pending" && (
-              <LoaderCircle className="w-6 h-6 animate-spin" />
-            )} */}
-            {/* {!(signInMutation.status === "pending") && <span>Entrar</span>} */}
+            {signInMutation.status === "pending" && (
+              <LoaderCircleIcon className="w-6 h-6 animate-spin" />
+            )}
+            {!(signInMutation.status === "pending") && <span>Entrar</span>}
           </Button>
         </form>
       </Form>
