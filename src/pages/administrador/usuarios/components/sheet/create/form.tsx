@@ -18,41 +18,33 @@ import {
 import { SheetFooter } from "@/components/ui/sheet";
 import { UserRole } from "@/lib/model";
 import { useUserCreateMutation } from "@/lib/tanstack/mutation/usuario/create";
-import { useUserShowQuery } from "@/lib/tanstack/query/usuario/show";
 import { UserCreatePayload, UserSchema } from "@/schemas/usuario";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircleIcon } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useSearchParams } from "react-router-dom";
+import { ACTION } from "../action";
 import { UploaderFile } from "./uploader-file";
-
-export function Form({
-  onClose,
-  open,
-}: {
-  onClose: () => void;
-  open: boolean;
-}): React.JSX.Element {
+export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
   const location = useLocation();
-  const [searchParams] = useSearchParams(new URLSearchParams(location.search));
+  const [searchParams, setSearchParams] = useSearchParams(
+    new URLSearchParams(location.search)
+  );
 
-  const id = searchParams.get("id") || "";
-
-  const userShowQuery = useUserShowQuery({
-    enabled: open,
-    id,
-  });
-
-  const userCreateMutation = useUserCreateMutation({
+  const create = useUserCreateMutation({
     onError(error) {
       console.log(error);
     },
     onSuccess(response) {
+      searchParams.set("page", "1");
+      searchParams.set("per_page", "10");
+      setSearchParams(searchParams);
+      ACTION["PAGINATE"]["ADDED"](response);
       onClose();
-      console.log(response);
     },
   });
+
   const form = useForm<UserCreatePayload>({
     resolver: zodResolver(UserSchema["create"]),
     defaultValues: {
@@ -61,18 +53,11 @@ export function Form({
   });
 
   const onSubmit = form.handleSubmit((data) => {
-    userCreateMutation.mutateAsync({
+    create.mutateAsync({
       ...data,
       files: null,
     });
   });
-
-  if (userShowQuery.status !== "success")
-    return (
-      <div className="flex justify-center items-center">
-        <LoaderCircleIcon className="animate-spin" />
-      </div>
-    );
 
   return (
     <Root {...form}>
@@ -80,7 +65,6 @@ export function Form({
         <FormField
           control={form.control}
           name="name"
-          defaultValue={userShowQuery.data?.name}
           render={({ field }) => (
             <FormItem>
               <FormLabel className="data-[error=true]:text-destructive">
@@ -96,7 +80,6 @@ export function Form({
 
         <FormField
           control={form.control}
-          defaultValue={userShowQuery.data?.email}
           name="email"
           render={({ field }) => (
             <FormItem>
@@ -117,7 +100,6 @@ export function Form({
 
         <FormField
           control={form.control}
-          defaultValue={userShowQuery.data?.role}
           name="role"
           render={({ field }) => (
             <FormItem className="w-full flex-1">
@@ -148,14 +130,12 @@ export function Form({
           <Button
             type="submit"
             className="w-full "
-            disabled={userCreateMutation.status === "pending"}
+            disabled={create.status === "pending"}
           >
-            {userCreateMutation.status === "pending" && (
-              <LoaderCircleIcon className="w-6 h-6 animate-spin" />
+            {create.status === "pending" && (
+              <LoaderCircleIcon className="w-4 h-4 animate-spin" />
             )}
-            {!(userCreateMutation.status === "pending") && (
-              <span>Adicionar</span>
-            )}
+            {!(create.status === "pending") && <span>Adicionar</span>}
           </Button>
         </SheetFooter>
       </form>

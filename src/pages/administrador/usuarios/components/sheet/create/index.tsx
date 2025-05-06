@@ -19,7 +19,7 @@ export function Create({
       <SheetTrigger className="hidden" {...props} />
       <SheetContent className="py-4 px-6 sm:max-w-2xl overflow-y-auto">
         <SheetHeader className="px-0">
-          <SheetTitle className="text-lg font-medium">Novo usuário</SheetTitle>
+          <SheetTitle className="text-lg font-medium">Novo registro</SheetTitle>
 
           <SheetDescription>
             Adicione um novo usuário ao sistema

@@ -3,8 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 
 import { API_SERVICE } from "@/lib/api";
-import { QUERY } from "@/lib/constant";
 import { PaginateMetaQuery, PaginateMetaResponse, User } from "@/lib/model";
+import { QUERY } from "../../instance";
 
 export function useUserPaginateQuery(
   query: PaginateMetaQuery

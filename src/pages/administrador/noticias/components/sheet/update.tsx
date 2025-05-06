@@ -335,7 +335,7 @@ export function Update({
               >
                 Adicionar
                 {/* {update_user_status === "pending" && (
-                  <LoaderCircleIcon className="w-6 h-6 animate-spin" />
+                  <LoaderCircleIcon className="w-4 h-4 animate-spin" />
                 )}
                 {!(update_user_status === "pending") && <span>Atualizar</span>} */}
               </Button>

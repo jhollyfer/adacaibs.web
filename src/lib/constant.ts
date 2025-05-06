@@ -42,8 +42,3 @@ export const NOTICE_STATUS_LIST: Option<NoticeStatus>[] = [
     value: NoticeStatus.SCHEDULED,
   },
 ];
-
-export const QUERY = {
-  USER_PAGINATE: "USER_PAGINATE",
-  USER_SHOW: "USER_SHOW",
-} as const;

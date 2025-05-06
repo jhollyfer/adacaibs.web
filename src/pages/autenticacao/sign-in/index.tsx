@@ -134,7 +134,7 @@ export function SignIn(): React.ReactElement {
             disabled={signInMutation.status === "pending"}
           >
             {signInMutation.status === "pending" && (
-              <LoaderCircleIcon className="w-6 h-6 animate-spin" />
+              <LoaderCircleIcon className="w-4 h-4 animate-spin" />
             )}
             {!(signInMutation.status === "pending") && <span>Entrar</span>}
           </Button>

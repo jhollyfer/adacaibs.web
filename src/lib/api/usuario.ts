@@ -1,4 +1,4 @@
-import { UserCreatePayload } from "@/schemas/usuario";
+import { UserCreatePayload, UserUpdatePayload } from "@/schemas/usuario";
 import {
   User as Model,
   PaginateMetaQuery,
@@ -9,6 +9,14 @@ import { AXIOS_INSTANCE } from "./axios-instance";
 export class User {
   static async create(payload: UserCreatePayload): Promise<Model> {
     const { data } = await AXIOS_INSTANCE.post<Model>("/user", payload);
+    return data;
+  }
+
+  static async update(payload: UserUpdatePayload): Promise<Model> {
+    const { data } = await AXIOS_INSTANCE.patch<Model>(
+      "/user/".concat(payload.id),
+      payload
+    );
     return data;
   }
 

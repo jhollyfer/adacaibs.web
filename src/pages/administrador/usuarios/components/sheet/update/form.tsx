@@ -16,24 +16,42 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SheetFooter } from "@/components/ui/sheet";
-import { UserRole } from "@/lib/model";
-import { useUserCreateMutation } from "@/lib/tanstack/mutation/usuario/create";
+import { User, UserRole } from "@/lib/model";
+import { useUserUpdateMutation } from "@/lib/tanstack/mutation/usuario/update";
 import { UserCreatePayload, UserSchema } from "@/schemas/usuario";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircleIcon } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useLocation, useSearchParams } from "react-router-dom";
+import { ACTION } from "../action";
 import { UploaderFile } from "./uploader-file";
-export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
-  const userCreateMutation = useUserCreateMutation({
+
+interface Props {
+  onClose: () => void;
+  data: User;
+}
+
+export function Form({ onClose, data: user }: Props): React.JSX.Element {
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams(
+    new URLSearchParams(location.search)
+  );
+
+  const update = useUserUpdateMutation({
     onError(error) {
       console.log(error);
     },
     onSuccess(response) {
+      searchParams.set("page", "1");
+      searchParams.set("per_page", "10");
+      setSearchParams(searchParams);
+      ACTION["PAGINATE"]["UPDATE"](response);
+      ACTION["SHOW"]["UPDATE"](response);
       onClose();
-      console.log(response);
     },
   });
+
   const form = useForm<UserCreatePayload>({
     resolver: zodResolver(UserSchema["create"]),
     defaultValues: {
@@ -42,7 +60,8 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
   });
 
   const onSubmit = form.handleSubmit((data) => {
-    userCreateMutation.mutateAsync({
+    update.mutateAsync({
+      id: user.id!,
       ...data,
       files: null,
     });
@@ -54,6 +73,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
         <FormField
           control={form.control}
           name="name"
+          defaultValue={user?.name}
           render={({ field }) => (
             <FormItem>
               <FormLabel className="data-[error=true]:text-destructive">
@@ -69,6 +89,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
 
         <FormField
           control={form.control}
+          defaultValue={user?.email}
           name="email"
           render={({ field }) => (
             <FormItem>
@@ -89,6 +110,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
 
         <FormField
           control={form.control}
+          defaultValue={user?.role}
           name="role"
           render={({ field }) => (
             <FormItem className="w-full flex-1">
@@ -119,14 +141,12 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
           <Button
             type="submit"
             className="w-full "
-            disabled={userCreateMutation.status === "pending"}
+            disabled={update.status === "pending"}
           >
-            {userCreateMutation.status === "pending" && (
-              <LoaderCircleIcon className="w-6 h-6 animate-spin" />
+            {update.status === "pending" && (
+              <LoaderCircleIcon className="w-4 h-4 animate-spin" />
             )}
-            {!(userCreateMutation.status === "pending") && (
-              <span>Adicionar</span>
-            )}
+            {!(update.status === "pending") && <span>Adicionar</span>}
           </Button>
         </SheetFooter>
       </form>

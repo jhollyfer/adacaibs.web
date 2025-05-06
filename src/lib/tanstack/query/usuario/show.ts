@@ -3,8 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 
 import { API_SERVICE } from "@/lib/api";
-import { QUERY } from "@/lib/constant";
 import { User } from "@/lib/model";
+import { QUERY } from "../../instance";
 
 interface Props {
   id: string;
