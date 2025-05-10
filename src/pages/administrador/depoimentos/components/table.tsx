@@ -59,6 +59,8 @@ export function Table({ data, labels }: Props): React.ReactElement {
     }
   };
 
+  console.log(data)
+
   return (
     <React.Fragment>
       <Root>
@@ -121,9 +123,13 @@ export function Table({ data, labels }: Props): React.ReactElement {
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <Calendar className="h-3.5 w-3.5 mr-1 text-gray-500" />
-                    <span>{new Intl.DateTimeFormat("pt-BR", {
-                      dateStyle: "long",
-                    }).format(row.createdAt)}</span>
+                    <span>
+                      {row.createdAt ?
+                        new Intl.DateTimeFormat("pt-BR", {
+                          dateStyle: "long"
+                        }).format(new Date(row.createdAt))
+                        : "Data não disponível"}
+                    </span>
                   </div>
                 </TableCell>
 

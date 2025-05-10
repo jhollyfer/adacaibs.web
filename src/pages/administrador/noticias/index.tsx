@@ -6,76 +6,25 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import {
-  NoticeCategory,
-  Notice as NoticeModel,
-  NoticeStatus,
-} from "@/lib/model";
 import { Filter, PlusIcon, Search } from "lucide-react";
 import React from "react";
 import { Sheet } from "./components/sheet";
 import { Table } from "./components/table";
-
-const mockNewsItems: NoticeModel[] = [
-  {
-    id: "1",
-    title: "Evento de Integração na Praça Central",
-    category: NoticeCategory.EDUCATION,
-    status: NoticeStatus.PUBLISHED,
-    createdAt: new Date(),
-    content: "Conteúdo da notícia 1",
-    resume: "Resumo da notícia 1",
-    cover: null,
-    tags: ["tag1", "tag2"],
-  },
-  {
-    id: "2",
-    title: "Evento de Integração na Praça Central",
-    category: NoticeCategory.EDUCATION,
-    status: NoticeStatus.PUBLISHED,
-    createdAt: new Date(),
-    content: "Conteúdo da notícia 1",
-    resume: "Resumo da notícia 1",
-    cover: null,
-    tags: ["tag1", "tag2"],
-  },
-  {
-    id: "3",
-    title: "Evento de Integração na Praça Central",
-    category: NoticeCategory.EDUCATION,
-    status: NoticeStatus.PUBLISHED,
-    createdAt: new Date(),
-    content: "Conteúdo da notícia 1",
-    resume: "Resumo da notícia 1",
-    cover: null,
-    tags: ["tag1", "tag2"],
-  },
-  {
-    id: "4",
-    title: "Evento de Integração na Praça Central",
-    category: NoticeCategory.EDUCATION,
-    status: NoticeStatus.PUBLISHED,
-    createdAt: new Date(),
-    content: "Conteúdo da notícia 1",
-    resume: "Resumo da notícia 1",
-    cover: null,
-    tags: ["tag1", "tag2"],
-  },
-  {
-    id: "5",
-    title: "Evento de Integração na Praça Central",
-    category: NoticeCategory.EDUCATION,
-    status: NoticeStatus.PUBLISHED,
-    createdAt: new Date(),
-    content: "Conteúdo da notícia 1",
-    resume: "Resumo da notícia 1",
-    cover: null,
-    tags: ["tag1", "tag2"],
-  },
-];
+import { useLocation, useSearchParams } from "react-router-dom";
+import { useNoticePaginateQuery } from "@/lib/tanstack/query/noticias/paginate";
+import { Pagination } from "@/components/pagination";
 
 export function Notice(): React.JSX.Element {
+  const location = useLocation();
+  const [searchParams] = useSearchParams(new URLSearchParams(location.search));
+
   const noticeCreateButtonRef = React.useRef<HTMLButtonElement | null>(null);
+
+  const paginate = useNoticePaginateQuery({
+    page: Number(searchParams.get("page") ?? 1),
+    per_page: Number(searchParams.get("per_page") ?? 10),
+    ...(searchParams.has("search") && { search: searchParams.get("search")! }),
+  });
 
   return (
     <React.Fragment>
@@ -83,6 +32,7 @@ export function Notice(): React.JSX.Element {
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold">Notícias</h1>
           <Button
+            disabled={paginate.status === "pending"}
             onClick={() => noticeCreateButtonRef.current?.click()}
             className="flex items-center"
           >
@@ -97,6 +47,7 @@ export function Notice(): React.JSX.Element {
               type="text"
               placeholder="Buscar notícias..."
               className="pl-10 w-full sm:w-80"
+              disabled={paginate.status === "pending"}
             />
           </div>
 
@@ -116,19 +67,25 @@ export function Notice(): React.JSX.Element {
           </DropdownMenu>
         </div>
 
-        <div className="border rounded-lg">
-          <Table
-            labels={[
-              "Título",
-              "Categoria",
-              "Status",
-              "Autor",
-              "Visualizações",
-              "Data de submissão",
-            ]}
-            data={mockNewsItems}
-          />
-        </div>
+        {/* TODO: criar um estado vazio para quando não tem nada */}
+        {paginate.status === "success" && (
+          <React.Fragment>
+            <div className="border rounded-lg">
+              <Table
+                labels={[
+                  "Título",
+                  "Categoria",
+                  "Status",
+                  "Autor",
+                  "Visualizações",
+                  "Data de submissão",
+                ]}
+                data={paginate.data?.data}
+              />
+            </div>
+            <Pagination meta={paginate.data?.meta} />
+          </React.Fragment>
+        )}
       </div>
 
       <Sheet.Create ref={noticeCreateButtonRef} />
