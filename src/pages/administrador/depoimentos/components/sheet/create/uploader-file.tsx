@@ -5,9 +5,9 @@ import {
 } from "@/components/file-uploader";
 import { Button } from "@/components/ui/button";
 import { FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { Storage } from "@/lib/model";
 import { useUploadMutation } from "@/lib/tanstack/mutation/storage/upload";
 import { cn } from "@/lib/utils";
-import { UploadResponse } from "@/schemas/storage";
 import { TestimonialCreatePayload } from "@/schemas/depoimentos";
 import {
   CheckCircleIcon,
@@ -20,7 +20,7 @@ import React from "react";
 import { useFormContext } from "react-hook-form";
 
 export function UploaderFile(): React.JSX.Element {
-  const [files, setFiles] = React.useState<UploadResponse>([]);
+  const [files, setFiles] = React.useState<Storage[]>([]);
 
   const uploadMutation = useUploadMutation({
     onError(error) {
@@ -28,7 +28,7 @@ export function UploaderFile(): React.JSX.Element {
     },
     onSuccess([response]) {
       setFiles([response]);
-      form.setValue("photo", response.url);
+      form.setValue("photo", response.id!);
     },
   });
 
@@ -110,22 +110,24 @@ export function UploaderFile(): React.JSX.Element {
               </FileInput>
               {files?.length > 0 && (
                 <FileUploaderContent>
-                  {files.map((file, index) => {
+                  {files.map((file) => {
                     return (
                       <div
-                        key={index}
+                        key={file.id}
                         className="inline-flex gap-2 items-center justify-between"
                       >
                         <div className="inline-flex items-center gap-2">
                           <PaperclipIcon className="h-4 w-4 stroke-current" />
-                          <span>{file.output}</span>
+                          <span>{file.name}</span>
                         </div>
                         <Button
                           variant={"ghost"}
                           size={"icon"}
                           type="button"
                           onClick={() => {
-                            const payload = files.filter((_, i) => i !== index);
+                            const payload = files.filter(
+                              (f) => f.id !== file.id
+                            );
                             setFiles(payload);
                             form.setValue("photo", null);
                           }}

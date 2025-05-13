@@ -5,10 +5,10 @@ import {
 } from "@/components/file-uploader";
 import { Button } from "@/components/ui/button";
 import { FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { Storage } from "@/lib/model";
 import { useUploadMutation } from "@/lib/tanstack/mutation/storage/upload";
 import { cn } from "@/lib/utils";
 import { TestimonialUpdatePayload } from "@/schemas/depoimentos";
-import { UploadResponse } from "@/schemas/storage";
 import {
   CheckCircleIcon,
   CloudUploadIcon,
@@ -23,8 +23,10 @@ interface UploaderFileUpdateProps {
   currentPhoto: string | null;
 }
 
-export function UploaderFile({ currentPhoto }: UploaderFileUpdateProps): React.JSX.Element {
-  const [files, setFiles] = React.useState<UploadResponse>([]);
+export function UploaderFile({
+  currentPhoto,
+}: UploaderFileUpdateProps): React.JSX.Element {
+  const [files, setFiles] = React.useState<Storage[]>([]);
 
   const uploadMutation = useUploadMutation({
     onError(error) {
@@ -32,7 +34,7 @@ export function UploaderFile({ currentPhoto }: UploaderFileUpdateProps): React.J
     },
     onSuccess([response]) {
       setFiles([response]);
-      form.setValue("photo", response.url);
+      form.setValue("photo", response.id!);
     },
   });
 
@@ -100,8 +102,8 @@ export function UploaderFile({ currentPhoto }: UploaderFileUpdateProps): React.J
                         <CloudUploadIcon className="w-4 h-4 " />
                         <p className="text-sm">
                           <span>
-                            <strong>Clique para trocar a foto</strong> ou arraste
-                            e solte.
+                            <strong>Clique para trocar a foto</strong> ou
+                            arraste e solte.
                           </span>
                         </p>
                       </React.Fragment>
@@ -129,7 +131,7 @@ export function UploaderFile({ currentPhoto }: UploaderFileUpdateProps): React.J
                       >
                         <div className="inline-flex items-center gap-2">
                           <PaperclipIcon className="h-4 w-4 stroke-current" />
-                          <span>{file.output}</span>
+                          <span>{file.name}</span>
                         </div>
                         <Button
                           variant={"ghost"}
