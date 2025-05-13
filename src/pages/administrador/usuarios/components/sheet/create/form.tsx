@@ -37,10 +37,17 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
       console.log(error);
     },
     onSuccess(response) {
-      searchParams.set("page", "1");
-      searchParams.set("per_page", "10");
-      setSearchParams(searchParams);
-      ACTION["PAGINATE"]["ADDED"](response);
+      ACTION["PAGINATE"]["ADDED"](response, {
+        page: Number(searchParams.get("page") ?? 1),
+        per_page: Number(searchParams.get("per_page") ?? 10),
+        ...(searchParams.has("search") && {
+          search: searchParams.get("search")!,
+        }),
+      });
+      setSearchParams({
+        page: "1",
+        per_page: "10",
+      });
       onClose();
     },
   });

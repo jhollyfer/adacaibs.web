@@ -1,17 +1,11 @@
-import { PaginateMetaResponse, User } from "@/lib/model";
+import { PaginateMetaResponse, PaginateQuerySearch, User } from "@/lib/model";
 import { QUERY, TanstackQuery } from "@/lib/tanstack/instance";
 
 export const ACTION = {
   PAGINATE: {
-    ADDED(payload: User) {
+    ADDED(payload: User, query: PaginateQuerySearch) {
       TanstackQuery.setQueryData<PaginateMetaResponse<User[]>>(
-        [
-          QUERY.USER_PAGINATE,
-          {
-            page: "1",
-            per_page: "10",
-          },
-        ],
+        [QUERY.USER_PAGINATE, query],
         (old) => {
           if (!old) {
             return {
@@ -26,22 +20,21 @@ export const ACTION = {
             };
           }
 
+          const data = [payload, ...old.data];
+
           return {
-            meta: old.meta,
-            data: [payload, ...old.data],
+            meta: {
+              ...old.meta,
+              total: data.length,
+            },
+            data,
           };
         }
       );
     },
-    UPDATE(payload: User) {
+    UPDATE(payload: User, query: PaginateQuerySearch) {
       TanstackQuery.setQueryData<PaginateMetaResponse<User[]>>(
-        [
-          QUERY.USER_PAGINATE,
-          {
-            page: "1",
-            per_page: "10",
-          },
-        ],
+        [QUERY.USER_PAGINATE, query],
         (old) => {
           if (!old) {
             return {
@@ -56,23 +49,29 @@ export const ACTION = {
             };
           }
 
+          const data = old.data.map((row) => {
+            if (row.id?.toString() === payload.id?.toString()) return payload;
+            return row;
+          });
+
           return {
             meta: old?.meta,
-            data: old?.data.map((user) => {
-              if (user.id?.toString() === payload.id?.toString()) {
-                return { ...payload };
-              }
-
-              return user;
-            }),
+            data,
           };
         }
       );
     },
   },
+
   SHOW: {
     UPDATE(payload: User) {
-      TanstackQuery.setQueryData<User>([QUERY.USER_SHOW, payload.id], payload);
+      TanstackQuery.setQueryData<User>([QUERY.USER_SHOW, payload.id], (old) => {
+        if (!old) return payload;
+        return {
+          ...old,
+          ...payload,
+        };
+      });
     },
   },
 } as const;

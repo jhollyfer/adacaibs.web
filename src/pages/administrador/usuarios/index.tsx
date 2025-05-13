@@ -10,7 +10,9 @@ import { Table } from "./components/table";
 
 export function Users(): React.JSX.Element {
   const location = useLocation();
-  const [searchParams] = useSearchParams(new URLSearchParams(location.search));
+  const [searchParams, setSearchParams] = useSearchParams(
+    new URLSearchParams(location.search)
+  );
 
   const userCreateButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
@@ -40,6 +42,22 @@ export function Users(): React.JSX.Element {
               placeholder="Buscar usuários..."
               className="pl-8"
               disabled={paginate.status === "pending"}
+              onKeyDown={(event) => {
+                if (
+                  (event.key === "Backspace" &&
+                    event.currentTarget.value?.length === 1) ||
+                  event.currentTarget.value === ""
+                ) {
+                  searchParams.delete("search");
+                  setSearchParams(searchParams);
+                }
+
+                if (event.key === "Enter" && event.currentTarget.value) {
+                  searchParams.set("search", event.currentTarget.value);
+                  setSearchParams(searchParams);
+                }
+              }}
+              defaultValue={searchParams.get("search") ?? ""}
             />
           </div>
         </div>

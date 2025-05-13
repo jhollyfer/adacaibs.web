@@ -150,4 +150,10 @@ export interface PaginateMetaQuery {
   search?: string;
 }
 
+export interface PaginateQuerySearch {
+  page: number;
+  per_page: number;
+  search?: string;
+}
+
 // export type Payload<T extends Base> = Omit<T, 'createdAt' | 'updatedAt'>

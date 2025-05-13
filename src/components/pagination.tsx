@@ -23,10 +23,12 @@ interface Props {
 }
 
 export function Pagination({ meta }: Props): React.JSX.Element {
-  const [, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const page = Number(meta?.page ?? 1);
-  const per_page = Number(meta?.per_page ?? 10);
+  const page = Number((meta?.page || searchParams.get("page")) ?? 1);
+  const per_page = Number(
+    (meta?.per_page || searchParams.get("per_page")) ?? 10
+  );
   const last_page = Number(meta?.last_page ?? 1);
 
   return (

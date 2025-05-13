@@ -5,7 +5,6 @@ import {
   HomeIcon,
   ImageIcon,
   MessageSquareIcon,
-  SettingsIcon,
   SwatchBookIcon,
   UsersIcon,
   VideoIcon,
@@ -61,11 +60,11 @@ export const MenuRouteMap: MenuRoute = [
         url: "/administrador/usuarios",
         icon: UsersIcon,
       },
-      {
-        title: "Sistema",
-        url: "/administrador/sistema",
-        icon: SettingsIcon,
-      },
+      // {
+      //   title: "Sistema",
+      //   url: "/administrador/sistema",
+      //   icon: SettingsIcon,
+      // },
     ],
   },
 ];
