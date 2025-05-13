@@ -43,8 +43,15 @@ interface Base {
   updatedAt?: Date | null;
 }
 
+export interface Storage extends Base {
+  url: string;
+  name: string;
+  mimetype: string;
+  key: string;
+}
+
 export interface User extends Base {
-  avatar: string | null;
+  avatar: Storage | null;
   name: string;
   email: string;
   password: string;

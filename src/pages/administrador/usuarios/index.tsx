@@ -16,6 +16,12 @@ export function Users(): React.JSX.Element {
 
   const userCreateButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
+  console.log({
+    page: Number(searchParams.get("page") ?? 1),
+    per_page: Number(searchParams.get("per_page") ?? 10),
+    ...(searchParams.has("search") && { search: searchParams.get("search")! }),
+  });
+
   const paginate = useUserPaginateQuery({
     page: Number(searchParams.get("page") ?? 1),
     per_page: Number(searchParams.get("per_page") ?? 10),

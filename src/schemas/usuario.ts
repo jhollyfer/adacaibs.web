@@ -11,7 +11,7 @@ export const UserSchema = {
       .trim()
       .email(),
     role: z.nativeEnum(UserRole, { required_error: "Função é obrigatória" }),
-    avatar: z.string().trim().nullable(),
+    avatar_id: z.string().trim().nullable(),
     // files: SOMENTE PARA O UPLOAD DO AVATAR DO USUÁRIO
     files: z
       .array(
@@ -34,7 +34,7 @@ export const UserSchema = {
       .trim()
       .email(),
     role: z.nativeEnum(UserRole, { required_error: "Função é obrigatória" }),
-    avatar: z.string().trim().nullable(),
+    avatar_id: z.string().trim().nullable(),
 
     // files: SOMENTE PARA O UPLOAD DO AVATAR DO USUÁRIO
     files: z

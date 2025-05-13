@@ -1,9 +1,9 @@
-import { UploadResponse } from "@/schemas/storage";
+import { Storage as Model } from "@/lib/model";
 import { AXIOS_INSTANCE } from "./axios-instance";
 
 export class Storage {
-  static async upload(payload: FormData): Promise<UploadResponse> {
-    const { data } = await AXIOS_INSTANCE.post<UploadResponse>(
+  static async upload(payload: FormData): Promise<Model[]> {
+    const { data } = await AXIOS_INSTANCE.post<Model[]>(
       "/storage/upload",
       payload,
       {
@@ -12,13 +12,6 @@ export class Storage {
         },
       }
     );
-    return (
-      data?.map((item) => ({
-        ...item,
-        url: String(import.meta.env.VITE_STORAGE_ENDPOINT)
-          .concat("/")
-          .concat(item.output),
-      })) || []
-    );
+    return data;
   }
 }
