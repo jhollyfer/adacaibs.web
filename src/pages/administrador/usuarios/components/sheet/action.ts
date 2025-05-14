@@ -33,7 +33,6 @@ export const ACTION = {
       );
     },
     UPDATE(payload: User, query: PaginateQuerySearch) {
-      console.log(query);
       TanstackQuery.setQueryData<PaginateMetaResponse<User[]>>(
         [QUERY.USER_PAGINATE, query],
         (old) => {
