@@ -23,7 +23,7 @@ import { useTestimonialUpdateMutation } from "@/lib/tanstack/mutation/depoimento
 import {
   TestimonialSchema,
   TestimonialUpdatePayload,
-} from "@/schemas/depoimentos";
+} from "@/schemas/depoimento";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircleIcon } from "lucide-react";
 import React from "react";

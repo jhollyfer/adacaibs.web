@@ -6,8 +6,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import React from "react";
 import { useTestimonialShowQuery } from "@/lib/tanstack/query/depoimentos/show";
+import React from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { FormUpdate } from "./form";
 
@@ -48,12 +48,10 @@ export function Update({
       <SheetContent className="py-4 px-6 sm:max-w-2xl overflow-y-auto">
         <SheetHeader className="px-0">
           <SheetTitle className="text-lg font-medium">
-            Atualizar depoimento
+            Atualizar registro
           </SheetTitle>
 
-          <SheetDescription>
-            Editar informações do depoimento
-          </SheetDescription>
+          <SheetDescription>Editar informações do depoimento</SheetDescription>
         </SheetHeader>
 
         {testimonial?.status === "success" && (

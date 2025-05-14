@@ -1,8 +1,11 @@
-import { TestimonialCreatePayload, TestimonialUpdatePayload } from "@/schemas/depoimentos";
-import { 
-  Testimonial as Model, 
-  PaginateMetaQuery, 
-  PaginateMetaResponse 
+import {
+  TestimonialCreatePayload,
+  TestimonialUpdatePayload,
+} from "@/schemas/depoimento";
+import {
+  Testimonial as Model,
+  PaginateMetaQuery,
+  PaginateMetaResponse,
 } from "../model";
 import { AXIOS_INSTANCE } from "./axios-instance";
 

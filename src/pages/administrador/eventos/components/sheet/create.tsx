@@ -19,16 +19,7 @@ import {
 } from "@/components/ui/sheet";
 import React from "react";
 
-import {
-  FileInput,
-  FileUploader,
-  FileUploaderContent,
-} from "@/components/file-uploader";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
-import { CloudUploadIcon, PaperclipIcon, TrashIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
 import {
   Select,
   SelectContent,
@@ -36,14 +27,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Uploader } from "@/components/uploader";
 import { EventCategory } from "@/lib/model";
+import { EventCreatePayload, EventSchema } from "@/schemas/evento";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 export function Create({
   ...props
 }: React.ComponentProps<typeof SheetTrigger>): React.JSX.Element {
   const [open, setOpen] = React.useState<boolean>(false);
 
-  const form = useForm();
+  const form = useForm<EventCreatePayload>({
+    resolver: zodResolver(EventSchema["create"]),
+    defaultValues: {
+      cover_id: null,
+    },
+  });
 
   return (
     <Sheet
@@ -73,7 +74,9 @@ export function Create({
             Adicionar novo evento
           </SheetTitle>
 
-          <SheetDescription>Adicione um novo evento para a plataforma</SheetDescription>
+          <SheetDescription>
+            Adicione um novo evento para a plataforma
+          </SheetDescription>
         </SheetHeader>
 
         <Form {...form}>
@@ -87,10 +90,7 @@ export function Create({
                     Título do Evento <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Digite o título do evento"
-                      {...field}
-                    />
+                    <Input placeholder="Digite o título do evento" {...field} />
                   </FormControl>
                   <FormMessage className="text-right text-destructive" />
                 </FormItem>
@@ -107,11 +107,7 @@ export function Create({
                       Data <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        type="date"
-                        placeholder="00/00/0000"
-                        {...field}
-                      />
+                      <Input type="date" placeholder="00/00/0000" {...field} />
                     </FormControl>
                     <FormMessage className="text-right text-destructive" />
                   </FormItem>
@@ -144,10 +140,7 @@ export function Create({
                     Local <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Nome do local"
-                      {...field}
-                    />
+                    <Input placeholder="Nome do local" {...field} />
                   </FormControl>
                   <FormMessage className="text-right text-destructive" />
                 </FormItem>
@@ -163,10 +156,7 @@ export function Create({
                     Endereço <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Endereço completo"
-                      {...field}
-                    />
+                    <Input placeholder="Endereço completo" {...field} />
                   </FormControl>
                   <FormMessage className="text-right text-destructive" />
                 </FormItem>
@@ -192,11 +182,21 @@ export function Create({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value={EventCategory.WORKSHOP}>Workshop</SelectItem>
-                        <SelectItem value={EventCategory.LECTURE}>Palestra</SelectItem>
-                        <SelectItem value={EventCategory.COURSE}>Curso</SelectItem>
-                        <SelectItem value={EventCategory.SPORT}>Esporte</SelectItem>
-                        <SelectItem value={EventCategory.COMMUNITY}>Comunidade</SelectItem>
+                        <SelectItem value={EventCategory.WORKSHOP}>
+                          Workshop
+                        </SelectItem>
+                        <SelectItem value={EventCategory.LECTURE}>
+                          Palestra
+                        </SelectItem>
+                        <SelectItem value={EventCategory.COURSE}>
+                          Curso
+                        </SelectItem>
+                        <SelectItem value={EventCategory.SPORT}>
+                          Esporte
+                        </SelectItem>
+                        <SelectItem value={EventCategory.COMMUNITY}>
+                          Comunidade
+                        </SelectItem>
                         <SelectItem value={EventCategory.ART}>Arte</SelectItem>
                       </SelectContent>
                     </Select>
@@ -228,7 +228,7 @@ export function Create({
 
             <FormField
               control={form.control}
-              name="description"
+              name="resume"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="data-[error=true]:text-destructive">
@@ -248,11 +248,12 @@ export function Create({
 
             <FormField
               control={form.control}
-              name="detailedContent"
+              name="content"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="data-[error=true]:text-destructive">
-                    Conteúdo Detalhado <span className="text-destructive">*</span>
+                    Conteúdo Detalhado{" "}
+                    <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
                     <Textarea
@@ -266,90 +267,21 @@ export function Create({
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="cover"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel className="data-[error=true]:text-destructive">
-                      Imagem do Evento <span className="text-destructive">*</span>
-                    </FormLabel>
-                    <FileUploader
-                      value={field.value}
-                      onValueChange={(value) => {
-                        field.onChange(value);
-                      }}
-                      dropzoneOptions={{
-                        multiple: false,
-                        maxFiles: 1,
-                        maxSize: 4 * 1024 * 1024,
-                        accept: {
-                          'image/*': ['.jpeg', '.jpg', '.png', '.gif', '.webp']
-                        }
-                      }}
-                      reSelect={true}
-                      className={cn(
-                        "relative rounded-lg p-2 border border-dashed"
-                      )}
-                    >
-                      <FileInput>
-                        <div
-                          className={cn(
-                            "inline-flex items-center justify-center w-full gap-4 py-2"
-                          )}
-                        >
-                          <CloudUploadIcon
-                            className={cn(
-                              "w-8 h-8"
-                            )}
-                          />
-                          <p className="mb-1 text-sm">
-                            <span>
-                              <strong>Clique para fazer upload</strong> ou
-                              arraste e solte.
-                            </span>
-                          </p>
-                        </div>
-                      </FileInput>
-                      {field?.value?.length > 0 && (
-                        <FileUploaderContent>
-                          {(field.value as File[]).map((file, index) => (
-                            <div
-                              key={index}
-                              className="inline-flex gap-2 items-center justify-between"
-                            >
-                              <div className="inline-flex items-center gap-2">
-                                <PaperclipIcon className="h-4 w-4 stroke-current" />
-                                <span>{file.name}</span>
-                              </div>
-                              <Button
-                                variant={"ghost"}
-                                size={"icon"}
-                                type="button"
-                                onClick={() => {
-                                  const payload = form.getValues("cover") ?? [];
-                                  payload.splice(index, 1);
-                                  form.setValue("cover", payload);
-                                }}
-                              >
-                                <TrashIcon className="w-4 h-4 stroke-current" />
-                              </Button>
-                            </div>
-                          ))}
-                        </FileUploaderContent>
-                      )}
-                    </FileUploader>
-                  </FormItem>
-                );
+            <Uploader
+              dropzoneOptions={{
+                multiple: false,
+                maxFiles: 1,
+                maxSize: 4 * 1024 * 1024,
+                accept: {
+                  "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
+                },
               }}
+              fieldName="cover_id"
+              label="Capa"
             />
 
             <SheetFooter className="inline-flex flex-1 justify-end w-full px-0">
-              <Button
-                className=""
-                type="submit"
-              >
+              <Button className="" type="submit">
                 Adicionar Evento
               </Button>
             </SheetFooter>

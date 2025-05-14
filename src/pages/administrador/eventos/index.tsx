@@ -1,22 +1,18 @@
+import { Pagination } from "@/components/pagination";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Plus,
-  Search,
-} from "lucide-react";
-import React from "react";
-import { Table } from "./components/table";
-import type { Events } from "@/lib/model";
-import { Sheet } from "./components/sheet";
-import { useLocation, useSearchParams } from "react-router-dom";
 import { useEventsPaginateQuery } from "@/lib/tanstack/query/eventos/paginate";
-import { Pagination } from "@/components/pagination";
+import { Plus, Search } from "lucide-react";
+import React from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
+import { Sheet } from "./components/sheet";
+import { Table } from "./components/table";
 
 export function Events(): React.JSX.Element {
   const location = useLocation();
   const [searchParams] = useSearchParams(new URLSearchParams(location.search));
 
-  const eventCreateButtonRef = React.useRef<HTMLButtonElement | null>(null);
+  const createButtonRef = React.useRef<HTMLButtonElement | null>(null);
   const [filter, setFilter] = React.useState<string>("all");
 
   // TODO: adicionar isso na rota do backend, não podemos fazer isso aqui
@@ -42,7 +38,7 @@ export function Events(): React.JSX.Element {
           <h1 className="text-3xl font-bold">Eventos</h1>
           <Button
             disabled={paginate.status === "pending"}
-            onClick={() => eventCreateButtonRef.current?.click()}
+            onClick={() => createButtonRef.current?.click()}
           >
             <Plus className="mr-2 h-4 w-4" /> Novo Evento
           </Button>
@@ -101,7 +97,7 @@ export function Events(): React.JSX.Element {
           </React.Fragment>
         )}
       </div>
-      <Sheet.Create ref={eventCreateButtonRef} />
+      <Sheet.Create ref={createButtonRef} />
     </React.Fragment>
   );
 }
