@@ -14,13 +14,7 @@ export function Users(): React.JSX.Element {
     new URLSearchParams(location.search)
   );
 
-  const userCreateButtonRef = React.useRef<HTMLButtonElement | null>(null);
-
-  console.log({
-    page: Number(searchParams.get("page") ?? 1),
-    per_page: Number(searchParams.get("per_page") ?? 10),
-    ...(searchParams.has("search") && { search: searchParams.get("search")! }),
-  });
+  const createButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
   const paginate = useUserPaginateQuery({
     page: Number(searchParams.get("page") ?? 1),
@@ -35,7 +29,7 @@ export function Users(): React.JSX.Element {
           <h1 className="text-3xl font-bold">Usuários</h1>
           <Button
             disabled={paginate.status === "pending"}
-            onClick={() => userCreateButtonRef.current?.click()}
+            onClick={() => createButtonRef.current?.click()}
           >
             <Plus className="mr-2 h-4 w-4" /> Novo Usuário
           </Button>
@@ -80,7 +74,7 @@ export function Users(): React.JSX.Element {
           </React.Fragment>
         )}
       </div>
-      <Sheet.Create ref={userCreateButtonRef} />
+      <Sheet.Create ref={createButtonRef} />
     </React.Fragment>
   );
 }

@@ -10,11 +10,11 @@ import { Table } from "./components/table";
 
 export function Testimonials(): React.JSX.Element {
   const location = useLocation();
-  const [searchParams] = useSearchParams(new URLSearchParams(location.search));
-
-  const testimonialCreateButtonRef = React.useRef<HTMLButtonElement | null>(
-    null
+  const [searchParams, setSearchParams] = useSearchParams(
+    new URLSearchParams(location.search)
   );
+
+  const createButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
   const paginate = useTestimonialPaginateQuery({
     page: Number(searchParams.get("page") ?? 1),
@@ -29,7 +29,7 @@ export function Testimonials(): React.JSX.Element {
           <h1 className="text-3xl font-bold">Depoimentos</h1>
           <Button
             disabled={paginate.status === "pending"}
-            onClick={() => testimonialCreateButtonRef.current?.click()}
+            onClick={() => createButtonRef.current?.click()}
           >
             <Plus className="mr-2 h-4 w-4" /> Novo Depoimento
           </Button>
@@ -39,9 +39,25 @@ export function Testimonials(): React.JSX.Element {
           <div className="relative max-w-sm">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
             <Input
-              placeholder="Buscar depoimentos..."
+              placeholder="Buscar cargo ou nome..."
               className="pl-8"
               disabled={paginate.status === "pending"}
+              onKeyDown={(event) => {
+                if (
+                  (event.key === "Backspace" &&
+                    event.currentTarget.value?.length === 1) ||
+                  event.currentTarget.value === ""
+                ) {
+                  searchParams.delete("search");
+                  setSearchParams(searchParams);
+                }
+
+                if (event.key === "Enter" && event.currentTarget.value) {
+                  searchParams.set("search", event.currentTarget.value);
+                  setSearchParams(searchParams);
+                }
+              }}
+              defaultValue={searchParams.get("search") ?? ""}
             />
           </div>
         </div>
@@ -58,7 +74,7 @@ export function Testimonials(): React.JSX.Element {
           </React.Fragment>
         )}
       </div>
-      <Sheet.Create ref={testimonialCreateButtonRef} />
+      <Sheet.Create ref={createButtonRef} />
     </React.Fragment>
   );
 }

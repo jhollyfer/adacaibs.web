@@ -125,32 +125,70 @@ export function FormUpdate({
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="rating"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel className="data-[error=true]:text-destructive">
-                Avaliação <span className="text-destructive">*</span>
-              </FormLabel>
-              <Select defaultValue={field.value} onValueChange={field.onChange}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione uma avaliação" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="5">5 estrelas</SelectItem>
-                  <SelectItem value="4">4 estrelas</SelectItem>
-                  <SelectItem value="3">3 estrelas</SelectItem>
-                  <SelectItem value="2">2 estrelas</SelectItem>
-                  <SelectItem value="1">1 estrela</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage className="text-right text-destructive" />
-            </FormItem>
-          )}
-        />
+        <div className="inline-flex gap-4 w-full">
+          <FormField
+            control={form.control}
+            name="rating"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel className="data-[error=true]:text-destructive">
+                  Avaliação <span className="text-destructive">*</span>
+                </FormLabel>
+                <Select
+                  defaultValue={field.value}
+                  onValueChange={field.onChange}
+                >
+                  <FormControl className="w-full">
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Selecione uma avaliação" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {[1, 2, 3, 4, 5].map((rating) => (
+                      <SelectItem key={rating} value={rating.toString()}>
+                        {rating} estrelas
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage className="text-right text-destructive" />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel className="data-[error=true]:text-destructive">
+                  Status <span className="text-destructive">*</span>
+                </FormLabel>
+                <Select
+                  defaultValue={field.value}
+                  onValueChange={field.onChange}
+                >
+                  <FormControl className="w-full">
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Selecione um status" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value={TestimonialStatus.APPROVED}>
+                      Publicado
+                    </SelectItem>
+                    <SelectItem value={TestimonialStatus.PENDING}>
+                      Pendente
+                    </SelectItem>
+                    <SelectItem value={TestimonialStatus.REJECTED}>
+                      Rejeitado
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage className="text-right text-destructive" />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormField
           control={form.control}
@@ -186,37 +224,6 @@ export function FormUpdate({
           defaultValue={testimonial?.avatar ? [testimonial.avatar] : []}
         />
 
-        <FormField
-          control={form.control}
-          name="status"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel className="data-[error=true]:text-destructive">
-                Status <span className="text-destructive">*</span>
-              </FormLabel>
-              <Select defaultValue={field.value} onValueChange={field.onChange}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione um status" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value={TestimonialStatus.APPROVED}>
-                    Publicado
-                  </SelectItem>
-                  <SelectItem value={TestimonialStatus.PENDING}>
-                    Pendente
-                  </SelectItem>
-                  <SelectItem value={TestimonialStatus.REJECTED}>
-                    Rejeitado
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage className="text-right text-destructive" />
-            </FormItem>
-          )}
-        />
-
         <SheetFooter className="inline-flex flex-1 justify-end w-full px-0">
           <Button
             type="submit"
@@ -226,9 +233,7 @@ export function FormUpdate({
             {update.status === "pending" && (
               <LoaderCircleIcon className="w-4 h-4 animate-spin" />
             )}
-            {!(update.status === "pending") && (
-              <span>Atualizar Depoimento</span>
-            )}
+            {!(update.status === "pending") && <span>Atualizar </span>}
           </Button>
         </SheetFooter>
       </form>

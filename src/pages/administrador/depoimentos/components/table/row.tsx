@@ -7,14 +7,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { User, UserRole, UserStatus } from "@/lib/model";
-import { cn } from "@/lib/utils";
+import { Testimonial, TestimonialStatus } from "@/lib/model";
 import {
+  CalendarIcon,
   EllipsisIcon,
   EyeIcon,
-  MailIcon,
   PencilIcon,
-  ShieldIcon,
+  StarIcon,
   TrashIcon,
 } from "lucide-react";
 import React from "react";
@@ -22,18 +21,42 @@ import { useLocation, useSearchParams } from "react-router-dom";
 import { Sheet } from "../sheet";
 
 interface Props {
-  data: User;
+  data: Testimonial;
 }
 
-const RoleLabelMapper = {
-  [UserRole.ADMINISTRATOR]: "Administrador",
-  [UserRole.EDITOR]: "Editor",
-} as const;
+const getStatusStyle = (
+  status: TestimonialStatus
+):
+  | "bg-green-100 text-green-800"
+  | "bg-yellow-100 text-yellow-800"
+  | "bg-red-100 text-red-800"
+  | "bg-gray-100 text-gray-800" => {
+  switch (status) {
+    case TestimonialStatus.APPROVED:
+      return "bg-green-100 text-green-800";
+    case TestimonialStatus.PENDING:
+      return "bg-yellow-100 text-yellow-800";
+    case TestimonialStatus.REJECTED:
+      return "bg-red-100 text-red-800";
+    default:
+      return "bg-gray-100 text-gray-800";
+  }
+};
 
-const RoleColorMapper = {
-  [UserRole.ADMINISTRATOR]: "text-red-500",
-  [UserRole.EDITOR]: "text-blue-500",
-} as const;
+const getStatusLabel = (
+  status: TestimonialStatus
+): "Publicado" | "Pendente" | "Rejeitado" | "Desconhecido" => {
+  switch (status) {
+    case TestimonialStatus.APPROVED:
+      return "Publicado";
+    case TestimonialStatus.PENDING:
+      return "Pendente";
+    case TestimonialStatus.REJECTED:
+      return "Rejeitado";
+    default:
+      return "Desconhecido";
+  }
+};
 
 export function Row({ data }: Props): React.JSX.Element {
   const updateButtonRef = React.useRef<HTMLButtonElement | null>(null);
@@ -42,53 +65,63 @@ export function Row({ data }: Props): React.JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams(
     new URLSearchParams(location?.search)
   );
-  
+
   return (
     <TableRow key={data.id}>
       <TableCell className="font-medium">
         <div className="flex items-center gap-3">
           <img
-            src={data?.avatar?.url || "/default.webp"}
+            src={data.avatar?.url || "/default.webp"}
             alt={data.name}
-            className="h-8 w-8 object-cover rounded-full"
+            className="h-10 w-10 object-cover rounded-full"
           />
-          <span>{data.name}</span>
+          <div>
+            <div>{data.name}</div>
+            <div className="text-xs text-gray-500">{data.position}</div>
+          </div>
         </div>
       </TableCell>
 
       <TableCell>
-        <div className="flex items-center">
-          <MailIcon className="h-4 w-4 mr-1 text-gray-500" />
-          <span>{data.email}</span>
-        </div>
+        <p className="line-clamp-2 max-w-xs">{data.testimonial}</p>
       </TableCell>
 
       <TableCell>
-        <div className="flex items-center">
-          <ShieldIcon
-            className={cn(
-              "h-4 w-4 mr-1",
-              RoleColorMapper[data.role as keyof typeof RoleColorMapper] ||
-                "text-gray-500"
-            )}
-          />
-          <span className="capitalize">
-            {RoleLabelMapper[data.role as keyof typeof RoleLabelMapper] ||
-              "Desconhecido"}
-          </span>
+        <div className="flex">
+          {[...Array(5)].map((_, i) => (
+            <StarIcon
+              key={i}
+              className={`h-4 w-4 ${
+                i < Number(data.rating)
+                  ? "text-yellow-400 fill-yellow-400"
+                  : "text-gray-300"
+              }`}
+            />
+          ))}
         </div>
       </TableCell>
 
       <TableCell>
         <span
-          className={cn(
-            "px-2 py-1 rounded-full text-xs",
-            data.status === UserStatus.ACTIVE && "bg-green-100 text-green-800",
-            data.status === UserStatus.INACTIVE && "bg-gray-100 text-gray-800"
-          )}
+          className={`px-2 py-1 rounded-full text-xs ${getStatusStyle(
+            data.status
+          )}`}
         >
-          {data.status === UserStatus.ACTIVE ? "Ativo" : "Inativo"}
+          {getStatusLabel(data.status)}
         </span>
+      </TableCell>
+
+      <TableCell>
+        <div className="flex items-center text-sm">
+          <CalendarIcon className="h-3.5 w-3.5 mr-1 text-gray-500" />
+          <span>
+            {data.createdAt
+              ? new Intl.DateTimeFormat("pt-BR", {
+                  dateStyle: "long",
+                }).format(new Date(data.createdAt))
+              : "Data não disponível"}
+          </span>
+        </div>
       </TableCell>
 
       <TableCell className="w-[80px]">
@@ -124,13 +157,13 @@ export function Row({ data }: Props): React.JSX.Element {
             </DropdownMenuItem>
 
             <DropdownMenuItem
-              className="inline-flex space-x-1 w-full text-red-600"
+              className="inline-flex space-x-1 w-full"
               // onClick={() => {
               // 	setSearchParams((state) => {
-              // 		state.set('id', user.id);
+              // 		state.set('id', row.id);
               // 		return state;
               // 	});
-              // 	removeUserButtonRef?.current?.click();
+              // 	removeTestimonialButtonRef?.current?.click();
               // }}
             >
               <TrashIcon className="w-4 h-4" />
