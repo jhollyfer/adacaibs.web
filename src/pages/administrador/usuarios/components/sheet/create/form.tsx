@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SheetFooter } from "@/components/ui/sheet";
+import { Uploader } from "@/components/uploader";
 import { UserRole } from "@/lib/model";
 import { useUserCreateMutation } from "@/lib/tanstack/mutation/usuario/create";
 import { UserCreatePayload, UserSchema } from "@/schemas/usuario";
@@ -25,7 +26,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { ACTION } from "../action";
-import { UploaderFile } from "./uploader-file";
 export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams(
@@ -131,7 +131,18 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
           )}
         />
 
-        <UploaderFile />
+        <Uploader
+          dropzoneOptions={{
+            multiple: false,
+            maxFiles: 1,
+            maxSize: 4 * 1024 * 1024,
+            accept: {
+              "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
+            },
+          }}
+          fieldName="avatar_id"
+          label="Avatar"
+        />
 
         <SheetFooter className="inline-flex flex-1 justify-end w-full px-0">
           <Button

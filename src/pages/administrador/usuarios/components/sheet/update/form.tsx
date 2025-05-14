@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SheetFooter } from "@/components/ui/sheet";
+import { Uploader } from "@/components/uploader";
 import { User, UserRole } from "@/lib/model";
 import { useUserUpdateMutation } from "@/lib/tanstack/mutation/usuario/update";
 import { UserCreatePayload, UserSchema } from "@/schemas/usuario";
@@ -25,7 +26,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { ACTION } from "../action";
-import { UploaderFile } from "./uploader-file";
 
 interface Props {
   onClose: () => void;
@@ -143,7 +143,19 @@ export function Form({ onClose, data: user }: Props): React.JSX.Element {
           )}
         />
 
-        <UploaderFile defaultValue={user?.avatar ? [user.avatar] : []} />
+        <Uploader
+          dropzoneOptions={{
+            multiple: false,
+            maxFiles: 1,
+            maxSize: 4 * 1024 * 1024,
+            accept: {
+              "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
+            },
+          }}
+          fieldName="avatar_id"
+          label="Avatar"
+          defaultValue={user?.avatar ? [user.avatar] : []}
+        />
 
         <SheetFooter className="inline-flex flex-1 justify-end w-full px-0">
           <Button
@@ -154,7 +166,7 @@ export function Form({ onClose, data: user }: Props): React.JSX.Element {
             {update.status === "pending" && (
               <LoaderCircleIcon className="w-4 h-4 animate-spin" />
             )}
-            {!(update.status === "pending") && <span>Adicionar</span>}
+            {!(update.status === "pending") && <span>Atualizar</span>}
           </Button>
         </SheetFooter>
       </form>

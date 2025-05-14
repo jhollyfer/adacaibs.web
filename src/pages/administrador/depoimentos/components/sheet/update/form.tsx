@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { SheetFooter } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
+import { Uploader } from "@/components/uploader";
 import { Testimonial, TestimonialStatus } from "@/lib/model";
 import { useTestimonialUpdateMutation } from "@/lib/tanstack/mutation/depoimentos/update";
 import {
@@ -29,7 +30,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { ACTION } from "../action";
-import { UploaderFile } from "./uploader-file";
 
 interface FormProps {
   data: Testimonial;
@@ -172,7 +172,17 @@ export function FormUpdate({
           )}
         />
 
-        <UploaderFile
+        <Uploader
+          dropzoneOptions={{
+            multiple: false,
+            maxFiles: 1,
+            maxSize: 4 * 1024 * 1024,
+            accept: {
+              "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
+            },
+          }}
+          fieldName="avatar_id"
+          label="Avatar"
           defaultValue={testimonial?.avatar ? [testimonial.avatar] : []}
         />
 

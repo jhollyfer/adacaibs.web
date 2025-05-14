@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { SheetFooter } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
+import { Uploader } from "@/components/uploader";
 import { TestimonialStatus } from "@/lib/model";
 import { useTestimonialCreateMutation } from "@/lib/tanstack/mutation/depoimentos/create";
 import {
@@ -29,7 +30,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { ACTION } from "../action";
-import { UploaderFile } from "./uploader-file";
 
 export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
   const location = useLocation();
@@ -158,7 +158,18 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
           )}
         />
 
-        <UploaderFile />
+        <Uploader
+          dropzoneOptions={{
+            multiple: false,
+            maxFiles: 1,
+            maxSize: 4 * 1024 * 1024,
+            accept: {
+              "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
+            },
+          }}
+          fieldName="avatar_id"
+          label="Avatar"
+        />
 
         <FormField
           control={form.control}
