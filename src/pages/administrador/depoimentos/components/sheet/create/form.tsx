@@ -8,7 +8,6 @@ import {
   Form as Root,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -17,15 +16,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SheetFooter } from "@/components/ui/sheet";
+import { Textarea } from "@/components/ui/textarea";
 import { TestimonialStatus } from "@/lib/model";
+import { useTestimonialCreateMutation } from "@/lib/tanstack/mutation/depoimentos/create";
+import {
+  TestimonialCreatePayload,
+  TestimonialSchema,
+} from "@/schemas/depoimentos";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircleIcon } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { ACTION } from "../action";
-import { useTestimonialCreateMutation } from "@/lib/tanstack/mutation/depoimentos/create";
-import { TestimonialCreatePayload, TestimonialSchema } from "@/schemas/depoimentos";
 import { UploaderFile } from "./uploader-file";
 
 export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
@@ -42,7 +45,13 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
       searchParams.set("page", "1");
       searchParams.set("per_page", "10");
       setSearchParams(searchParams);
-      ACTION["PAGINATE"]["ADDED"](response);
+      ACTION["PAGINATE"]["ADDED"](response, {
+        page: Number(searchParams.get("page") ?? 1),
+        per_page: Number(searchParams.get("per_page") ?? 10),
+        ...(searchParams.has("search") && {
+          search: searchParams.get("search")!,
+        }),
+      });
       onClose();
     },
   });
@@ -61,6 +70,8 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
       files: null,
     });
   });
+
+  console.log(form.formState.errors);
 
   return (
     <Root {...form}>
@@ -164,9 +175,15 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value={TestimonialStatus.APPROVED}>Publicado</SelectItem>
-                  <SelectItem value={TestimonialStatus.PENDING}>Pendente</SelectItem>
-                  <SelectItem value={TestimonialStatus.REJECTED}>Rejeitado</SelectItem>
+                  <SelectItem value={TestimonialStatus.APPROVED}>
+                    Publicado
+                  </SelectItem>
+                  <SelectItem value={TestimonialStatus.PENDING}>
+                    Pendente
+                  </SelectItem>
+                  <SelectItem value={TestimonialStatus.REJECTED}>
+                    Rejeitado
+                  </SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage className="text-right text-destructive" />
@@ -183,7 +200,9 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
             {create.status === "pending" && (
               <LoaderCircleIcon className="w-4 h-4 animate-spin" />
             )}
-            {!(create.status === "pending") && <span>Adicionar Depoimento</span>}
+            {!(create.status === "pending") && (
+              <span>Adicionar Depoimento</span>
+            )}
           </Button>
         </SheetFooter>
       </form>

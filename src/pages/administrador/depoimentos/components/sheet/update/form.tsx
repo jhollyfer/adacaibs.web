@@ -8,7 +8,6 @@ import {
   Form as Root,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -17,15 +16,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SheetFooter } from "@/components/ui/sheet";
-import { TestimonialStatus, Testimonial } from "@/lib/model";
+import { Textarea } from "@/components/ui/textarea";
+import { Testimonial, TestimonialStatus } from "@/lib/model";
+import { useTestimonialUpdateMutation } from "@/lib/tanstack/mutation/depoimentos/update";
+import {
+  TestimonialSchema,
+  TestimonialUpdatePayload,
+} from "@/schemas/depoimentos";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircleIcon } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { ACTION } from "../action";
-import { useTestimonialUpdateMutation } from "@/lib/tanstack/mutation/depoimentos/update";
-import { TestimonialSchema, TestimonialUpdatePayload } from "@/schemas/depoimentos";
 import { UploaderFile } from "./uploader-file";
 
 interface FormProps {
@@ -33,7 +36,10 @@ interface FormProps {
   onClose: () => void;
 }
 
-export function FormUpdate({ data, onClose }: FormProps): React.JSX.Element {
+export function FormUpdate({
+  data: testimonial,
+  onClose,
+}: FormProps): React.JSX.Element {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams(
     new URLSearchParams(location.search)
@@ -47,7 +53,13 @@ export function FormUpdate({ data, onClose }: FormProps): React.JSX.Element {
       searchParams.set("page", "1");
       searchParams.set("per_page", "10");
       setSearchParams(searchParams);
-      ACTION["PAGINATE"]["UPDATE"](response);
+      ACTION["PAGINATE"]["UPDATE"](response, {
+        page: Number(searchParams.get("page") ?? 1),
+        per_page: Number(searchParams.get("per_page") ?? 10),
+        ...(searchParams.has("search") && {
+          search: searchParams.get("search")!,
+        }),
+      });
       ACTION["SHOW"]["UPDATE"](response);
       onClose();
     },
@@ -56,22 +68,21 @@ export function FormUpdate({ data, onClose }: FormProps): React.JSX.Element {
   const form = useForm<TestimonialUpdatePayload>({
     resolver: zodResolver(TestimonialSchema["update"]),
     defaultValues: {
-      id: data.id,
-      name: data.name,
-      position: data.position,
-      rating: data.rating,
-      testimonial: data.testimonial,
-      status: data.status,
-      photo: data.photo,
+      id: testimonial.id,
+      name: testimonial.name,
+      position: testimonial.position,
+      rating: testimonial.rating,
+      testimonial: testimonial.testimonial,
+      status: testimonial.status,
+      avatar_id: testimonial.avatar_id,
       files: null,
     },
   });
 
-  const onSubmit = form.handleSubmit((formData) => {
-    console.log(formData);
+  const onSubmit = form.handleSubmit((data) => {
     update.mutateAsync({
-      ...formData,
-      id: data.id!,
+      ...data,
+      id: testimonial.id!,
       files: null,
     });
   });
@@ -161,7 +172,9 @@ export function FormUpdate({ data, onClose }: FormProps): React.JSX.Element {
           )}
         />
 
-        <UploaderFile currentPhoto={data.photo} />
+        <UploaderFile
+          defaultValue={testimonial?.avatar ? [testimonial.avatar] : []}
+        />
 
         <FormField
           control={form.control}
@@ -178,9 +191,15 @@ export function FormUpdate({ data, onClose }: FormProps): React.JSX.Element {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value={TestimonialStatus.APPROVED}>Publicado</SelectItem>
-                  <SelectItem value={TestimonialStatus.PENDING}>Pendente</SelectItem>
-                  <SelectItem value={TestimonialStatus.REJECTED}>Rejeitado</SelectItem>
+                  <SelectItem value={TestimonialStatus.APPROVED}>
+                    Publicado
+                  </SelectItem>
+                  <SelectItem value={TestimonialStatus.PENDING}>
+                    Pendente
+                  </SelectItem>
+                  <SelectItem value={TestimonialStatus.REJECTED}>
+                    Rejeitado
+                  </SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage className="text-right text-destructive" />
@@ -197,7 +216,9 @@ export function FormUpdate({ data, onClose }: FormProps): React.JSX.Element {
             {update.status === "pending" && (
               <LoaderCircleIcon className="w-4 h-4 animate-spin" />
             )}
-            {!(update.status === "pending") && <span>Atualizar Depoimento</span>}
+            {!(update.status === "pending") && (
+              <span>Atualizar Depoimento</span>
+            )}
           </Button>
         </SheetFooter>
       </form>

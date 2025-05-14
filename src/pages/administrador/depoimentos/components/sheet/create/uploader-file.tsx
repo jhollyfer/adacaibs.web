@@ -28,7 +28,7 @@ export function UploaderFile(): React.JSX.Element {
     },
     onSuccess([response]) {
       setFiles([response]);
-      form.setValue("photo", response.id!);
+      form.setValue("avatar_id", response.id!);
     },
   });
 
@@ -129,7 +129,7 @@ export function UploaderFile(): React.JSX.Element {
                               (f) => f.id !== file.id
                             );
                             setFiles(payload);
-                            form.setValue("photo", null);
+                            form.setValue("avatar_id", null);
                           }}
                         >
                           <TrashIcon className="w-4 h-4 stroke-current" />

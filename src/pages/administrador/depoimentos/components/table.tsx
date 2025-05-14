@@ -15,7 +15,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Testimonial, TestimonialStatus } from "@/lib/model";
-import { Calendar, EllipsisIcon, EyeIcon, PencilIcon, Star, TrashIcon } from "lucide-react";
+import {
+  Calendar,
+  EllipsisIcon,
+  EyeIcon,
+  PencilIcon,
+  Star,
+  TrashIcon,
+} from "lucide-react";
 import React from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Sheet } from "./sheet";
@@ -26,14 +33,22 @@ interface Props {
 }
 
 export function Table({ data, labels }: Props): React.ReactElement {
-  const testimonialUpdateButtonRef = React.useRef<HTMLButtonElement | null>(null);
+  const testimonialUpdateButtonRef = React.useRef<HTMLButtonElement | null>(
+    null
+  );
 
   const location = useLocation();
   const [, setSearchParams] = useSearchParams(
     new URLSearchParams(location?.search)
   );
 
-  const getStatusStyle = (status: TestimonialStatus): "bg-green-100 text-green-800" | "bg-yellow-100 text-yellow-800" | "bg-red-100 text-red-800" | "bg-gray-100 text-gray-800" => {
+  const getStatusStyle = (
+    status: TestimonialStatus
+  ):
+    | "bg-green-100 text-green-800"
+    | "bg-yellow-100 text-yellow-800"
+    | "bg-red-100 text-red-800"
+    | "bg-gray-100 text-gray-800" => {
     switch (status) {
       case TestimonialStatus.APPROVED:
         return "bg-green-100 text-green-800";
@@ -46,7 +61,9 @@ export function Table({ data, labels }: Props): React.ReactElement {
     }
   };
 
-  const getStatusLabel = (status: TestimonialStatus): "Publicado" | "Pendente" | "Rejeitado" | "Desconhecido" => {
+  const getStatusLabel = (
+    status: TestimonialStatus
+  ): "Publicado" | "Pendente" | "Rejeitado" | "Desconhecido" => {
     switch (status) {
       case TestimonialStatus.APPROVED:
         return "Publicado";
@@ -59,7 +76,7 @@ export function Table({ data, labels }: Props): React.ReactElement {
     }
   };
 
-  console.log(data)
+  console.log(data);
 
   return (
     <React.Fragment>
@@ -81,7 +98,7 @@ export function Table({ data, labels }: Props): React.ReactElement {
                 <TableCell className="font-medium">
                   <div className="flex items-center gap-3">
                     <img
-                      src={row.photo || "/default.webp"}
+                      src={row.avatar?.url || "/default.webp"}
                       alt={row.name}
                       className="h-10 w-10 object-cover rounded-full"
                     />
@@ -103,10 +120,11 @@ export function Table({ data, labels }: Props): React.ReactElement {
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
-                        className={`h-4 w-4 ${i < Number(row.rating)
-                          ? "text-yellow-400 fill-yellow-400"
-                          : "text-gray-300"
-                          }`}
+                        className={`h-4 w-4 ${
+                          i < Number(row.rating)
+                            ? "text-yellow-400 fill-yellow-400"
+                            : "text-gray-300"
+                        }`}
                       />
                     ))}
                   </div>
@@ -114,7 +132,9 @@ export function Table({ data, labels }: Props): React.ReactElement {
 
                 <TableCell>
                   <span
-                    className={`px-2 py-1 rounded-full text-xs ${getStatusStyle(row.status)}`}
+                    className={`px-2 py-1 rounded-full text-xs ${getStatusStyle(
+                      row.status
+                    )}`}
                   >
                     {getStatusLabel(row.status)}
                   </span>
@@ -124,10 +144,10 @@ export function Table({ data, labels }: Props): React.ReactElement {
                   <div className="flex items-center text-sm">
                     <Calendar className="h-3.5 w-3.5 mr-1 text-gray-500" />
                     <span>
-                      {row.createdAt ?
-                        new Intl.DateTimeFormat("pt-BR", {
-                          dateStyle: "long"
-                        }).format(new Date(row.createdAt))
+                      {row.createdAt
+                        ? new Intl.DateTimeFormat("pt-BR", {
+                            dateStyle: "long",
+                          }).format(new Date(row.createdAt))
                         : "Data não disponível"}
                     </span>
                   </div>
@@ -172,13 +192,13 @@ export function Table({ data, labels }: Props): React.ReactElement {
 
                       <DropdownMenuItem
                         className="inline-flex space-x-1 w-full"
-                      // onClick={() => {
-                      // 	setSearchParams((state) => {
-                      // 		state.set('id', row.id);
-                      // 		return state;
-                      // 	});
-                      // 	removeTestimonialButtonRef?.current?.click();
-                      // }}
+                        // onClick={() => {
+                        // 	setSearchParams((state) => {
+                        // 		state.set('id', row.id);
+                        // 		return state;
+                        // 	});
+                        // 	removeTestimonialButtonRef?.current?.click();
+                        // }}
                       >
                         <TrashIcon className="w-4 h-4" />
                         <span>Remover</span>

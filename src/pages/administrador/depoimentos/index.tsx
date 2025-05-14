@@ -1,29 +1,26 @@
+import { Pagination } from "@/components/pagination";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Plus,
-  Search,
-} from "lucide-react";
-import React from "react";
-import { Table } from "./components/table";
-import { Sheet } from "./components/sheet";
-import { useLocation, useSearchParams } from "react-router-dom";
 import { useTestimonialPaginateQuery } from "@/lib/tanstack/query/depoimentos/paginate";
-import { Pagination } from "@/components/pagination";
+import { Plus, Search } from "lucide-react";
+import React from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
+import { Sheet } from "./components/sheet";
+import { Table } from "./components/table";
 
 export function Testimonials(): React.JSX.Element {
   const location = useLocation();
   const [searchParams] = useSearchParams(new URLSearchParams(location.search));
 
-  const testimonialCreateButtonRef = React.useRef<HTMLButtonElement | null>(null);
+  const testimonialCreateButtonRef = React.useRef<HTMLButtonElement | null>(
+    null
+  );
 
   const paginate = useTestimonialPaginateQuery({
     page: Number(searchParams.get("page") ?? 1),
     per_page: Number(searchParams.get("per_page") ?? 10),
     ...(searchParams.has("search") && { search: searchParams.get("search")! }),
   });
-
-  console.log(paginate.data?.data)
 
   return (
     <React.Fragment>
@@ -53,13 +50,7 @@ export function Testimonials(): React.JSX.Element {
           <React.Fragment>
             <div className="rounded-md border">
               <Table
-                labels={[
-                  "Pessoa",
-                  "Depoimento",
-                  "Avaliação",
-                  "Status",
-                  "Data"
-                ]}
+                labels={["Pessoa", "Depoimento", "Avaliação", "Status", "Data"]}
                 data={paginate.data?.data}
               />
             </div>

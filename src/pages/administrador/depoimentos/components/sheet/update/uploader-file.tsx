@@ -19,14 +19,14 @@ import {
 import React from "react";
 import { useFormContext } from "react-hook-form";
 
-interface UploaderFileUpdateProps {
-  currentPhoto: string | null;
+interface Props {
+  defaultValue?: Storage[];
 }
 
-export function UploaderFile({
-  currentPhoto,
-}: UploaderFileUpdateProps): React.JSX.Element {
-  const [files, setFiles] = React.useState<Storage[]>([]);
+export function UploaderFile({ defaultValue }: Props): React.JSX.Element {
+  const [files, setFiles] = React.useState<Storage[]>([
+    ...(defaultValue || []),
+  ]);
 
   const uploadMutation = useUploadMutation({
     onError(error) {
@@ -34,7 +34,7 @@ export function UploaderFile({
     },
     onSuccess([response]) {
       setFiles([response]);
-      form.setValue("photo", response.id!);
+      form.setValue("avatar_id", response.id!);
     },
   });
 
@@ -49,14 +49,14 @@ export function UploaderFile({
             <FormLabel className="data-[error=true]:text-destructive">
               Foto de Perfil <span className="text-destructive">*</span>
             </FormLabel>
-            <div className="mb-2">
+            {/* <div className="mb-2">
               <div className="text-sm text-gray-500">Foto atual:</div>
               <img
-                src={currentPhoto || "/default.webp"}
+                src={ || "/default.webp"}
                 alt="Foto atual"
                 className="h-16 w-16 object-cover rounded-full mt-1"
               />
-            </div>
+            </div> */}
             <FileUploader
               value={field.value}
               onValueChange={(value) => {
@@ -140,7 +140,7 @@ export function UploaderFile({
                           onClick={() => {
                             const payload = files.filter((_, i) => i !== index);
                             setFiles(payload);
-                            form.setValue("photo", null);
+                            form.setValue("avatar_id", null);
                             form.setValue("files", []);
                           }}
                         >

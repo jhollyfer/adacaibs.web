@@ -52,6 +52,7 @@ export interface Storage extends Base {
 
 export interface User extends Base {
   avatar: Storage | null;
+  avatar_id: string | null;
   name: string;
   email: string;
   password: string;
@@ -114,11 +115,12 @@ export interface Album extends Base {
 }
 
 export interface Testimonial extends Base {
+  avatar: Storage | null;
+  avatar_id: string | null;
   name: string;
   position: string;
   rating: string;
   testimonial: string;
-  photo: string | null;
   status: TestimonialStatus;
 }
 
