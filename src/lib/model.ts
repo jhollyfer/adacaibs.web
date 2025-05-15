@@ -60,13 +60,25 @@ export interface User extends Base {
   status: UserStatus;
 }
 
+// antes da mudança de schema
+// export interface Notice extends Base {
+//   title: string;
+//   category: NoticeCategory;
+//   status: NoticeStatus;
+//   resume: string;
+//   content: string;
+//   cover: string | null;
+//   tags: string[];
+// }
+
 export interface Notice extends Base {
+  cover: Storage | null;
+  cover_id: string | null;
   title: string;
   category: NoticeCategory;
   status: NoticeStatus;
   resume: string;
   content: string;
-  cover: string | null;
   tags: string[];
 }
 
