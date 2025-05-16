@@ -12,16 +12,7 @@ export const NoticeSchema = {
     }),
     resume: z.string({ required_error: "Resumo é obrigatório" }).trim(),
     content: z.string({ required_error: "Conteúdo é obrigatório" }).trim(),
-    tags: z
-      .union([
-        z.string().transform((str) =>
-          str
-            .split(",")
-            .map((tag) => tag.trim())
-            .filter((tag) => tag.length > 0)
-        ),
-        z.array(z.string()),
-      ]),
+    tags: z.array(z.string()),
     cover_id: z.string().trim().nullable(),
 
     // files: SOMENTE PARA O UPLOAD DA CAPA DA NOTÍCIA

@@ -95,14 +95,26 @@ export interface Events extends Base {
   cover: string | null;
 }
 
+// export interface Podcast extends Base {
+//   title: string;
+//   date: string;
+//   duration: string;
+//   presenters: string[];
+//   guests: string[];
+//   description: string;
+//   cover: string | null;
+//   content: string | null;
+// }
+
 export interface Podcast extends Base {
+  cover: Storage | null;
+  cover_id: string | null;
   title: string;
   date: string;
   duration: string;
   presenters: string[];
   guests: string[];
   description: string;
-  cover: string | null;
   content: string | null;
 }
 

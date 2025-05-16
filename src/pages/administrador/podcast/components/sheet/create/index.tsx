@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Sheet,
   SheetContent,
@@ -6,9 +7,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import React from "react";
 import { Form } from "./form";
-
 export function Create({
   ...props
 }: React.ComponentProps<typeof SheetTrigger>): React.JSX.Element {
@@ -17,13 +16,13 @@ export function Create({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger className="hidden" {...props} />
-      <SheetContent className="py-4 px-6 sm:max-w-2xl">
+      <SheetContent className="py-4 px-6 sm:max-w-2xl overflow-y-auto">
         <SheetHeader className="px-0">
           <SheetTitle className="text-lg font-medium">
-            Adicionar nova
+            Adicionar novo
           </SheetTitle>
 
-          <SheetDescription>Adicione uma nova notícia</SheetDescription>
+          <SheetDescription>Adicione um novo podcast</SheetDescription>
         </SheetHeader>
 
         <Form onClose={() => setOpen(false)} />

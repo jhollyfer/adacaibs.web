@@ -1,4 +1,10 @@
-import { Badge } from "@/components/ui/badge";
+import { Podcast } from "@/lib/model";
+import React from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
+import {
+  TableCell,
+  TableRow,
+} from "@/components/ui/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,15 +13,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { TableCell, TableRow } from "@/components/ui/table";
-import { Notice } from "@/lib/model";
 import { EllipsisIcon, EyeIcon, PencilIcon, TrashIcon } from "lucide-react";
-import React from "react";
-import { useLocation, useSearchParams } from "react-router-dom";
 import { Sheet } from "../sheet";
 
 interface Props {
-  data: Notice;
+  data: Podcast;
 }
 
 export function Row({ data }: Props): React.ReactElement {
@@ -25,16 +27,12 @@ export function Row({ data }: Props): React.ReactElement {
   const [searchParams, setSearchParams] = useSearchParams(
     new URLSearchParams(location?.search)
   );
-
   return (
     <TableRow key={data.id}>
       <TableCell>{data.title}</TableCell>
-      <TableCell>{data.category}</TableCell>
-      <TableCell>
-        <Badge variant="outline">{data?.status}</Badge>
-      </TableCell>
-      <TableCell>{"Administrador"}</TableCell>
-      <TableCell>{"100 visualizações"}</TableCell>
+      <TableCell>{data.presenters?.join(", ")}</TableCell>
+      <TableCell>{"100 ouvintes"}</TableCell>
+
       <TableCell>
         {new Intl.DateTimeFormat("pt-BR", {
           dateStyle: "long",
@@ -64,8 +62,10 @@ export function Row({ data }: Props): React.ReactElement {
             <DropdownMenuItem
               className="inline-flex space-x-1 w-full"
               onClick={() => {
-                searchParams.set("id", data.id!);
-                setSearchParams(searchParams);
+                setSearchParams((state) => {
+                  state.set("id", data.id!);
+                  return state;
+                });
                 updateButtonRef?.current?.click();
               }}
             >
@@ -77,10 +77,10 @@ export function Row({ data }: Props): React.ReactElement {
               className="inline-flex space-x-1 w-full"
             // onClick={() => {
             // 	setSearchParams((state) => {
-            // 		state.set('id', row.id);
+            // 		state.set('data_id', data._id);
             // 		return state;
             // 	});
-            // 	removeTestimonialButtonRef?.current?.click();
+            // 	removeButtonRef?.current?.click();
             // }}
             >
               <TrashIcon className="w-4 h-4" />
@@ -91,5 +91,5 @@ export function Row({ data }: Props): React.ReactElement {
         </DropdownMenu>
       </TableCell>
     </TableRow>
-  )
+  );
 }
