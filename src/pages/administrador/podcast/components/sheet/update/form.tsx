@@ -11,22 +11,25 @@ import { Input } from "@/components/ui/input";
 import { SheetFooter } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
 import { Uploader } from "@/components/uploader";
+import { Podcast } from "@/lib/model";
+import { usePodcastUpdateMutation } from "@/lib/tanstack/mutation/podcast/update";
+import { PodcastSchema, PodcastUpdatePayload } from "@/schemas/podcast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircleIcon } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { ACTION } from "../action";
-import { usePodcastUpdateMutation } from "@/lib/tanstack/mutation/podcast/update";
-import { PodcastSchema, PodcastUpdatePayload } from "@/schemas/podcast";
-import { Podcast } from "@/lib/model";
 
 interface FormProps {
   data: Podcast;
   onClose: () => void;
 }
 
-export function FormUpdate({ data: podcast, onClose }: FormProps): React.JSX.Element {
+export function FormUpdate({
+  data: podcast,
+  onClose,
+}: FormProps): React.JSX.Element {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams(
     new URLSearchParams(location.search)
@@ -50,7 +53,7 @@ export function FormUpdate({ data: podcast, onClose }: FormProps): React.JSX.Ele
       ACTION["SHOW"]["UPDATE"](response);
       onClose();
     },
-  })
+  });
 
   const form = useForm<PodcastUpdatePayload>({
     resolver: zodResolver(PodcastSchema["update"]),
@@ -59,10 +62,10 @@ export function FormUpdate({ data: podcast, onClose }: FormProps): React.JSX.Ele
       title: podcast.title,
       date: podcast.date,
       duration: podcast.duration,
-      presenters: podcast.presenters,
-      guests: podcast.guests,
+      presenters: podcast.presenters?.join(", "),
+      guests: podcast.guests.join(", "),
       description: podcast.description,
-      content: podcast.content,
+      // content: podcast.content || null,
       cover_id: podcast.cover_id,
       files: null,
     },
@@ -88,10 +91,7 @@ export function FormUpdate({ data: podcast, onClose }: FormProps): React.JSX.Ele
                 Título <span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Digite o título da notícia"
-                  {...field}
-                />
+                <Input placeholder="Digite o título da notícia" {...field} />
               </FormControl>
               <FormMessage className="text-right text-destructive" />
             </FormItem>
@@ -230,5 +230,5 @@ export function FormUpdate({ data: podcast, onClose }: FormProps): React.JSX.Ele
         </SheetFooter>
       </form>
     </Root>
-  )
+  );
 }
