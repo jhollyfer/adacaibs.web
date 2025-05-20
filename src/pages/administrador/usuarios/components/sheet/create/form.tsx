@@ -41,6 +41,8 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
       searchParams.set("per_page", "10");
       setSearchParams(searchParams);
 
+      // Problema ta aqui
+
       ACTION["PAGINATE"]["ADDED"](response, {
         page: Number(searchParams.get("page") ?? 1),
         per_page: Number(searchParams.get("per_page") ?? 10),
