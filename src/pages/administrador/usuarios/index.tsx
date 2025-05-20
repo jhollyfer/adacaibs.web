@@ -7,6 +7,8 @@ import React from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Sheet } from "./components/sheet";
 import { Table } from "./components/table";
+import { EmptyState } from "@/components/empty-state";
+import { Loading } from "@/components/loading";
 
 export function Users(): React.JSX.Element {
   const location = useLocation();
@@ -62,7 +64,9 @@ export function Users(): React.JSX.Element {
           </div>
         </div>
 
-        {paginate.status === "success" && (
+        {paginate.status === "pending" && <Loading />}
+
+        {paginate.status === "success" && paginate?.data.data.length > 0 && (
           <React.Fragment>
             <div className="rounded-md border">
               <Table
@@ -72,6 +76,10 @@ export function Users(): React.JSX.Element {
             </div>
             <Pagination meta={paginate.data?.meta} />
           </React.Fragment>
+        )}
+
+        {paginate.status === 'success' && !paginate?.data.data.length && (
+          <EmptyState message="Nenhum usuário encontrado" />
         )}
       </div>
       <Sheet.Create ref={createButtonRef} />
