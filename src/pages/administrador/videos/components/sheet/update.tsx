@@ -23,7 +23,7 @@ import {
   FileInput,
   FileUploader,
   FileUploaderContent,
-} from "@/components/file-uploader";
+} from "@/components/ui/file-uploader";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -58,7 +58,9 @@ export function Update({
       <SheetTrigger className="hidden" {...props} />
       <SheetContent className="py-4 px-6 sm:max-w-2xl overflow-y-auto">
         <SheetHeader className="px-0">
-          <SheetTitle className="text-lg font-medium">Atualizar Vídeo</SheetTitle>
+          <SheetTitle className="text-lg font-medium">
+            Atualizar Vídeo
+          </SheetTitle>
 
           <SheetDescription>Editar informações do vídeo</SheetDescription>
         </SheetHeader>
@@ -74,10 +76,7 @@ export function Update({
                     Título do Vídeo <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Digite o título do vídeo"
-                      {...field}
-                    />
+                    <Input placeholder="Digite o título do vídeo" {...field} />
                   </FormControl>
                   <FormMessage className="text-right text-destructive" />
                 </FormItem>
@@ -94,11 +93,7 @@ export function Update({
                       Data <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        type="date"
-                        placeholder="00/00/0000"
-                        {...field}
-                      />
+                      <Input type="date" placeholder="00/00/0000" {...field} />
                     </FormControl>
                     <FormMessage className="text-right text-destructive" />
                   </FormItem>
@@ -128,10 +123,14 @@ export function Update({
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel className="data-[error=true]:text-destructive">
-                    Instrutor/Apresentador <span className="text-destructive">*</span>
+                    Instrutor/Apresentador{" "}
+                    <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="Nome do instrutor ou apresentador" {...field} />
+                    <Input
+                      placeholder="Nome do instrutor ou apresentador"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage className="text-right text-destructive" />
                 </FormItem>
@@ -147,7 +146,10 @@ export function Update({
                     URL do Vídeo <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="Ex: https://www.youtube.com/watch?v=..." {...field} />
+                    <Input
+                      placeholder="Ex: https://www.youtube.com/watch?v=..."
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage className="text-right text-destructive" />
                 </FormItem>
@@ -193,8 +195,8 @@ export function Update({
                         maxFiles: 1,
                         maxSize: 4 * 1024 * 1024,
                         accept: {
-                          'image/*': ['.jpeg', '.jpg', '.png', '.gif', '.webp']
-                        }
+                          "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
+                        },
                       }}
                       reSelect={true}
                       className={cn(
@@ -207,11 +209,7 @@ export function Update({
                             "inline-flex items-center justify-center w-full gap-4 py-2"
                           )}
                         >
-                          <CloudUploadIcon
-                            className={cn(
-                              "w-8 h-8"
-                            )}
-                          />
+                          <CloudUploadIcon className={cn("w-8 h-8")} />
                           <p className="mb-1 text-sm">
                             <span>
                               <strong>Clique para fazer upload</strong> ou
@@ -236,7 +234,8 @@ export function Update({
                                 size={"icon"}
                                 type="button"
                                 onClick={() => {
-                                  const payload = form.getValues("thumbnail") ?? [];
+                                  const payload =
+                                    form.getValues("thumbnail") ?? [];
                                   payload.splice(index, 1);
                                   form.setValue("thumbnail", payload);
                                 }}
@@ -254,10 +253,7 @@ export function Update({
             />
 
             <SheetFooter className="inline-flex flex-1 justify-end w-full px-0">
-              <Button
-                className=""
-                type="submit"
-              >
+              <Button className="" type="submit">
                 Atualizar
               </Button>
             </SheetFooter>

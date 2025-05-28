@@ -23,12 +23,8 @@ import {
   FileInput,
   FileUploader,
   FileUploaderContent,
-} from "@/components/file-uploader";
+} from "@/components/ui/file-uploader";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
-import { CloudUploadIcon, PaperclipIcon, TrashIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
 import {
   Select,
   SelectContent,
@@ -36,7 +32,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { EventCategory } from "@/lib/model";
+import { cn } from "@/lib/utils";
+import { CloudUploadIcon, PaperclipIcon, TrashIcon } from "lucide-react";
+import { useForm } from "react-hook-form";
 
 export function Update({
   ...props
@@ -87,10 +87,7 @@ export function Update({
                     Título do Evento <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Digite o título do evento"
-                      {...field}
-                    />
+                    <Input placeholder="Digite o título do evento" {...field} />
                   </FormControl>
                   <FormMessage className="text-right text-destructive" />
                 </FormItem>
@@ -107,11 +104,7 @@ export function Update({
                       Data <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        type="date"
-                        placeholder="00/00/0000"
-                        {...field}
-                      />
+                      <Input type="date" placeholder="00/00/0000" {...field} />
                     </FormControl>
                     <FormMessage className="text-right text-destructive" />
                   </FormItem>
@@ -144,10 +137,7 @@ export function Update({
                     Local <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Nome do local"
-                      {...field}
-                    />
+                    <Input placeholder="Nome do local" {...field} />
                   </FormControl>
                   <FormMessage className="text-right text-destructive" />
                 </FormItem>
@@ -163,10 +153,7 @@ export function Update({
                     Endereço <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Endereço completo"
-                      {...field}
-                    />
+                    <Input placeholder="Endereço completo" {...field} />
                   </FormControl>
                   <FormMessage className="text-right text-destructive" />
                 </FormItem>
@@ -192,11 +179,21 @@ export function Update({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value={EventCategory.WORKSHOP}>Workshop</SelectItem>
-                        <SelectItem value={EventCategory.LECTURE}>Palestra</SelectItem>
-                        <SelectItem value={EventCategory.COURSE}>Curso</SelectItem>
-                        <SelectItem value={EventCategory.SPORT}>Esporte</SelectItem>
-                        <SelectItem value={EventCategory.COMMUNITY}>Comunidade</SelectItem>
+                        <SelectItem value={EventCategory.WORKSHOP}>
+                          Workshop
+                        </SelectItem>
+                        <SelectItem value={EventCategory.LECTURE}>
+                          Palestra
+                        </SelectItem>
+                        <SelectItem value={EventCategory.COURSE}>
+                          Curso
+                        </SelectItem>
+                        <SelectItem value={EventCategory.SPORT}>
+                          Esporte
+                        </SelectItem>
+                        <SelectItem value={EventCategory.COMMUNITY}>
+                          Comunidade
+                        </SelectItem>
                         <SelectItem value={EventCategory.ART}>Arte</SelectItem>
                       </SelectContent>
                     </Select>
@@ -252,7 +249,8 @@ export function Update({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="data-[error=true]:text-destructive">
-                    Conteúdo Detalhado <span className="text-destructive">*</span>
+                    Conteúdo Detalhado{" "}
+                    <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
                     <Textarea
@@ -273,7 +271,8 @@ export function Update({
                 return (
                   <FormItem>
                     <FormLabel className="data-[error=true]:text-destructive">
-                      Imagem do Evento <span className="text-destructive">*</span>
+                      Imagem do Evento{" "}
+                      <span className="text-destructive">*</span>
                     </FormLabel>
                     <div className="mb-2">
                       <div className="text-sm text-gray-500">Imagem atual:</div>
@@ -293,8 +292,8 @@ export function Update({
                         maxFiles: 1,
                         maxSize: 4 * 1024 * 1024,
                         accept: {
-                          'image/*': ['.jpeg', '.jpg', '.png', '.gif', '.webp']
-                        }
+                          "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
+                        },
                       }}
                       reSelect={true}
                       className={cn(
@@ -307,11 +306,7 @@ export function Update({
                             "inline-flex items-center justify-center w-full gap-4 py-2"
                           )}
                         >
-                          <CloudUploadIcon
-                            className={cn(
-                              "w-8 h-8"
-                            )}
-                          />
+                          <CloudUploadIcon className={cn("w-8 h-8")} />
                           <p className="mb-1 text-sm">
                             <span>
                               <strong>Clique para trocar a imagem</strong> ou
@@ -354,10 +349,7 @@ export function Update({
             />
 
             <SheetFooter className="inline-flex flex-1 justify-end w-full px-0">
-              <Button
-                className=""
-                type="submit"
-              >
+              <Button className="" type="submit">
                 Atualizar Evento
               </Button>
             </SheetFooter>

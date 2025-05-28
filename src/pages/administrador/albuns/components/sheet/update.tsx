@@ -23,7 +23,7 @@ import {
   FileInput,
   FileUploader,
   FileUploaderContent,
-} from "@/components/file-uploader";
+} from "@/components/ui/file-uploader";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -55,7 +55,9 @@ export function Update({
       <SheetTrigger className="hidden" {...props} />
       <SheetContent className="py-4 px-6 sm:max-w-2xl overflow-y-auto">
         <SheetHeader className="px-0">
-          <SheetTitle className="text-lg font-medium">Atualizar Álbum</SheetTitle>
+          <SheetTitle className="text-lg font-medium">
+            Atualizar Álbum
+          </SheetTitle>
 
           <SheetDescription>Editar informações do álbum</SheetDescription>
         </SheetHeader>
@@ -71,10 +73,7 @@ export function Update({
                     Título do Álbum <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Digite o título do álbum"
-                      {...field}
-                    />
+                    <Input placeholder="Digite o título do álbum" {...field} />
                   </FormControl>
                   <FormMessage className="text-right text-destructive" />
                 </FormItem>
@@ -90,11 +89,7 @@ export function Update({
                     Data <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      type="date"
-                      placeholder="00/00/0000"
-                      {...field}
-                    />
+                    <Input type="date" placeholder="00/00/0000" {...field} />
                   </FormControl>
                   <FormMessage className="text-right text-destructive" />
                 </FormItem>
@@ -148,8 +143,8 @@ export function Update({
                         maxFiles: 1,
                         maxSize: 4 * 1024 * 1024,
                         accept: {
-                          'image/*': ['.jpeg', '.jpg', '.png', '.gif', '.webp']
-                        }
+                          "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
+                        },
                       }}
                       reSelect={true}
                       className={cn(
@@ -162,11 +157,7 @@ export function Update({
                             "inline-flex items-center justify-center w-full gap-4 py-2"
                           )}
                         >
-                          <CloudUploadIcon
-                            className={cn(
-                              "w-8 h-8"
-                            )}
-                          />
+                          <CloudUploadIcon className={cn("w-8 h-8")} />
                           <p className="mb-1 text-sm">
                             <span>
                               <strong>Clique para trocar a capa</strong> ou
@@ -218,7 +209,9 @@ export function Update({
                       Imagens do Álbum
                     </FormLabel>
                     <div className="mb-2">
-                      <div className="text-sm text-gray-500">O álbum possui atualmente 24 imagens.</div>
+                      <div className="text-sm text-gray-500">
+                        O álbum possui atualmente 24 imagens.
+                      </div>
                     </div>
                     <FileUploader
                       value={field.value}
@@ -229,8 +222,8 @@ export function Update({
                         multiple: true,
                         maxSize: 4 * 1024 * 1024,
                         accept: {
-                          'image/*': ['.jpeg', '.jpg', '.png', '.gif', '.webp']
-                        }
+                          "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
+                        },
                       }}
                       reSelect={true}
                       className={cn(
@@ -243,15 +236,13 @@ export function Update({
                             "inline-flex items-center justify-center w-full gap-4 py-2"
                           )}
                         >
-                          <CloudUploadIcon
-                            className={cn(
-                              "w-8 h-8"
-                            )}
-                          />
+                          <CloudUploadIcon className={cn("w-8 h-8")} />
                           <p className="mb-1 text-sm">
                             <span>
-                              <strong>Clique para adicionar mais imagens</strong> ou
-                              arraste e solte.
+                              <strong>
+                                Clique para adicionar mais imagens
+                              </strong>{" "}
+                              ou arraste e solte.
                             </span>
                           </p>
                         </div>
@@ -259,22 +250,30 @@ export function Update({
                       {field?.value?.length > 0 && (
                         <FileUploaderContent>
                           <div className="mb-2">
-                            {field.value.length} {field.value.length === 1 ? 'nova imagem selecionada' : 'novas imagens selecionadas'}
+                            {field.value.length}{" "}
+                            {field.value.length === 1
+                              ? "nova imagem selecionada"
+                              : "novas imagens selecionadas"}
                           </div>
-                          {(field.value as File[]).slice(0, 3).map((file, index) => (
-                            <div
-                              key={index}
-                              className="inline-flex gap-2 items-center justify-between"
-                            >
-                              <div className="inline-flex items-center gap-2">
-                                <PaperclipIcon className="h-4 w-4 stroke-current" />
-                                <span>{file.name}</span>
+                          {(field.value as File[])
+                            .slice(0, 3)
+                            .map((file, index) => (
+                              <div
+                                key={index}
+                                className="inline-flex gap-2 items-center justify-between"
+                              >
+                                <div className="inline-flex items-center gap-2">
+                                  <PaperclipIcon className="h-4 w-4 stroke-current" />
+                                  <span>{file.name}</span>
+                                </div>
                               </div>
-                            </div>
-                          ))}
+                            ))}
                           {field.value.length > 3 && (
                             <div className="text-sm text-gray-500 mt-1">
-                              ... e mais {field.value.length - 3} {field.value.length - 3 === 1 ? 'arquivo' : 'arquivos'}
+                              ... e mais {field.value.length - 3}{" "}
+                              {field.value.length - 3 === 1
+                                ? "arquivo"
+                                : "arquivos"}
                             </div>
                           )}
                           <div className="mt-2 flex justify-end">
@@ -298,7 +297,7 @@ export function Update({
                         variant="outline"
                         size="sm"
                         type="button"
-                        onClick={() => { }}
+                        onClick={() => {}}
                         className="text-red-500 border-red-200 hover:bg-red-50"
                       >
                         <TrashIcon className="w-4 h-4 stroke-current mr-2" />
@@ -311,10 +310,7 @@ export function Update({
             />
 
             <SheetFooter className="inline-flex flex-1 justify-end w-full px-0">
-              <Button
-                className=""
-                type="submit"
-              >
+              <Button className="" type="submit">
                 Atualizar Álbum
               </Button>
             </SheetFooter>

@@ -1,3 +1,4 @@
+import { Arquivo } from "@/components/arquivo";
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -16,8 +17,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SheetFooter } from "@/components/ui/sheet";
-import { Uploader } from "@/components/uploader";
 import { User, UserRole } from "@/lib/model";
+import { updatedUserToPagination } from "@/lib/tanstack/actions/usuarios";
 import { useUserUpdateMutation } from "@/lib/tanstack/mutation/usuario/update";
 import { UserCreatePayload, UserSchema } from "@/schemas/usuario";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,7 +26,6 @@ import { LoaderCircleIcon } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useSearchParams } from "react-router-dom";
-import { ACTION } from "../action";
 
 interface Props {
   onClose: () => void;
@@ -34,27 +34,20 @@ interface Props {
 
 export function Form({ onClose, data: user }: Props): React.JSX.Element {
   const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams(
-    new URLSearchParams(location.search)
-  );
+  const [searchParams] = useSearchParams(new URLSearchParams(location.search));
 
   const update = useUserUpdateMutation({
     onError(error) {
       console.log(error);
     },
     onSuccess(response) {
-      searchParams.set("page", "1");
-      searchParams.set("per_page", "10");
-      setSearchParams(searchParams);
-
-      ACTION["PAGINATE"]["UPDATE"](response, {
+      updatedUserToPagination(response, {
         page: Number(searchParams.get("page") ?? 1),
         per_page: Number(searchParams.get("per_page") ?? 10),
         ...(searchParams.has("search") && {
           search: searchParams.get("search")!,
         }),
       });
-      ACTION["SHOW"]["UPDATE"](response);
 
       onClose();
     },
@@ -71,7 +64,6 @@ export function Form({ onClose, data: user }: Props): React.JSX.Element {
     update.mutateAsync({
       id: user.id!,
       ...data,
-      files: null,
     });
   });
 
@@ -143,7 +135,7 @@ export function Form({ onClose, data: user }: Props): React.JSX.Element {
           )}
         />
 
-        <Uploader
+        <Arquivo
           dropzoneOptions={{
             multiple: false,
             maxFiles: 1,

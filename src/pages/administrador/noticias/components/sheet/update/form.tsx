@@ -1,3 +1,4 @@
+import { Arquivo } from "@/components/arquivo";
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -17,24 +18,26 @@ import {
 } from "@/components/ui/select";
 import { SheetFooter } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
-import { Uploader } from "@/components/uploader";
+import { NOTICE_CATEGORY_LIST, NOTICE_STATUS_LIST } from "@/lib/constant";
+import { Notice } from "@/lib/model";
+import { useNoticeUpdateMutation } from "@/lib/tanstack/mutation/noticias/update";
+import { NoticeSchema, NoticeUpdatePayload } from "@/schemas/noticias";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircleIcon } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { ACTION } from "../action";
-import { Notice } from "@/lib/model";
-import { NoticeSchema, NoticeUpdatePayload } from "@/schemas/noticias";
-import { useNoticeUpdateMutation } from "@/lib/tanstack/mutation/noticias/update";
-import { NOTICE_CATEGORY_LIST, NOTICE_STATUS_LIST } from "@/lib/constant";
 
 interface FormProps {
   data: Notice;
   onClose: () => void;
 }
 
-export function FormUpdate({ data: notice, onClose }: FormProps): React.JSX.Element {
+export function FormUpdate({
+  data: notice,
+  onClose,
+}: FormProps): React.JSX.Element {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams(
     new URLSearchParams(location.search)
@@ -58,7 +61,7 @@ export function FormUpdate({ data: notice, onClose }: FormProps): React.JSX.Elem
       ACTION["SHOW"]["UPDATE"](response);
       onClose();
     },
-  })
+  });
 
   const form = useForm<NoticeUpdatePayload>({
     resolver: zodResolver(NoticeSchema["update"]),
@@ -95,10 +98,7 @@ export function FormUpdate({ data: notice, onClose }: FormProps): React.JSX.Elem
                 Título <span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Digite o título da notícia"
-                  {...field}
-                />
+                <Input placeholder="Digite o título da notícia" {...field} />
               </FormControl>
               <FormMessage className="text-right text-destructive" />
             </FormItem>
@@ -207,7 +207,7 @@ export function FormUpdate({ data: notice, onClose }: FormProps): React.JSX.Elem
           )}
         />
 
-        <Uploader
+        <Arquivo
           dropzoneOptions={{
             multiple: false,
             maxFiles: 1,
@@ -230,10 +230,7 @@ export function FormUpdate({ data: notice, onClose }: FormProps): React.JSX.Elem
                 Tags <span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Digite o título da notícia"
-                  {...field}
-                />
+                <Input placeholder="Digite o título da notícia" {...field} />
               </FormControl>
               <FormMessage className="text-right text-destructive" />
             </FormItem>
@@ -254,5 +251,5 @@ export function FormUpdate({ data: notice, onClose }: FormProps): React.JSX.Elem
         </SheetFooter>
       </form>
     </Root>
-  )
+  );
 }

@@ -1,27 +1,28 @@
-import { Uploader } from "@/components/uploader";
+import { Arquivo } from "@/components/arquivo";
 import { Input } from "@/components/ui/input";
+import { SheetFooter } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  SheetFooter,
-} from "@/components/ui/sheet";
 
 import { Button } from "@/components/ui/button";
 import {
-  Form as Root,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
+  Form as Root,
 } from "@/components/ui/form";
-import { useLocation, useSearchParams } from "react-router-dom";
-import { PodcastCreatePayload, PodcastSchema, PodcastTransformedSchema } from "@/schemas/podcast";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { usePodcastCreateMutation } from "@/lib/tanstack/mutation/podcast/create";
-import { ACTION } from "../action";
+import {
+  PodcastCreatePayload,
+  PodcastSchema,
+  PodcastTransformedSchema,
+} from "@/schemas/podcast";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircleIcon } from "lucide-react";
-
+import { useForm } from "react-hook-form";
+import { useLocation, useSearchParams } from "react-router-dom";
+import { ACTION } from "../action";
 
 export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
   const location = useLocation();
@@ -46,7 +47,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
       });
       onClose();
     },
-  })
+  });
 
   const form = useForm<PodcastCreatePayload>({
     resolver: zodResolver(PodcastSchema["create"]),
@@ -64,13 +65,13 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
 
     create.mutateAsync({
       ...transformed,
-      presenters: transformed.presenters.join(', '), // <-- transforma string[]
-      guests: transformed.guests.join(', '),         // <-- transforma string[]
+      presenters: transformed.presenters.join(", "), // <-- transforma string[]
+      guests: transformed.guests.join(", "), // <-- transforma string[]
       files: null,
     });
   });
 
-  console.log(form.formState.errors)
+  console.log(form.formState.errors);
 
   return (
     <Root {...form}>
@@ -84,10 +85,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
                 Título <span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Digite o título da notícia"
-                  {...field}
-                />
+                <Input placeholder="Digite o título da notícia" {...field} />
               </FormControl>
               <FormMessage className="text-right text-destructive" />
             </FormItem>
@@ -104,10 +102,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
                   Data <span className="text-destructive">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="00/00/0000"
-                    {...field}
-                  />
+                  <Input placeholder="00/00/0000" {...field} />
                 </FormControl>
                 <FormMessage className="text-right text-destructive" />
               </FormItem>
@@ -183,7 +178,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
           )}
         />
 
-        <Uploader
+        <Arquivo
           dropzoneOptions={{
             multiple: true,
             maxFiles: 1,
@@ -197,7 +192,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
           label="Audio"
         />
 
-        <Uploader
+        <Arquivo
           dropzoneOptions={{
             multiple: true,
             maxFiles: 1,
@@ -211,10 +206,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
         />
 
         <SheetFooter className="inline-flex flex-1 justify-end w-full px-0">
-          <Button
-            type="submit"
-            disabled={create.status === "pending"}
-          >
+          <Button type="submit" disabled={create.status === "pending"}>
             Adicionar
             {create.status === "pending" && (
               <LoaderCircleIcon className="w-4 h-4 animate-spin" />
@@ -224,5 +216,5 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
         </SheetFooter>
       </form>
     </Root>
-  )
+  );
 }

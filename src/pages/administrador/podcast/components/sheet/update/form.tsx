@@ -1,3 +1,4 @@
+import { Arquivo } from "@/components/arquivo";
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -10,7 +11,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { SheetFooter } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
-import { Uploader } from "@/components/uploader";
 import { Podcast } from "@/lib/model";
 import { usePodcastUpdateMutation } from "@/lib/tanstack/mutation/podcast/update";
 import { PodcastSchema, PodcastUpdatePayload } from "@/schemas/podcast";
@@ -188,7 +188,7 @@ export function FormUpdate({
           )}
         />
 
-        <Uploader
+        <Arquivo
           dropzoneOptions={{
             multiple: false,
             maxFiles: 1,
@@ -202,7 +202,7 @@ export function FormUpdate({
           label="Audio"
         />
 
-        <Uploader
+        <Arquivo
           dropzoneOptions={{
             multiple: false,
             maxFiles: 1,

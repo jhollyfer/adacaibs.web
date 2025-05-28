@@ -1,5 +1,5 @@
-import React from "react";
 import { XCircle } from "lucide-react";
+import React from "react";
 
 interface EmptyStateProps {
   message?: string;

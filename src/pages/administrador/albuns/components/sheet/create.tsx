@@ -19,15 +19,9 @@ import {
 } from "@/components/ui/sheet";
 import React from "react";
 
-import {
-  FileInput,
-  FileUploader,
-  FileUploaderContent,
-} from "@/components/file-uploader";
+import { Arquivo } from "@/components/arquivo";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
-import { CloudUploadIcon, PaperclipIcon, TrashIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 export function Create({
@@ -59,7 +53,9 @@ export function Create({
             Adicionar novo álbum
           </SheetTitle>
 
-          <SheetDescription>Adicione um novo álbum de fotos para a galeria</SheetDescription>
+          <SheetDescription>
+            Adicione um novo álbum de fotos para a galeria
+          </SheetDescription>
         </SheetHeader>
 
         <Form {...form}>
@@ -73,10 +69,7 @@ export function Create({
                     Título do Álbum <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Digite o título do álbum"
-                      {...field}
-                    />
+                    <Input placeholder="Digite o título do álbum" {...field} />
                   </FormControl>
                   <FormMessage className="text-right text-destructive" />
                 </FormItem>
@@ -92,11 +85,7 @@ export function Create({
                     Data <span className="text-destructive">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      type="date"
-                      placeholder="00/00/0000"
-                      {...field}
-                    />
+                    <Input type="date" placeholder="00/00/0000" {...field} />
                   </FormControl>
                   <FormMessage className="text-right text-destructive" />
                 </FormItem>
@@ -123,177 +112,34 @@ export function Create({
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="cover"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel className="data-[error=true]:text-destructive">
-                      Imagem de Capa <span className="text-destructive">*</span>
-                    </FormLabel>
-                    <FileUploader
-                      value={field.value}
-                      onValueChange={(value) => {
-                        field.onChange(value);
-                      }}
-                      dropzoneOptions={{
-                        multiple: false,
-                        maxFiles: 1,
-                        maxSize: 4 * 1024 * 1024,
-                        accept: {
-                          'image/*': ['.jpeg', '.jpg', '.png', '.gif', '.webp']
-                        }
-                      }}
-                      reSelect={true}
-                      className={cn(
-                        "relative rounded-lg p-2 border border-dashed"
-                      )}
-                    >
-                      <FileInput>
-                        <div
-                          className={cn(
-                            "inline-flex items-center justify-center w-full gap-4 py-2"
-                          )}
-                        >
-                          <CloudUploadIcon
-                            className={cn(
-                              "w-8 h-8"
-                            )}
-                          />
-                          <p className="mb-1 text-sm">
-                            <span>
-                              <strong>Clique para fazer upload</strong> ou
-                              arraste e solte.
-                            </span>
-                          </p>
-                        </div>
-                      </FileInput>
-                      {field?.value?.length > 0 && (
-                        <FileUploaderContent>
-                          {(field.value as File[]).map((file, index) => (
-                            <div
-                              key={index}
-                              className="inline-flex gap-2 items-center justify-between"
-                            >
-                              <div className="inline-flex items-center gap-2">
-                                <PaperclipIcon className="h-4 w-4 stroke-current" />
-                                <span>{file.name}</span>
-                              </div>
-                              <Button
-                                variant={"ghost"}
-                                size={"icon"}
-                                type="button"
-                                onClick={() => {
-                                  const payload = form.getValues("cover") ?? [];
-                                  payload.splice(index, 1);
-                                  form.setValue("cover", payload);
-                                }}
-                              >
-                                <TrashIcon className="w-4 h-4 stroke-current" />
-                              </Button>
-                            </div>
-                          ))}
-                        </FileUploaderContent>
-                      )}
-                    </FileUploader>
-                  </FormItem>
-                );
+            <Arquivo
+              dropzoneOptions={{
+                multiple: false,
+                maxFiles: 1,
+                maxSize: 4 * 1024 * 1024,
+                accept: {
+                  "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
+                },
               }}
+              fieldName="cover_id"
+              label="Capa do Álbum"
             />
 
-            <FormField
-              control={form.control}
-              name="images"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel className="data-[error=true]:text-destructive">
-                      Imagens do Álbum <span className="text-destructive">*</span>
-                    </FormLabel>
-                    <FileUploader
-                      value={field.value}
-                      onValueChange={(value) => {
-                        field.onChange(value);
-                      }}
-                      dropzoneOptions={{
-                        multiple: true,
-                        maxSize: 4 * 1024 * 1024,
-                        accept: {
-                          'image/*': ['.jpeg', '.jpg', '.png', '.gif', '.webp']
-                        }
-                      }}
-                      reSelect={true}
-                      className={cn(
-                        "relative rounded-lg p-2 border border-dashed"
-                      )}
-                    >
-                      <FileInput>
-                        <div
-                          className={cn(
-                            "inline-flex items-center justify-center w-full gap-4 py-2"
-                          )}
-                        >
-                          <CloudUploadIcon
-                            className={cn(
-                              "w-8 h-8"
-                            )}
-                          />
-                          <p className="mb-1 text-sm">
-                            <span>
-                              <strong>Clique para fazer upload</strong> ou
-                              arraste e solte.
-                            </span>
-                          </p>
-                        </div>
-                      </FileInput>
-                      {field?.value?.length > 0 && (
-                        <FileUploaderContent>
-                          <div className="mb-2">
-                            {field.value.length} {field.value.length === 1 ? 'imagem selecionada' : 'imagens selecionadas'}
-                          </div>
-                          {(field.value as File[]).slice(0, 3).map((file, index) => (
-                            <div
-                              key={index}
-                              className="inline-flex gap-2 items-center justify-between"
-                            >
-                              <div className="inline-flex items-center gap-2">
-                                <PaperclipIcon className="h-4 w-4 stroke-current" />
-                                <span>{file.name}</span>
-                              </div>
-                            </div>
-                          ))}
-                          {field.value.length > 3 && (
-                            <div className="text-sm text-gray-500 mt-1">
-                              ... e mais {field.value.length - 3} {field.value.length - 3 === 1 ? 'arquivo' : 'arquivos'}
-                            </div>
-                          )}
-                          <div className="mt-2 flex justify-end">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              type="button"
-                              onClick={() => {
-                                form.setValue("images", []);
-                              }}
-                            >
-                              <TrashIcon className="w-4 h-4 stroke-current mr-2" />
-                              Limpar seleção
-                            </Button>
-                          </div>
-                        </FileUploaderContent>
-                      )}
-                    </FileUploader>
-                  </FormItem>
-                );
+            <Arquivo
+              dropzoneOptions={{
+                multiple: true,
+                maxFiles: 10,
+                maxSize: 4 * 1024 * 1024,
+                accept: {
+                  "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
+                },
               }}
+              fieldName="images"
+              label="Capa do Álbum"
             />
 
             <SheetFooter className="inline-flex flex-1 justify-end w-full px-0">
-              <Button
-                className=""
-                type="submit"
-              >
+              <Button className="" type="submit">
                 Adicionar Álbum
               </Button>
             </SheetFooter>

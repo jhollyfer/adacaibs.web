@@ -1,3 +1,5 @@
+import { Arquivo } from "@/components/arquivo";
+import { Button } from "@/components/ui/button";
 import {
   FormControl,
   FormField,
@@ -6,14 +8,7 @@ import {
   FormMessage,
   Form as Root,
 } from "@/components/ui/form";
-import { NoticeStatus } from "@/lib/model";
-import { NoticeCreatePayload, NoticeSchema } from "@/schemas/noticias";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useLocation, useSearchParams } from "react-router-dom";
 import { Input } from "@/components/ui/input";
-import { SheetFooter } from "@/components/ui/sheet";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -21,13 +16,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { SheetFooter } from "@/components/ui/sheet";
+import { Textarea } from "@/components/ui/textarea";
 import { NOTICE_CATEGORY_LIST, NOTICE_STATUS_LIST } from "@/lib/constant";
-import { Button } from "@/components/ui/button";
-import { Uploader } from "@/components/uploader";
+import { NoticeStatus } from "@/lib/model";
 import { useNoticeCreateMutation } from "@/lib/tanstack/mutation/noticias/create";
-import { ACTION } from "../action";
+import { NoticeCreatePayload, NoticeSchema } from "@/schemas/noticias";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircleIcon } from "lucide-react";
-
+import { useForm } from "react-hook-form";
+import { useLocation, useSearchParams } from "react-router-dom";
+import { ACTION } from "../action";
 
 // TODO: arrumar a tag que está indo errado.
 export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
@@ -53,7 +52,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
       });
       onClose();
     },
-  })
+  });
 
   const form = useForm<NoticeCreatePayload>({
     resolver: zodResolver(NoticeSchema["create"]),
@@ -82,10 +81,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
                 Título <span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Digite o título da notícia"
-                  {...field}
-                />
+                <Input placeholder="Digite o título da notícia" {...field} />
               </FormControl>
               <FormMessage className="text-right text-destructive" />
             </FormItem>
@@ -194,7 +190,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
           )}
         />
 
-        <Uploader
+        <Arquivo
           dropzoneOptions={{
             multiple: false,
             maxFiles: 1,
@@ -216,10 +212,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
                 Tags <span className="text-destructive">*</span>
               </FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Digite o título da notícia"
-                  {...field}
-                />
+                <Input placeholder="Digite o título da notícia" {...field} />
               </FormControl>
               <FormMessage className="text-right text-destructive" />
             </FormItem>
@@ -240,5 +233,5 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
         </SheetFooter>
       </form>
     </Root>
-  )
+  );
 }

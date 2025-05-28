@@ -1,3 +1,4 @@
+import { Arquivo } from "@/components/arquivo";
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -17,8 +18,8 @@ import {
 } from "@/components/ui/select";
 import { SheetFooter } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
-import { Uploader } from "@/components/uploader";
 import { TestimonialStatus } from "@/lib/model";
+import { addedTestimonialToPagination } from "@/lib/tanstack/actions/depoimentos";
 import { useTestimonialCreateMutation } from "@/lib/tanstack/mutation/depoimentos/create";
 import {
   TestimonialCreatePayload,
@@ -29,23 +30,17 @@ import { LoaderCircleIcon } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useSearchParams } from "react-router-dom";
-import { ACTION } from "../action";
 
 export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
   const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams(
-    new URLSearchParams(location.search)
-  );
+  const [searchParams] = useSearchParams(new URLSearchParams(location.search));
 
   const create = useTestimonialCreateMutation({
     onError(error) {
       console.log(error);
     },
     onSuccess(response) {
-      searchParams.set("page", "1");
-      searchParams.set("per_page", "10");
-      setSearchParams(searchParams);
-      ACTION["PAGINATE"]["ADDED"](response, {
+      addedTestimonialToPagination(response, {
         page: Number(searchParams.get("page") ?? 1),
         per_page: Number(searchParams.get("per_page") ?? 10),
         ...(searchParams.has("search") && {
@@ -196,7 +191,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
           )}
         />
 
-        <Uploader
+        <Arquivo
           dropzoneOptions={{
             multiple: false,
             maxFiles: 1,

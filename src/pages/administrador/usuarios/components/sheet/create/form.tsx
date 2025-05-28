@@ -1,3 +1,4 @@
+import { Arquivo } from "@/components/arquivo";
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -16,8 +17,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SheetFooter } from "@/components/ui/sheet";
-import { Uploader } from "@/components/uploader";
 import { UserRole } from "@/lib/model";
+import { addedUserToPagination } from "@/lib/tanstack/actions/usuarios";
 import { useUserCreateMutation } from "@/lib/tanstack/mutation/usuario/create";
 import { UserCreatePayload, UserSchema } from "@/schemas/usuario";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,25 +26,17 @@ import { LoaderCircleIcon } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useSearchParams } from "react-router-dom";
-import { ACTION } from "../action";
+
 export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
   const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams(
-    new URLSearchParams(location.search)
-  );
+  const [searchParams] = useSearchParams(new URLSearchParams(location.search));
 
   const create = useUserCreateMutation({
     onError(error) {
       console.log(error);
     },
     onSuccess(response) {
-      searchParams.set("page", "1");
-      searchParams.set("per_page", "10");
-      setSearchParams(searchParams);
-
-      // Problema ta aqui
-
-      ACTION["PAGINATE"]["ADDED"](response, {
+      addedUserToPagination(response, {
         page: Number(searchParams.get("page") ?? 1),
         per_page: Number(searchParams.get("per_page") ?? 10),
         ...(searchParams.has("search") && {
@@ -62,10 +55,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
   });
 
   const onSubmit = form.handleSubmit((data) => {
-    create.mutateAsync({
-      ...data,
-      files: null,
-    });
+    create.mutateAsync(data);
   });
 
   return (
@@ -133,7 +123,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
           )}
         />
 
-        <Uploader
+        <Arquivo
           dropzoneOptions={{
             multiple: false,
             maxFiles: 1,

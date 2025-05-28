@@ -6,6 +6,7 @@ import { AxiosError } from "axios";
 interface Props {
   onSuccess: (response: Storage[]) => void;
   onError: (error: Error | AxiosError) => void;
+  mutationKey: string[];
 }
 
 export function useUploadMutation(

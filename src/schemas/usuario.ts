@@ -12,17 +12,6 @@ export const UserSchema = {
       .email(),
     role: z.nativeEnum(UserRole, { required_error: "Função é obrigatória" }),
     avatar_id: z.string().trim().nullable(),
-    // files: SOMENTE PARA O UPLOAD DO AVATAR DO USUÁRIO
-    files: z
-      .array(
-        z.instanceof(File).refine((file) => file.size < 2 * 1024 * 1024, {
-          message: "O arquivo deve ter no máximo 2MB",
-        })
-      )
-      .max(1, {
-        message: "Você pode enviar apenas um arquivo",
-      })
-      .nullable(),
   }),
   update: z.object({
     id: z.string({ required_error: "ID é obrigatório" }),
@@ -35,18 +24,6 @@ export const UserSchema = {
       .email(),
     role: z.nativeEnum(UserRole, { required_error: "Função é obrigatória" }),
     avatar_id: z.string().trim().nullable(),
-
-    // files: SOMENTE PARA O UPLOAD DO AVATAR DO USUÁRIO
-    files: z
-      .array(
-        z.instanceof(File).refine((file) => file.size < 2 * 1024 * 1024, {
-          message: "O arquivo deve ter no máximo 2MB",
-        })
-      )
-      .max(1, {
-        message: "Você pode enviar apenas um arquivo",
-      })
-      .nullable(),
   }),
 } as const;
 

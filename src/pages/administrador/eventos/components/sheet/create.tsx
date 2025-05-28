@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/sheet";
 import React from "react";
 
+import { Arquivo } from "@/components/arquivo";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -28,7 +29,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Uploader } from "@/components/uploader";
 import { EventCategory } from "@/lib/model";
 import { EventCreatePayload, EventSchema } from "@/schemas/evento";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -267,7 +267,7 @@ export function Create({
               )}
             />
 
-            <Uploader
+            <Arquivo
               dropzoneOptions={{
                 multiple: false,
                 maxFiles: 1,
