@@ -1,4 +1,5 @@
-import { PaginateMetaResponse, PaginateQuerySearch, User } from "@/lib/model";
+import { MetaBase } from "@/lib/constant";
+import { PaginateMetaQuery, PaginateMetaResponse, User } from "@/lib/model";
 import { QUERY, TanstackQuery } from "@/lib/tanstack/instance";
 
 export function updatedUser(payload: User): void {
@@ -13,20 +14,14 @@ export function updatedUser(payload: User): void {
 
 export function addedUserToPagination(
   payload: User,
-  query: PaginateQuerySearch
+  query: PaginateMetaQuery
 ): void {
   TanstackQuery.setQueryData<PaginateMetaResponse<User[]>>(
     [QUERY.USER_PAGINATE, query],
     (old) => {
       if (!old) {
         return {
-          meta: {
-            total: 1,
-            per_page: 10,
-            page: 1,
-            last_page: 1,
-            first_page: 1,
-          },
+          meta: MetaBase,
           data: [payload],
         };
       }
@@ -46,20 +41,14 @@ export function addedUserToPagination(
 
 export function updatedUserToPagination(
   payload: User,
-  query: PaginateQuerySearch
+  query: PaginateMetaQuery
 ): void {
   TanstackQuery.setQueryData<PaginateMetaResponse<User[]>>(
     [QUERY.USER_PAGINATE, query],
     (old) => {
       if (!old) {
         return {
-          meta: {
-            total: 1,
-            per_page: 10,
-            page: 1,
-            last_page: 1,
-            first_page: 1,
-          },
+          meta: MetaBase,
           data: [payload],
         };
       }

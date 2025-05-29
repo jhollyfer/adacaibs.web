@@ -1,15 +1,12 @@
+import { Pagination } from "@/components/pagination";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Plus,
-  Search,
-} from "lucide-react";
-import React from "react";
-import { Table } from "./components/table";
-import { Sheet } from "./components/sheet";
-import { useLocation, useSearchParams } from "react-router-dom";
 import { useAlbumPaginateQuery } from "@/lib/tanstack/query/album/paginate";
-import { Pagination } from "@/components/pagination";
+import { Plus, Search } from "lucide-react";
+import React from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
+import { Sheet } from "./components/sheet";
+import { Table } from "./components/table";
 
 export function Gallery(): React.JSX.Element {
   const location = useLocation();
@@ -19,7 +16,7 @@ export function Gallery(): React.JSX.Element {
 
   const paginate = useAlbumPaginateQuery({
     page: Number(searchParams.get("page") ?? 1),
-    per_page: Number(searchParams.get("per_page") ?? 10),
+    perPage: Number(searchParams.get("perPage") ?? 10),
     ...(searchParams.has("search") && { search: searchParams.get("search")! }),
   });
 
@@ -51,11 +48,7 @@ export function Gallery(): React.JSX.Element {
           <React.Fragment>
             <div className="border rounded-lg">
               <Table
-                labels={[
-                  "Título",
-                  "Descrição",
-                  "Data de submissão",
-                ]}
+                labels={["Título", "Descrição", "Data de submissão"]}
                 data={paginate.data?.data}
               />
             </div>

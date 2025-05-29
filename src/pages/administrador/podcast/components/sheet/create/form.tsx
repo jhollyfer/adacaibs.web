@@ -36,11 +36,11 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
     },
     onSuccess(response) {
       searchParams.set("page", "1");
-      searchParams.set("per_page", "10");
+      searchParams.set("perPage", "10");
       setSearchParams(searchParams);
       ACTION["PAGINATE"]["ADDED"](response, {
         page: Number(searchParams.get("page") ?? 1),
-        per_page: Number(searchParams.get("per_page") ?? 10),
+        perPage: Number(searchParams.get("perPage") ?? 10),
         ...(searchParams.has("search") && {
           search: searchParams.get("search")!,
         }),
@@ -201,7 +201,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
               "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
             },
           }}
-          fieldName="cover_id"
+          fieldName="coverId"
           label="Imagem de Capa"
         />
 

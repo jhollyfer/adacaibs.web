@@ -1,3 +1,4 @@
+import { Pagination } from "@/components/pagination";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -6,23 +7,24 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import { useNoticePaginateQuery } from "@/lib/tanstack/query/noticias/paginate";
 import { Filter, PlusIcon, Search } from "lucide-react";
 import React from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { Sheet } from "./components/sheet";
 import { Table } from "./components/table";
-import { useLocation, useSearchParams } from "react-router-dom";
-import { useNoticePaginateQuery } from "@/lib/tanstack/query/noticias/paginate";
-import { Pagination } from "@/components/pagination";
 
 export function Notice(): React.JSX.Element {
   const location = useLocation();
-  const [searchParams] = useSearchParams(new URLSearchParams(location.search));
+  const [searchParams, setSearchParams] = useSearchParams(
+    new URLSearchParams(location.search)
+  );
 
   const noticeCreateButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
   const paginate = useNoticePaginateQuery({
     page: Number(searchParams.get("page") ?? 1),
-    per_page: Number(searchParams.get("per_page") ?? 10),
+    perPage: Number(searchParams.get("perPage") ?? 10),
     ...(searchParams.has("search") && { search: searchParams.get("search")! }),
   });
 
@@ -44,10 +46,25 @@ export function Notice(): React.JSX.Element {
           <div className="relative w-full sm:w-auto">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              type="text"
-              placeholder="Buscar notícias..."
-              className="pl-10 w-full sm:w-80"
+              placeholder="Buscar cargo ou nome..."
+              className="pl-8"
               disabled={paginate.status === "pending"}
+              onKeyDown={(event) => {
+                if (
+                  (event.key === "Backspace" &&
+                    event.currentTarget.value?.length === 1) ||
+                  event.currentTarget.value === ""
+                ) {
+                  searchParams.delete("search");
+                  setSearchParams(searchParams);
+                }
+
+                if (event.key === "Enter" && event.currentTarget.value) {
+                  searchParams.set("search", event.currentTarget.value);
+                  setSearchParams(searchParams);
+                }
+              }}
+              defaultValue={searchParams.get("search") ?? ""}
             />
           </div>
 

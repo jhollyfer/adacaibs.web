@@ -1,4 +1,5 @@
 import { Arquivo } from "@/components/arquivo";
+import { MultipleSelector } from "@/components/multi-selector";
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -20,45 +21,37 @@ import { SheetFooter } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
 import { NOTICE_CATEGORY_LIST, NOTICE_STATUS_LIST } from "@/lib/constant";
 import { Notice } from "@/lib/model";
+import { updatedNoticeToPagination } from "@/lib/tanstack/actions/noticias";
 import { useNoticeUpdateMutation } from "@/lib/tanstack/mutation/noticias/update";
+import { cn } from "@/lib/utils";
 import { NoticeSchema, NoticeUpdatePayload } from "@/schemas/noticias";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircleIcon } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useSearchParams } from "react-router-dom";
-import { ACTION } from "../action";
 
-interface FormProps {
+interface Props {
   data: Notice;
   onClose: () => void;
 }
 
-export function FormUpdate({
-  data: notice,
-  onClose,
-}: FormProps): React.JSX.Element {
+export function Form({ data: notice, onClose }: Props): React.JSX.Element {
   const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams(
-    new URLSearchParams(location.search)
-  );
+  const [searchParams] = useSearchParams(new URLSearchParams(location.search));
 
   const update = useNoticeUpdateMutation({
     onError(error) {
       console.log(error);
     },
     onSuccess(response) {
-      searchParams.set("page", "1");
-      searchParams.set("per_page", "10");
-      setSearchParams(searchParams);
-      ACTION["PAGINATE"]["UPDATE"](response, {
+      updatedNoticeToPagination(response, {
         page: Number(searchParams.get("page") ?? 1),
-        per_page: Number(searchParams.get("per_page") ?? 10),
+        perPage: Number(searchParams.get("perPage") ?? 10),
         ...(searchParams.has("search") && {
           search: searchParams.get("search")!,
         }),
       });
-      ACTION["SHOW"]["UPDATE"](response);
       onClose();
     },
   });
@@ -73,8 +66,7 @@ export function FormUpdate({
       resume: notice.resume,
       content: notice.content,
       tags: notice.tags,
-      cover_id: notice.cover_id,
-      files: null,
+      coverId: notice.coverId,
     },
   });
 
@@ -82,7 +74,6 @@ export function FormUpdate({
     update.mutateAsync({
       ...data,
       id: notice.id!,
-      files: null,
     });
   });
 
@@ -91,6 +82,7 @@ export function FormUpdate({
       <form className="space-y-4" onSubmit={onSubmit}>
         <FormField
           control={form.control}
+          defaultValue={notice.title}
           name="title"
           render={({ field }) => (
             <FormItem>
@@ -216,25 +208,43 @@ export function FormUpdate({
               "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
             },
           }}
-          fieldName="avatar_id"
-          label="Avatar"
+          fieldName="avatarId"
+          label="Capa"
           defaultValue={notice?.cover ? [notice.cover] : []}
         />
 
         <FormField
           control={form.control}
           name="tags"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="data-[error=true]:text-destructive">
-                Tags <span className="text-destructive">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input placeholder="Digite o título da notícia" {...field} />
-              </FormControl>
-              <FormMessage className="text-right text-destructive" />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            const hasError = !!form.formState.errors[field.name];
+
+            return (
+              <FormItem>
+                <FormLabel className="data-[error=true]:text-destructive">
+                  Tags
+                </FormLabel>
+                <FormControl>
+                  <MultipleSelector
+                    onChange={(value) => {
+                      field.onChange(value.flatMap((v) => v.value));
+                      // field.onChange(value);
+                    }}
+                    defaultOptions={[]}
+                    value={
+                      field.value?.map((v) => ({ value: v, label: v })) || []
+                    }
+                    creatable
+                    triggerSearchOnFocus
+                    placeholder="Escreva e adicione"
+                    emptyIndicator={null}
+                    className={cn("w-full", hasError && "border-destructive")}
+                  />
+                </FormControl>
+                <FormMessage className="text-right text-destructive" />
+              </FormItem>
+            );
+          }}
         />
 
         <SheetFooter className="inline-flex flex-1 justify-end w-full px-0">

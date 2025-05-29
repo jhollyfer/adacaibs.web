@@ -1,12 +1,12 @@
+import { Pagination } from "@/components/pagination";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { usePodcastPaginateQuery } from "@/lib/tanstack/query/podcast/paginate";
 import { Plus, Search } from "lucide-react";
 import React from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { Sheet } from "./components/sheet";
 import { Table } from "./components/table";
-import { useLocation, useSearchParams } from "react-router-dom";
-import { usePodcastPaginateQuery } from "@/lib/tanstack/query/podcast/paginate";
-import { Pagination } from "@/components/pagination";
 
 export function Podcast(): React.JSX.Element {
   const location = useLocation();
@@ -16,7 +16,7 @@ export function Podcast(): React.JSX.Element {
 
   const paginate = usePodcastPaginateQuery({
     page: Number(searchParams.get("page") ?? 1),
-    per_page: Number(searchParams.get("per_page") ?? 10),
+    perPage: Number(searchParams.get("perPage") ?? 10),
     ...(searchParams.has("search") && { search: searchParams.get("search")! }),
   });
 

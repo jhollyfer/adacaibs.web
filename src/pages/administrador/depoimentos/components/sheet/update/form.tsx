@@ -24,7 +24,7 @@ import { useTestimonialUpdateMutation } from "@/lib/tanstack/mutation/depoimento
 import {
   TestimonialSchema,
   TestimonialUpdatePayload,
-} from "@/schemas/depoimento";
+} from "@/schemas/depoimentos";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircleIcon } from "lucide-react";
 import React from "react";
@@ -50,7 +50,7 @@ export function FormUpdate({
     onSuccess(response) {
       updatedTestimonialToPagination(response, {
         page: Number(searchParams.get("page") ?? 1),
-        per_page: Number(searchParams.get("per_page") ?? 10),
+        perPage: Number(searchParams.get("perPage") ?? 10),
         ...(searchParams.has("search") && {
           search: searchParams.get("search")!,
         }),
@@ -68,7 +68,7 @@ export function FormUpdate({
       rating: testimonial.rating,
       testimonial: testimonial.testimonial,
       status: testimonial.status,
-      avatar_id: testimonial.avatar_id,
+      avatarId: testimonial.avatarId,
       files: null,
     },
   });
@@ -213,7 +213,7 @@ export function FormUpdate({
               "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
             },
           }}
-          fieldName="avatar_id"
+          fieldName="avatarId"
           label="Avatar"
           defaultValue={testimonial?.avatar ? [testimonial.avatar] : []}
         />

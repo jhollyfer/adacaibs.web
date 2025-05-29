@@ -1,26 +1,24 @@
+import { Pagination } from "@/components/pagination";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Plus,
-  Search,
-} from "lucide-react";
-import React from "react";
-import { Table } from "./components/table";
-import type { Video } from "@/lib/model";
-import { Sheet } from "./components/sheet";
-import { useLocation, useSearchParams } from "react-router-dom";
 import { useVideoPaginateQuery } from "@/lib/tanstack/query/videos/paginate";
-import { Pagination } from "@/components/pagination";
+import { Plus, Search } from "lucide-react";
+import React from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
+import { Sheet } from "./components/sheet";
+import { Table } from "./components/table";
 
 export function Video(): React.JSX.Element {
   const location = useLocation();
-  const [searchParams] = useSearchParams(new URLSearchParams(location.search));
+  const [searchParams, setSearchParams] = useSearchParams(
+    new URLSearchParams(location.search)
+  );
 
   const videoCreateButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
   const paginate = useVideoPaginateQuery({
     page: Number(searchParams.get("page") ?? 1),
-    per_page: Number(searchParams.get("per_page") ?? 10),
+    perPage: Number(searchParams.get("perPage") ?? 10),
     ...(searchParams.has("search") && { search: searchParams.get("search")! }),
   });
 
@@ -41,9 +39,25 @@ export function Video(): React.JSX.Element {
           <div className="relative max-w-sm">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
             <Input
-              placeholder="Buscar vídeos..."
+              placeholder="Buscar cargo ou nome..."
               className="pl-8"
               disabled={paginate.status === "pending"}
+              onKeyDown={(event) => {
+                if (
+                  (event.key === "Backspace" &&
+                    event.currentTarget.value?.length === 1) ||
+                  event.currentTarget.value === ""
+                ) {
+                  searchParams.delete("search");
+                  setSearchParams(searchParams);
+                }
+
+                if (event.key === "Enter" && event.currentTarget.value) {
+                  searchParams.set("search", event.currentTarget.value);
+                  setSearchParams(searchParams);
+                }
+              }}
+              defaultValue={searchParams.get("search") ?? ""}
             />
           </div>
         </div>
@@ -53,9 +67,10 @@ export function Video(): React.JSX.Element {
             <div className="border rounded-lg">
               <Table
                 labels={[
-                  "Título",
-                  "Descrição",
-                  "Data de submissão",
+                  "Vídeo",
+                  "Data-Hora",
+                  "Apresentador/Instrutor",
+                  "Link do Vídeo",
                 ]}
                 data={paginate.data?.data}
               />

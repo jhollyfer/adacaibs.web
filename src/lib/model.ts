@@ -52,7 +52,7 @@ export interface Storage extends Base {
 
 export interface User extends Base {
   avatar: Storage | null;
-  avatar_id: string | null;
+  avatarId: string | null;
   name: string;
   email: string;
   password: string;
@@ -60,55 +60,34 @@ export interface User extends Base {
   status: UserStatus;
 }
 
-// antes da mudança de schema
-// export interface Notice extends Base {
-//   title: string;
-//   category: NoticeCategory;
-//   status: NoticeStatus;
-//   resume: string;
-//   content: string;
-//   cover: string | null;
-//   tags: string[];
-// }
-
 export interface Notice extends Base {
-  cover: Storage | null;
-  cover_id: string | null;
   title: string;
   category: NoticeCategory;
   status: NoticeStatus;
   resume: string;
   content: string;
   tags: string[];
+
+  cover: Storage | null;
+  coverId: string | null;
 }
 
 export interface Events extends Base {
   title: string;
   date: string;
-  hour: string; // Format: "HH:MM - HH:MM" (e.g., "14:00 - 18:00")
+  hour: string;
   location: string;
   address: string;
   category: EventCategory;
   capacity: number;
-  description: string;
-  detailedContent: string; // Can contain HTML
-  cover: string | null;
+  resume: string;
+  content: string;
+
+  cover: Storage | null;
+  coverId: string | null;
 }
 
-// export interface Podcast extends Base {
-//   title: string;
-//   date: string;
-//   duration: string;
-//   presenters: string[];
-//   guests: string[];
-//   description: string;
-//   cover: string | null;
-//   content: string | null;
-// }
-
 export interface Podcast extends Base {
-  cover: Storage | null;
-  cover_id: string | null;
   title: string;
   date: string;
   duration: string;
@@ -116,6 +95,9 @@ export interface Podcast extends Base {
   guests: string[];
   description: string;
   content: string | null;
+
+  cover: Storage | null;
+  coverId: string | null;
 }
 
 export interface Video extends Base {
@@ -123,10 +105,12 @@ export interface Video extends Base {
   date: string;
   duration: string;
   instructor: string;
-  views: number; // TODO: tem que adicionar isso no back
+  views: number;
   url: string;
   description: string;
-  thumbnail: string | null;
+
+  cover: Storage | null;
+  coverId: string | null;
 }
 
 export interface Album extends Base {
@@ -139,16 +123,17 @@ export interface Album extends Base {
 }
 
 export interface Testimonial extends Base {
-  avatar: Storage | null;
-  avatar_id: string | null;
   name: string;
   position: string;
   rating: string;
   testimonial: string;
   status: TestimonialStatus;
+
+  avatar: Storage | null;
+  avatarId: string | null;
 }
 
-interface Meta {
+export interface Meta {
   total: number;
   page: number;
   perPage: number;
@@ -161,32 +146,13 @@ interface Meta {
   previousPageUrl: string | null;
 }
 
-export interface Paginated<Entity> {
-  data: Entity;
-  meta: Meta;
-}
-
 export interface PaginateMetaResponse<T> {
   data: T;
-  meta: {
-    total: number;
-    per_page: number;
-    page: number;
-    last_page: number;
-    first_page: number;
-  };
+  meta: Meta;
 }
 
 export interface PaginateMetaQuery {
   page: number;
-  per_page: number;
+  perPage: number;
   search?: string;
 }
-
-export interface PaginateQuerySearch {
-  page: number;
-  per_page: number;
-  search?: string;
-}
-
-// export type Payload<T extends Base> = Omit<T, 'createdAt' | 'updatedAt'>

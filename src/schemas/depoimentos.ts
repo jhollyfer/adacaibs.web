@@ -14,19 +14,7 @@ export const TestimonialSchema = {
     status: z.nativeEnum(TestimonialStatus, {
       required_error: "Status é obrigatório",
     }),
-    avatar_id: z.string().trim().nullable(),
-
-    // files: SOMENTE PARA O UPLOAD DA FOTO DO DEPOIMENTO
-    files: z
-      .array(
-        z.instanceof(File).refine((file) => file.size < 2 * 1024 * 1024, {
-          message: "O arquivo deve ter no máximo 2MB",
-        })
-      )
-      .max(1, {
-        message: "Você pode enviar apenas um arquivo",
-      })
-      .nullable(),
+    avatarId: z.string().trim().nullable(),
   }),
   update: z.object({
     id: z.string({ required_error: "ID é obrigatório" }),
@@ -41,19 +29,7 @@ export const TestimonialSchema = {
     status: z.nativeEnum(TestimonialStatus, {
       required_error: "Status é obrigatório",
     }),
-    avatar_id: z.string().trim().nullable(),
-
-    // files: SOMENTE PARA O UPLOAD DA FOTO DO DEPOIMENTO
-    files: z
-      .array(
-        z.instanceof(File).refine((file) => file.size < 2 * 1024 * 1024, {
-          message: "O arquivo deve ter no máximo 2MB",
-        })
-      )
-      .max(1, {
-        message: "Você pode enviar apenas um arquivo",
-      })
-      .nullable(),
+    avatarId: z.string().trim().nullable(),
   }),
 } as const;
 

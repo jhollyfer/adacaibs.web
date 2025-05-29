@@ -1,4 +1,5 @@
 import { Arquivo } from "@/components/arquivo";
+import { MultipleSelector } from "@/components/multi-selector";
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -20,32 +21,27 @@ import { SheetFooter } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
 import { NOTICE_CATEGORY_LIST, NOTICE_STATUS_LIST } from "@/lib/constant";
 import { NoticeStatus } from "@/lib/model";
+import { addedNoticeToPagination } from "@/lib/tanstack/actions/noticias";
 import { useNoticeCreateMutation } from "@/lib/tanstack/mutation/noticias/create";
+import { cn } from "@/lib/utils";
 import { NoticeCreatePayload, NoticeSchema } from "@/schemas/noticias";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircleIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useLocation, useSearchParams } from "react-router-dom";
-import { ACTION } from "../action";
 
-// TODO: arrumar a tag que está indo errado.
 export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
   const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams(
-    new URLSearchParams(location.search)
-  );
+  const [searchParams] = useSearchParams(new URLSearchParams(location.search));
 
   const create = useNoticeCreateMutation({
     onError(error) {
       console.log(error);
     },
     onSuccess(response) {
-      searchParams.set("page", "1");
-      searchParams.set("per_page", "10");
-      setSearchParams(searchParams);
-      ACTION["PAGINATE"]["ADDED"](response, {
+      addedNoticeToPagination(response, {
         page: Number(searchParams.get("page") ?? 1),
-        per_page: Number(searchParams.get("per_page") ?? 10),
+        perPage: Number(searchParams.get("perPage") ?? 10),
         ...(searchParams.has("search") && {
           search: searchParams.get("search")!,
         }),
@@ -57,16 +53,12 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
   const form = useForm<NoticeCreatePayload>({
     resolver: zodResolver(NoticeSchema["create"]),
     defaultValues: {
-      files: null,
       status: NoticeStatus.DRAFT,
     },
   });
 
   const onSubmit = form.handleSubmit((data) => {
-    create.mutateAsync({
-      ...data,
-      files: null,
-    });
+    create.mutateAsync(data);
   });
 
   return (
@@ -199,24 +191,42 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
               "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
             },
           }}
-          fieldName="cover_id"
+          fieldName="coverId"
           label="Capa"
         />
 
         <FormField
           control={form.control}
           name="tags"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="data-[error=true]:text-destructive">
-                Tags <span className="text-destructive">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input placeholder="Digite o título da notícia" {...field} />
-              </FormControl>
-              <FormMessage className="text-right text-destructive" />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            const hasError = !!form.formState.errors[field.name];
+
+            return (
+              <FormItem>
+                <FormLabel className="data-[error=true]:text-destructive">
+                  Tags
+                </FormLabel>
+                <FormControl>
+                  <MultipleSelector
+                    onChange={(value) => {
+                      field.onChange(value.flatMap((v) => v.value));
+                      // field.onChange(value);
+                    }}
+                    defaultOptions={[]}
+                    value={
+                      field.value?.map((v) => ({ value: v, label: v })) || []
+                    }
+                    creatable
+                    triggerSearchOnFocus
+                    placeholder="Escreva e adicione"
+                    emptyIndicator={null}
+                    className={cn("w-full", hasError && "border-destructive")}
+                  />
+                </FormControl>
+                <FormMessage className="text-right text-destructive" />
+              </FormItem>
+            );
+          }}
         />
 
         <SheetFooter className="inline-flex flex-1 justify-end w-full px-0">

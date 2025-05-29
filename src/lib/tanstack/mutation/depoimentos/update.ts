@@ -1,6 +1,6 @@
 import { API_SERVICE } from "@/lib/api";
 import { Testimonial } from "@/lib/model";
-import { TestimonialUpdatePayload } from "@/schemas/depoimento";
+import { TestimonialUpdatePayload } from "@/schemas/depoimentos";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 

@@ -11,11 +11,7 @@ interface Props {
 
 export function useNoticeCreateMutation(
   props: Props
-): UseMutationResult<
-  Notice,
-  Error | AxiosError,
-  NoticeCreatePayload
-> {
+): UseMutationResult<Notice, Error | AxiosError, NoticeCreatePayload> {
   return useMutation({
     mutationFn: async function create(payload: NoticeCreatePayload) {
       return await API_SERVICE.NOTICE["create"](payload);

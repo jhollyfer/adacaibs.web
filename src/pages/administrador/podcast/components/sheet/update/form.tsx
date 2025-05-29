@@ -41,11 +41,11 @@ export function FormUpdate({
     },
     onSuccess(response) {
       searchParams.set("page", "1");
-      searchParams.set("per_page", "10");
+      searchParams.set("perPage", "10");
       setSearchParams(searchParams);
       ACTION["PAGINATE"]["UPDATE"](response, {
         page: Number(searchParams.get("page") ?? 1),
-        per_page: Number(searchParams.get("per_page") ?? 10),
+        perPage: Number(searchParams.get("perPage") ?? 10),
         ...(searchParams.has("search") && {
           search: searchParams.get("search")!,
         }),
@@ -66,7 +66,7 @@ export function FormUpdate({
       guests: podcast.guests.join(", "),
       description: podcast.description,
       // content: podcast.content || null,
-      cover_id: podcast.cover_id,
+      coverId: podcast.coverId,
       files: null,
     },
   });
@@ -211,7 +211,7 @@ export function FormUpdate({
               "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
             },
           }}
-          fieldName="cover_id"
+          fieldName="coverId"
           label="Imagem de Capa"
           defaultValue={podcast?.cover ? [podcast.cover] : []}
         />

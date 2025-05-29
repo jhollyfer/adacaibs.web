@@ -5,8 +5,8 @@ import { Events } from "./eventos";
 import { Notice } from "./noticias";
 import { Podcast } from "./podcast";
 import { Storage } from "./storage";
-import { User } from "./usuario";
-import { Video } from "./video";
+import { User } from "./usuarios";
+import { Video } from "./videos";
 
 export const API_SERVICE = {
   AUTHENTICATION: Authentication,

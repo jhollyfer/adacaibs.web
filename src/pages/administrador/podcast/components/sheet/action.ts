@@ -15,7 +15,7 @@ export const ACTION = {
             return {
               meta: {
                 total: 1,
-                per_page: 10,
+                perPage: 10,
                 page: 1,
                 last_page: 1,
                 first_page: 1,
@@ -44,7 +44,7 @@ export const ACTION = {
             return {
               meta: {
                 total: 1,
-                per_page: 10,
+                perPage: 10,
                 page: 1,
                 last_page: 1,
                 first_page: 1,

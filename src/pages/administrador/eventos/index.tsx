@@ -10,24 +10,16 @@ import { Table } from "./components/table";
 
 export function Events(): React.JSX.Element {
   const location = useLocation();
-  const [searchParams] = useSearchParams(new URLSearchParams(location.search));
+  const [searchParams, setSearchParams] = useSearchParams(
+    new URLSearchParams(location.search)
+  );
 
   const createButtonRef = React.useRef<HTMLButtonElement | null>(null);
   const [filter, setFilter] = React.useState<string>("all");
 
-  // TODO: adicionar isso na rota do backend, não podemos fazer isso aqui
-  // const filteredEvents = React.useMemo(() => {
-  //   if (filter === "upcoming") {
-  //     return mockEvents.filter(event => new Date(event.date) >= new Date());
-  //   } else if (filter === "past") {
-  //     return mockEvents.filter(event => new Date(event.date) < new Date());
-  //   }
-  //   return mockEvents;
-  // }, [filter]);
-
   const paginate = useEventsPaginateQuery({
     page: Number(searchParams.get("page") ?? 1),
-    per_page: Number(searchParams.get("per_page") ?? 10),
+    perPage: Number(searchParams.get("perPage") ?? 10),
     ...(searchParams.has("search") && { search: searchParams.get("search")! }),
   });
 
@@ -48,9 +40,25 @@ export function Events(): React.JSX.Element {
           <div className="relative max-w-sm">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
             <Input
-              placeholder="Buscar eventos..."
+              placeholder="Buscar cargo ou nome..."
               className="pl-8"
               disabled={paginate.status === "pending"}
+              onKeyDown={(event) => {
+                if (
+                  (event.key === "Backspace" &&
+                    event.currentTarget.value?.length === 1) ||
+                  event.currentTarget.value === ""
+                ) {
+                  searchParams.delete("search");
+                  setSearchParams(searchParams);
+                }
+
+                if (event.key === "Enter" && event.currentTarget.value) {
+                  searchParams.set("search", event.currentTarget.value);
+                  setSearchParams(searchParams);
+                }
+              }}
+              defaultValue={searchParams.get("search") ?? ""}
             />
           </div>
           <div className="flex gap-2">
@@ -83,12 +91,11 @@ export function Events(): React.JSX.Element {
             <div className="border rounded-lg">
               <Table
                 labels={[
-                  "Título",
-                  "Categoria",
+                  "Evento",
+                  "Data - Hora",
+                  "Local",
+                  "Capacidade",
                   "Status",
-                  "Autor",
-                  "Visualizações",
-                  "Data de submissão",
                 ]}
                 data={paginate.data?.data}
               />

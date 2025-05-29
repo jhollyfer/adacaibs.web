@@ -1,6 +1,7 @@
+import { MetaBase } from "@/lib/constant";
 import {
+  PaginateMetaQuery,
   PaginateMetaResponse,
-  PaginateQuerySearch,
   Testimonial,
 } from "@/lib/model";
 import { QUERY, TanstackQuery } from "@/lib/tanstack/instance";
@@ -20,20 +21,14 @@ export function updatedTestimonial(payload: Testimonial): void {
 
 export function addedTestimonialToPagination(
   payload: Testimonial,
-  query: PaginateQuerySearch
+  query: PaginateMetaQuery
 ): void {
   TanstackQuery.setQueryData<PaginateMetaResponse<Testimonial[]>>(
     [QUERY.TESTIMONIAL_PAGINATE, query],
     (old) => {
       if (!old) {
         return {
-          meta: {
-            total: 1,
-            per_page: 10,
-            page: 1,
-            last_page: 1,
-            first_page: 1,
-          },
+          meta: MetaBase,
           data: [payload],
         };
       }
@@ -53,20 +48,14 @@ export function addedTestimonialToPagination(
 
 export function updatedTestimonialToPagination(
   payload: Testimonial,
-  query: PaginateQuerySearch
+  query: PaginateMetaQuery
 ): void {
   TanstackQuery.setQueryData<PaginateMetaResponse<Testimonial[]>>(
     [QUERY.TESTIMONIAL_PAGINATE, query],
     (old) => {
       if (!old) {
         return {
-          meta: {
-            total: 1,
-            per_page: 10,
-            page: 1,
-            last_page: 1,
-            first_page: 1,
-          },
+          meta: MetaBase,
           data: [payload],
         };
       }

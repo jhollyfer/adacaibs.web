@@ -1,7 +1,7 @@
 import {
   TestimonialCreatePayload,
   TestimonialUpdatePayload,
-} from "@/schemas/depoimento";
+} from "@/schemas/depoimentos";
 import {
   Testimonial as Model,
   PaginateMetaQuery,

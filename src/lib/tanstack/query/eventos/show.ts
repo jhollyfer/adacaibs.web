@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 
 import { API_SERVICE } from "@/lib/api";
-import { User } from "@/lib/model";
+import { Events } from "@/lib/model";
 import { QUERY } from "../../instance";
 
 interface Props {
@@ -11,13 +11,13 @@ interface Props {
   enabled: boolean;
 }
 
-export function useUserShowQuery({
+export function useEventShowQuery({
   id,
   enabled,
-}: Props): UseQueryResult<User, Error | AxiosError> {
+}: Props): UseQueryResult<Events, Error | AxiosError> {
   return useQuery({
-    queryKey: [QUERY.USER_SHOW, id],
-    queryFn: async () => await API_SERVICE["USER"]["show"](id),
+    queryKey: [QUERY.EVENT_SHOW, id],
+    queryFn: async () => await API_SERVICE["EVENT"]["show"](id),
     enabled: !!id && enabled,
   });
 }

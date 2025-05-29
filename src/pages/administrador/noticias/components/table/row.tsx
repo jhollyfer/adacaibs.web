@@ -36,9 +36,11 @@ export function Row({ data }: Props): React.ReactElement {
       <TableCell>{"Administrador"}</TableCell>
       <TableCell>{"100 visualizações"}</TableCell>
       <TableCell>
-        {new Intl.DateTimeFormat("pt-BR", {
-          dateStyle: "long",
-        }).format(data.createdAt)}
+        {data.createdAt
+          ? new Intl.DateTimeFormat("pt-BR", {
+              dateStyle: "long",
+            }).format(new Date(data.createdAt))
+          : "Data não disponível"}
       </TableCell>
 
       <TableCell className="w-[80px]">
@@ -75,13 +77,13 @@ export function Row({ data }: Props): React.ReactElement {
 
             <DropdownMenuItem
               className="inline-flex space-x-1 w-full"
-            // onClick={() => {
-            // 	setSearchParams((state) => {
-            // 		state.set('id', row.id);
-            // 		return state;
-            // 	});
-            // 	removeTestimonialButtonRef?.current?.click();
-            // }}
+              // onClick={() => {
+              // 	setSearchParams((state) => {
+              // 		state.set('id', row.id);
+              // 		return state;
+              // 	});
+              // 	removeTestimonialButtonRef?.current?.click();
+              // }}
             >
               <TrashIcon className="w-4 h-4" />
               <span>Remover</span>
@@ -91,5 +93,5 @@ export function Row({ data }: Props): React.ReactElement {
         </DropdownMenu>
       </TableCell>
     </TableRow>
-  )
+  );
 }

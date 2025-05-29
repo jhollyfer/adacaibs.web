@@ -121,7 +121,7 @@ export function Create({
                   "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
                 },
               }}
-              fieldName="cover_id"
+              fieldName="coverId"
               label="Capa do Álbum"
             />
 

@@ -11,7 +11,7 @@ export const UserSchema = {
       .trim()
       .email(),
     role: z.nativeEnum(UserRole, { required_error: "Função é obrigatória" }),
-    avatar_id: z.string().trim().nullable(),
+    avatarId: z.string().trim().nullable(),
   }),
   update: z.object({
     id: z.string({ required_error: "ID é obrigatório" }),
@@ -23,7 +23,7 @@ export const UserSchema = {
       .trim()
       .email(),
     role: z.nativeEnum(UserRole, { required_error: "Função é obrigatória" }),
-    avatar_id: z.string().trim().nullable(),
+    avatarId: z.string().trim().nullable(),
   }),
 } as const;
 

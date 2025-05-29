@@ -1,3 +1,5 @@
+import { EmptyState } from "@/components/empty-state";
+import { Loading } from "@/components/loading";
 import { Pagination } from "@/components/pagination";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,8 +9,6 @@ import React from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Sheet } from "./components/sheet";
 import { Table } from "./components/table";
-import { EmptyState } from "@/components/empty-state";
-import { Loading } from "@/components/loading";
 
 export function Users(): React.JSX.Element {
   const location = useLocation();
@@ -20,7 +20,7 @@ export function Users(): React.JSX.Element {
 
   const paginate = useUserPaginateQuery({
     page: Number(searchParams.get("page") ?? 1),
-    per_page: Number(searchParams.get("per_page") ?? 10),
+    perPage: Number(searchParams.get("perPage") ?? 10),
     ...(searchParams.has("search") && { search: searchParams.get("search")! }),
   });
 
@@ -78,7 +78,7 @@ export function Users(): React.JSX.Element {
           </React.Fragment>
         )}
 
-        {paginate.status === 'success' && !paginate?.data.data.length && (
+        {paginate.status === "success" && !paginate?.data.data.length && (
           <EmptyState message="Nenhum usuário encontrado" />
         )}
       </div>

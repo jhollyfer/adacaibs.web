@@ -6,10 +6,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useNoticeShowQuery } from "@/lib/tanstack/query/noticias/show";
 import React from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
-import { useNoticeShowQuery } from "@/lib/tanstack/query/noticias/show";
-import { FormUpdate } from "./form";
+import { Form } from "./form";
 
 export function Update({
   ...props
@@ -55,7 +55,7 @@ export function Update({
         </SheetHeader>
 
         {notice?.status === "success" && (
-          <FormUpdate
+          <Form
             onClose={() => {
               searchParams.delete("id");
               setSearchParams(searchParams);

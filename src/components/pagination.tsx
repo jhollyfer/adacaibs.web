@@ -26,9 +26,7 @@ export function Pagination({ meta }: Props): React.JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = Number((meta?.page || searchParams.get("page")) ?? 1);
-  const per_page = Number(
-    (meta?.per_page || searchParams.get("per_page")) ?? 10
-  );
+  const perPage = Number((meta?.perPage || searchParams.get("perPage")) ?? 10);
   const last_page = Number(meta?.last_page ?? 1);
 
   return (
@@ -36,9 +34,9 @@ export function Pagination({ meta }: Props): React.JSX.Element {
       <div className="inline-flex gap-2 items-center">
         <span className="inline-flex flex-1">Registros por página: </span>
         <Select
-          defaultValue={String(per_page)}
+          defaultValue={String(perPage)}
           onValueChange={(value) => {
-            setSearchParams({ per_page: value, page: "1" });
+            setSearchParams({ perPage: value, page: "1" });
           }}
         >
           <SelectTrigger className="w-[180px]">

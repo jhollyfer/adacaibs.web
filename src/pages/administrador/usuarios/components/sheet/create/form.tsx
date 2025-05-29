@@ -38,7 +38,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
     onSuccess(response) {
       addedUserToPagination(response, {
         page: Number(searchParams.get("page") ?? 1),
-        per_page: Number(searchParams.get("per_page") ?? 10),
+        perPage: Number(searchParams.get("perPage") ?? 10),
         ...(searchParams.has("search") && {
           search: searchParams.get("search")!,
         }),
@@ -50,7 +50,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
   const form = useForm<UserCreatePayload>({
     resolver: zodResolver(UserSchema["create"]),
     defaultValues: {
-      avatar_id: null,
+      avatarId: null,
     },
   });
 
@@ -132,7 +132,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
               "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
             },
           }}
-          fieldName="avatar_id"
+          fieldName="avatarId"
           label="Avatar"
         />
 
