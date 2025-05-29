@@ -8,29 +8,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PaginateMetaResponse } from "@/lib/model";
+import { Meta } from "@/lib/model";
 import {
   ChevronLeft,
-  ChevronRightIcon,
+  ChevronRight,
   ChevronsLeft,
-  ChevronsRightIcon,
+  ChevronsRight,
 } from "lucide-react";
 import React from "react";
 import { useSearchParams } from "react-router-dom";
 
 interface Props {
-  meta: PaginateMetaResponse<unknown>["meta"];
+  meta: Meta;
 }
 
 export function Pagination({ meta }: Props): React.JSX.Element {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
 
-  const page = Number((meta?.page || searchParams.get("page")) ?? 1);
-  const perPage = Number((meta?.perPage || searchParams.get("perPage")) ?? 10);
-  const last_page = Number(meta?.last_page ?? 1);
+  const page = Number(meta?.page ?? 1);
+  const perPage = Number(meta?.perPage ?? 10);
+  const lastPage = Number(meta?.lastPage ?? 1);
 
   return (
-    <section className="inline-flex w-full justify-between">
+    <section className="inline-flex w-full justify-between flex-shrink-0">
       <div className="inline-flex gap-2 items-center">
         <span className="inline-flex flex-1">Registros por página: </span>
         <Select
@@ -44,11 +44,11 @@ export function Pagination({ meta }: Props): React.JSX.Element {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              {[10, 20, 30, 40, 50].map((item) => (
-                <SelectItem key={item} value={String(item)}>
-                  {item}
-                </SelectItem>
-              ))}
+              <SelectItem value="10">10</SelectItem>
+              <SelectItem value="20">20</SelectItem>
+              <SelectItem value="30">30</SelectItem>
+              <SelectItem value="40">40</SelectItem>
+              <SelectItem value="50">50</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -56,7 +56,7 @@ export function Pagination({ meta }: Props): React.JSX.Element {
 
       <div className="inline-flex space-x-8 items-center">
         <label className="inline-block max-w-48 w-full">
-          Página <strong>{page}</strong> de <strong>{last_page}</strong>
+          Página <strong>{page}</strong> de <strong>{lastPage}</strong>
         </label>
         <PaginationContent className="justify-end">
           <PaginationItem>
@@ -90,12 +90,12 @@ export function Pagination({ meta }: Props): React.JSX.Element {
               variant="ghost"
               size="icon"
               className="border"
-              disabled={page === last_page}
+              disabled={page === lastPage}
               onClick={() => {
                 setSearchParams({ page: String(page + 1) });
               }}
             >
-              <ChevronRightIcon />
+              <ChevronRight />
             </Button>
           </PaginationItem>
           <PaginationItem>
@@ -103,12 +103,12 @@ export function Pagination({ meta }: Props): React.JSX.Element {
               variant="ghost"
               size="icon"
               className="border"
-              disabled={page === last_page}
+              disabled={page === lastPage}
               onClick={() => {
-                setSearchParams({ page: String(last_page) });
+                setSearchParams({ page: String(lastPage) });
               }}
             >
-              <ChevronsRightIcon />
+              <ChevronsRight />
             </Button>
           </PaginationItem>
         </PaginationContent>

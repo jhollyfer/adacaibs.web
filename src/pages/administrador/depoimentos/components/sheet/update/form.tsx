@@ -69,7 +69,6 @@ export function FormUpdate({
       testimonial: testimonial.testimonial,
       status: testimonial.status,
       avatarId: testimonial.avatarId,
-      files: null,
     },
   });
 
@@ -77,7 +76,6 @@ export function FormUpdate({
     update.mutateAsync({
       ...data,
       id: testimonial.id!,
-      files: null,
     });
   });
 

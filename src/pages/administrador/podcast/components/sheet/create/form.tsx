@@ -51,9 +51,6 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
 
   const form = useForm<PodcastCreatePayload>({
     resolver: zodResolver(PodcastSchema["create"]),
-    defaultValues: {
-      files: null,
-    },
   });
 
   // voltar aqui essa é a forma de arrumar o tags das noticias
@@ -67,11 +64,8 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
       ...transformed,
       presenters: transformed.presenters.join(", "), // <-- transforma string[]
       guests: transformed.guests.join(", "), // <-- transforma string[]
-      files: null,
     });
   });
-
-  console.log(form.formState.errors);
 
   return (
     <Root {...form}>

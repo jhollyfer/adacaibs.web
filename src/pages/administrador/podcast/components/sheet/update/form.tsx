@@ -67,7 +67,6 @@ export function FormUpdate({
       description: podcast.description,
       // content: podcast.content || null,
       coverId: podcast.coverId,
-      files: null,
     },
   });
 
@@ -75,7 +74,6 @@ export function FormUpdate({
     update.mutateAsync({
       ...data,
       id: podcast.id!,
-      files: null,
     });
   });
 

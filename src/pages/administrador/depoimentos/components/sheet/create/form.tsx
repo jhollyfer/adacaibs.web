@@ -54,7 +54,6 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
   const form = useForm<TestimonialCreatePayload>({
     resolver: zodResolver(TestimonialSchema["create"]),
     defaultValues: {
-      files: null,
       status: TestimonialStatus.PENDING,
     },
   });
@@ -62,7 +61,6 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
   const onSubmit = form.handleSubmit((data) => {
     create.mutateAsync({
       ...data,
-      files: null,
     });
   });
 

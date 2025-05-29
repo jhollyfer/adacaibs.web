@@ -1,25 +1,16 @@
-import {
-  PaginateMetaResponse,
-  PaginateQuerySearch,
-  Podcast,
-} from "@/lib/model";
+import { MetaBase } from "@/lib/constant";
+import { PaginateMetaQuery, PaginateMetaResponse, Podcast } from "@/lib/model";
 import { QUERY, TanstackQuery } from "@/lib/tanstack/instance";
 
 export const ACTION = {
   PAGINATE: {
-    ADDED(payload: Podcast, query: PaginateQuerySearch) {
+    ADDED(payload: Podcast, query: PaginateMetaQuery) {
       TanstackQuery.setQueryData<PaginateMetaResponse<Podcast[]>>(
         [QUERY.PODCAST_PAGINATE, query],
         (old) => {
           if (!old) {
             return {
-              meta: {
-                total: 1,
-                perPage: 10,
-                page: 1,
-                last_page: 1,
-                first_page: 1,
-              },
+              meta: MetaBase,
               data: [payload],
             };
           }
@@ -36,19 +27,13 @@ export const ACTION = {
         }
       );
     },
-    UPDATE(payload: Podcast, query: PaginateQuerySearch) {
+    UPDATE(payload: Podcast, query: PaginateMetaQuery) {
       TanstackQuery.setQueryData<PaginateMetaResponse<Podcast[]>>(
         [QUERY.PODCAST_PAGINATE, query],
         (old) => {
           if (!old) {
             return {
-              meta: {
-                total: 1,
-                perPage: 10,
-                page: 1,
-                last_page: 1,
-                first_page: 1,
-              },
+              meta: MetaBase,
               data: [payload],
             };
           }
