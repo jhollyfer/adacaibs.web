@@ -28,6 +28,7 @@ interface Props {
   fieldName: string;
   label: string;
   dropzoneOptions: DropzoneOptions;
+  required?: boolean;
 }
 
 export function Arquivo({
@@ -35,6 +36,7 @@ export function Arquivo({
   fieldName,
   label,
   dropzoneOptions,
+  required,
 }: Props): React.JSX.Element {
   const [files, setFiles] = React.useState<Storage[]>([
     ...(defaultValue || []),
@@ -75,7 +77,7 @@ export function Arquivo({
           return (
             <FormItem>
               <FormLabel className="data-[error=true]:text-destructive">
-                {label}
+                {label} {required && <span className="text-destructive">*</span>}
               </FormLabel>
               <FileUploader
                 orientation="horizontal"

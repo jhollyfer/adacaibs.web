@@ -1,5 +1,6 @@
 import { Album } from "./album";
 import { Authentication } from "./autenticacao";
+import { Dashboard } from "./dashboard";
 import { Testimonial } from "./depoimentos";
 import { Events } from "./eventos";
 import { Notice } from "./noticias";
@@ -18,4 +19,5 @@ export const API_SERVICE = {
   ALBUM: Album,
   EVENT: Events,
   TESTIMONIAL: Testimonial,
+  DASHBOARD: Dashboard,
 } as const;

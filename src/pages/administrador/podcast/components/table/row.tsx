@@ -27,9 +27,19 @@ export function Row({ data }: Props): React.ReactElement {
   const [searchParams, setSearchParams] = useSearchParams(
     new URLSearchParams(location?.search)
   );
+
   return (
     <TableRow key={data.id}>
-      <TableCell>{data.title}</TableCell>
+      <TableCell className="flex items-center gap-3">
+        {data.cover?.url && (
+          <img
+            src={data.cover?.url}
+            alt="Capa"
+            className="w-8 h-8 object-cover rounded border flex-shrink-0"
+          />
+        )}
+        <span className="truncate">{data.title}</span>
+      </TableCell>
       <TableCell>{data.presenters?.join(", ")}</TableCell>
       <TableCell>{"100 ouvintes"}</TableCell>
 

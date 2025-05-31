@@ -96,7 +96,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
                   Data <span className="text-destructive">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="00/00/0000" {...field} />
+                  <Input type="date" placeholder="00/00/0000" {...field} />
                 </FormControl>
                 <FormMessage className="text-right text-destructive" />
               </FormItem>
@@ -112,7 +112,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
                   Duração <span className="text-destructive">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="00:00:00" {...field} />
+                  <Input type="time" placeholder="00:00:00" {...field} />
                 </FormControl>
                 <FormMessage className="text-right text-destructive" />
               </FormItem>
@@ -179,11 +179,12 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
             maxSize: 4 * 1024 * 1024,
             accept: {
               "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
-              "audio/*": [".mp3", ".wav", ".ogg", ".flac"], // TODO: verificar se isso funciona
+              "audio/*": [".mp3", ".wav", ".ogg", ".flac"],
             },
           }}
           fieldName="audio_id"
           label="Audio"
+          required
         />
 
         <Arquivo
@@ -197,6 +198,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
           }}
           fieldName="coverId"
           label="Imagem de Capa"
+          required
         />
 
         <SheetFooter className="inline-flex flex-1 justify-end w-full px-0">

@@ -193,6 +193,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
           }}
           fieldName="coverId"
           label="Capa"
+          required
         />
 
         <FormField
