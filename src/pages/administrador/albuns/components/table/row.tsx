@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,14 +7,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { Notice } from "@/lib/model";
-import { EllipsisIcon, EyeIcon, PencilIcon, TrashIcon } from "lucide-react";
+import { Album } from "@/lib/model";
+import { Calendar, EllipsisIcon, EyeIcon, ImageIcon, PencilIcon, TrashIcon } from "lucide-react";
 import React from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Sheet } from "../sheet";
 
 interface Props {
-  data: Notice;
+  data: Album;
 }
 
 export function Row({ data }: Props): React.ReactElement {
@@ -28,28 +27,33 @@ export function Row({ data }: Props): React.ReactElement {
 
   return (
     <TableRow key={data.id}>
-      <TableCell className="flex items-center gap-3">
-        {data.cover?.url && (
+      <TableCell className="font-medium">
+        <div className="flex items-center gap-3">
           <img
-            src={data.cover?.url}
-            alt="Capa"
-            className="w-8 h-8 object-cover rounded border flex-shrink-0"
+            src={data.cover || "/default.webp"}
+            alt={data.title}
+            className="h-12 w-20 object-cover rounded-md"
           />
-        )}
-        <span className="truncate">{data.title}</span>
+          <span>{data.title}</span>
+        </div>
       </TableCell>
-      <TableCell>{data.category}</TableCell>
+
       <TableCell>
-        <Badge variant="outline">{data?.status}</Badge>
+        <div className="flex items-center text-sm">
+          <Calendar className="h-3.5 w-3.5 mr-1 text-gray-500" />
+          <span>{data.date}</span>
+        </div>
       </TableCell>
-      <TableCell>{"Administrador"}</TableCell>
-      <TableCell>{"100 visualizações"}</TableCell>
+
       <TableCell>
-        {data.createdAt
-          ? new Intl.DateTimeFormat("pt-BR", {
-            dateStyle: "long",
-          }).format(new Date(data.createdAt))
-          : "Data não disponível"}
+        <span className="line-clamp-2 text-sm text-gray-700">{data.description}</span>
+      </TableCell>
+
+      <TableCell>
+        <div className="flex items-center">
+          <ImageIcon className="h-4 w-4 mr-1 text-gray-500" />
+          <span>{data.imageCount || data.images.length} fotos</span>
+        </div>
       </TableCell>
 
       <TableCell className="w-[80px]">
@@ -88,10 +92,10 @@ export function Row({ data }: Props): React.ReactElement {
               className="inline-flex space-x-1 w-full"
             // onClick={() => {
             // 	setSearchParams((state) => {
-            // 		state.set('id', row.id);
+            // 		state.set('id', data.id);
             // 		return state;
             // 	});
-            // 	removeTestimonialButtonRef?.current?.click();
+            // 	removeAlbumButtonRef?.current?.click();
             // }}
             >
               <TrashIcon className="w-4 h-4" />
