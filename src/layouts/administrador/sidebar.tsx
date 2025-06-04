@@ -19,7 +19,7 @@ import {
 import { Menu } from "@/components/sidebar-menu";
 import { useAuthentication } from "@/hooks/autenticacao";
 import { cn } from "@/lib/utils";
-import { LogOutIcon } from "lucide-react";
+import { LogOutIcon, Rotate3dIcon } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
 import { MenuRouteMap } from "./menu";
@@ -31,17 +31,21 @@ export function Sidebar(): React.JSX.Element {
   const menu = MenuRouteMap;
 
   return (
-    <Root collapsible="icon" variant="inset" className="border-r">
-      <SidebarHeader
-        className={cn("flex flex-col w-full justify-center items-center py-5")}
-      >
-        <Link to={"/dashboard"} replace className="inline-flex gap-1">
-          {/* <LogoSmall /> */}
-          <span>
-            {!(state === "collapsed") && "ADACAIBS"}
-            {state === "collapsed" && "AD"}
-          </span>
-        </Link>
+    <Root collapsible="icon" variant="floating">
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              className="data-[slot=sidebar-menu-button]:!p-1.5"
+            >
+              <Link to="/administrador/dashboard">
+                <Rotate3dIcon className="size-5" />
+                <span className="text-base font-semibold">ADACAIBS</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarHeader>
 
       <SidebarContent>

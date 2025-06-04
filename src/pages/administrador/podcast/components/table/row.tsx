@@ -1,10 +1,3 @@
-import { Podcast } from "@/lib/model";
-import React from "react";
-import { useLocation, useSearchParams } from "react-router-dom";
-import {
-  TableCell,
-  TableRow,
-} from "@/components/ui/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +6,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { EllipsisIcon, EyeIcon, PencilIcon, TrashIcon } from "lucide-react";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { Podcast } from "@/lib/model";
+import {
+  EllipsisIcon,
+  EyeIcon,
+  PencilIcon,
+  SquareArrowOutUpRightIcon,
+  TrashIcon,
+} from "lucide-react";
+import React from "react";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { Sheet } from "../sheet";
 
 interface Props {
@@ -44,9 +47,14 @@ export function Row({ data }: Props): React.ReactElement {
       <TableCell>{"100 ouvintes"}</TableCell>
 
       <TableCell>
-        {new Intl.DateTimeFormat("pt-BR", {
-          dateStyle: "long",
-        }).format(data.createdAt)}
+        <Link
+          to={data.audio?.url ?? "#"}
+          target="_blank"
+          className="inline-flex"
+        >
+          <span>Ouvir audio</span>
+          <SquareArrowOutUpRightIcon className="w-4 h-4 ml-1" />
+        </Link>
       </TableCell>
 
       <TableCell className="w-[80px]">
@@ -85,13 +93,13 @@ export function Row({ data }: Props): React.ReactElement {
 
             <DropdownMenuItem
               className="inline-flex space-x-1 w-full"
-            // onClick={() => {
-            // 	setSearchParams((state) => {
-            // 		state.set('data_id', data._id);
-            // 		return state;
-            // 	});
-            // 	removeButtonRef?.current?.click();
-            // }}
+              // onClick={() => {
+              // 	setSearchParams((state) => {
+              // 		state.set('data_id', data._id);
+              // 		return state;
+              // 	});
+              // 	removeButtonRef?.current?.click();
+              // }}
             >
               <TrashIcon className="w-4 h-4" />
               <span>Remover</span>

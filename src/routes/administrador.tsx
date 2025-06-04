@@ -1,4 +1,3 @@
-import { SidebarProvider } from "@/components/ui/sidebar";
 import { AUTHENTICATION_ID } from "@/context/autenticacao";
 import { Layout } from "@/layouts";
 import React from "react";
@@ -33,7 +32,7 @@ const VideoPage = React.lazy(async () => {
 });
 
 const GalleryPage = React.lazy(async () => {
-  const module = await import("@/pages/administrador/albuns");
+  const module = await import("@/pages/administrador/albums");
   return {
     default: module.Gallery,
   };
@@ -70,11 +69,7 @@ export const route: RouteObject = {
     return null; // precisa retornar algo quando a autenticação for válida
   },
   // index: true,
-  element: (
-    <SidebarProvider>
-      <Layout.Administrator />
-    </SidebarProvider>
-  ),
+  element: <Layout.Administrator />,
   children: [
     {
       // path: "/",

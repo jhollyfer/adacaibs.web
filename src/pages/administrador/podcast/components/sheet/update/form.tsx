@@ -1,4 +1,6 @@
 import { Arquivo } from "@/components/arquivo";
+import { Data } from "@/components/data";
+import { MultipleSelector } from "@/components/multi-selector";
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -12,45 +14,37 @@ import { Input } from "@/components/ui/input";
 import { SheetFooter } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
 import { Podcast } from "@/lib/model";
+import { updatedPodcastToPagination } from "@/lib/tanstack/actions/podcast";
 import { usePodcastUpdateMutation } from "@/lib/tanstack/mutation/podcast/update";
+import { cn } from "@/lib/utils";
 import { PodcastSchema, PodcastUpdatePayload } from "@/schemas/podcast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircleIcon } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useSearchParams } from "react-router-dom";
-import { ACTION } from "../action";
 
-interface FormProps {
+interface Props {
   data: Podcast;
   onClose: () => void;
 }
 
-export function FormUpdate({
-  data: podcast,
-  onClose,
-}: FormProps): React.JSX.Element {
+export function Form({ data: podcast, onClose }: Props): React.JSX.Element {
   const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams(
-    new URLSearchParams(location.search)
-  );
+  const [searchParams] = useSearchParams(new URLSearchParams(location.search));
 
   const update = usePodcastUpdateMutation({
     onError(error) {
       console.log(error);
     },
     onSuccess(response) {
-      searchParams.set("page", "1");
-      searchParams.set("perPage", "10");
-      setSearchParams(searchParams);
-      ACTION["PAGINATE"]["UPDATE"](response, {
+      updatedPodcastToPagination(response, {
         page: Number(searchParams.get("page") ?? 1),
         perPage: Number(searchParams.get("perPage") ?? 10),
         ...(searchParams.has("search") && {
           search: searchParams.get("search")!,
         }),
       });
-      ACTION["SHOW"]["UPDATE"](response);
       onClose();
     },
   });
@@ -60,13 +54,13 @@ export function FormUpdate({
     defaultValues: {
       id: podcast.id,
       title: podcast.title,
-      date: podcast.date,
+      date: new Date(podcast.date),
       duration: podcast.duration,
-      presenters: podcast.presenters?.join(", "),
-      guests: podcast.guests.join(", "),
+      presenters: podcast.presenters,
+      guests: podcast.guests,
       description: podcast.description,
-      // content: podcast.content || null,
       coverId: podcast.coverId,
+      audioId: podcast.audioId,
     },
   });
 
@@ -97,25 +91,7 @@ export function FormUpdate({
         />
 
         <div className="flex-1 w-full gap-2 inline-flex">
-          <FormField
-            control={form.control}
-            name="date"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel className="data-[error=true]:text-destructive">
-                  Data <span className="text-destructive">*</span>
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    // type="date"
-                    placeholder="00/00/0000"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="text-right text-destructive" />
-              </FormItem>
-            )}
-          />
+          <Data name="date" label="Data" required />
 
           <FormField
             control={form.control}
@@ -126,7 +102,7 @@ export function FormUpdate({
                   Duração <span className="text-destructive">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="00:00:00" {...field} />
+                  <Input placeholder="Ex: 15 min" {...field} />
                 </FormControl>
                 <FormMessage className="text-right text-destructive" />
               </FormItem>
@@ -136,34 +112,70 @@ export function FormUpdate({
 
         <FormField
           control={form.control}
-          name="duration"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel className="data-[error=true]:text-destructive">
-                Apresentadores <span className="text-destructive">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input placeholder="" {...field} />
-              </FormControl>
-              <FormMessage className="text-right text-destructive" />
-            </FormItem>
-          )}
+          name="presenters"
+          render={({ field }) => {
+            const hasError = !!form.formState.errors[field.name];
+
+            return (
+              <FormItem>
+                <FormLabel className="data-[error=true]:text-destructive">
+                  Apresentadores
+                </FormLabel>
+                <FormControl>
+                  <MultipleSelector
+                    onChange={(value) => {
+                      field.onChange(value.flatMap((v) => v.value));
+                      // field.onChange(value);
+                    }}
+                    defaultOptions={[]}
+                    value={
+                      field.value?.map((v) => ({ value: v, label: v })) || []
+                    }
+                    creatable
+                    triggerSearchOnFocus
+                    placeholder="Escreva e adicione"
+                    emptyIndicator={null}
+                    className={cn("w-full", hasError && "border-destructive")}
+                  />
+                </FormControl>
+                <FormMessage className="text-right text-destructive" />
+              </FormItem>
+            );
+          }}
         />
 
         <FormField
           control={form.control}
-          name="duration"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel className="data-[error=true]:text-destructive">
-                Convidados <span className="text-destructive">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input placeholder="" {...field} />
-              </FormControl>
-              <FormMessage className="text-right text-destructive" />
-            </FormItem>
-          )}
+          name="guests"
+          render={({ field }) => {
+            const hasError = !!form.formState.errors[field.name];
+
+            return (
+              <FormItem>
+                <FormLabel className="data-[error=true]:text-destructive">
+                  Convidados
+                </FormLabel>
+                <FormControl>
+                  <MultipleSelector
+                    onChange={(value) => {
+                      field.onChange(value.flatMap((v) => v.value));
+                      // field.onChange(value);
+                    }}
+                    defaultOptions={[]}
+                    value={
+                      field.value?.map((v) => ({ value: v, label: v })) || []
+                    }
+                    creatable
+                    triggerSearchOnFocus
+                    placeholder="Escreva e adicione"
+                    emptyIndicator={null}
+                    className={cn("w-full", hasError && "border-destructive")}
+                  />
+                </FormControl>
+                <FormMessage className="text-right text-destructive" />
+              </FormItem>
+            );
+          }}
         />
 
         <FormField
@@ -196,15 +208,16 @@ export function FormUpdate({
               "audio/*": [".mp3", ".wav", ".ogg", ".flac"], // TODO: verificar se isso funciona
             },
           }}
-          fieldName="audio_id"
+          fieldName="audioId"
           label="Audio"
+          defaultValue={podcast?.audio ? [podcast.audio] : []}
         />
 
         <Arquivo
           dropzoneOptions={{
             multiple: false,
             maxFiles: 1,
-            maxSize: 4 * 1024 * 1024,
+            maxSize: 20 * 1024 * 1024,
             accept: {
               "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
             },

@@ -8,7 +8,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Album } from "@/lib/model";
-import { Calendar, EllipsisIcon, EyeIcon, ImageIcon, PencilIcon, TrashIcon } from "lucide-react";
+import {
+  EllipsisIcon,
+  EyeIcon,
+  ImageIcon,
+  PencilIcon,
+  TrashIcon,
+} from "lucide-react";
 import React from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Sheet } from "../sheet";
@@ -30,7 +36,7 @@ export function Row({ data }: Props): React.ReactElement {
       <TableCell className="font-medium">
         <div className="flex items-center gap-3">
           <img
-            src={data.cover || "/default.webp"}
+            src={data.cover?.url || "/default.webp"}
             alt={data.title}
             className="h-12 w-20 object-cover rounded-md"
           />
@@ -38,21 +44,23 @@ export function Row({ data }: Props): React.ReactElement {
         </div>
       </TableCell>
 
-      <TableCell>
+      {/* <TableCell>
         <div className="flex items-center text-sm">
           <Calendar className="h-3.5 w-3.5 mr-1 text-gray-500" />
-          <span>{data.date}</span>
+          <span>{data.description}</span>
         </div>
-      </TableCell>
+      </TableCell> */}
 
       <TableCell>
-        <span className="line-clamp-2 text-sm text-gray-700">{data.description}</span>
+        <span className="line-clamp-2 text-sm text-gray-700">
+          {data.description}
+        </span>
       </TableCell>
 
       <TableCell>
         <div className="flex items-center">
           <ImageIcon className="h-4 w-4 mr-1 text-gray-500" />
-          <span>{data.imageCount || data.images.length} fotos</span>
+          <span>{data.images.length} fotos</span>
         </div>
       </TableCell>
 
@@ -90,13 +98,13 @@ export function Row({ data }: Props): React.ReactElement {
 
             <DropdownMenuItem
               className="inline-flex space-x-1 w-full"
-            // onClick={() => {
-            // 	setSearchParams((state) => {
-            // 		state.set('id', data.id);
-            // 		return state;
-            // 	});
-            // 	removeAlbumButtonRef?.current?.click();
-            // }}
+              // onClick={() => {
+              // 	setSearchParams((state) => {
+              // 		state.set('id', data.id);
+              // 		return state;
+              // 	});
+              // 	removeAlbumButtonRef?.current?.click();
+              // }}
             >
               <TrashIcon className="w-4 h-4" />
               <span>Remover</span>

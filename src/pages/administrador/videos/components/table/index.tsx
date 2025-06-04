@@ -17,7 +17,7 @@ interface Props {
 export function Table({ data, labels }: Props): React.ReactElement {
   return (
     <Root>
-      <TableHeader>
+      <TableHeader className="sticky top-0 bg-background">
         <TableRow>
           {labels.map((label) => (
             <TableHead key={label}>

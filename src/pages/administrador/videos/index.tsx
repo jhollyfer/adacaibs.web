@@ -1,8 +1,8 @@
 import { Pagination } from "@/components/pagination";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { MetaBase } from "@/lib/constant";
 import { useVideoPaginateQuery } from "@/lib/tanstack/query/videos/paginate";
-import { Plus, Search } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 import React from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Sheet } from "./components/sheet";
@@ -10,11 +10,9 @@ import { Table } from "./components/table";
 
 export function Video(): React.JSX.Element {
   const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams(
-    new URLSearchParams(location.search)
-  );
+  const [searchParams] = useSearchParams(new URLSearchParams(location.search));
 
-  const videoCreateButtonRef = React.useRef<HTMLButtonElement | null>(null);
+  const createButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
   const paginate = useVideoPaginateQuery({
     page: Number(searchParams.get("page") ?? 1),
@@ -24,62 +22,38 @@ export function Video(): React.JSX.Element {
 
   return (
     <React.Fragment>
-      <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold">Vídeos</h1>
+      <div className="flex flex-col h-full overflow-hidden">
+        <div className="flex-shrink-0 p-2 flex flex-row justify-between gap-1 border-b">
+          <h1 className="text-2xl font-medium ">Vídeos</h1>
+
           <Button
+            type="button"
+            onClick={() => createButtonRef.current?.click()}
             disabled={paginate.status === "pending"}
-            onClick={() => videoCreateButtonRef.current?.click()}
+            className="py-1 px-2  h-auto inline-flex gap-1 cursor-pointer"
           >
-            <Plus className="mr-2 h-4 w-4" /> Novo Video
+            <PlusIcon className="w-5 h-5" />
+            <span>Novo vídeo</span>
           </Button>
         </div>
 
-        <div className="mb-6 flex justify-between items-center">
-          <div className="relative max-w-sm">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-            <Input
-              placeholder="Buscar cargo ou nome..."
-              className="pl-8"
-              disabled={paginate.status === "pending"}
-              onKeyDown={(event) => {
-                if (
-                  (event.key === "Backspace" &&
-                    event.currentTarget.value?.length === 1) ||
-                  event.currentTarget.value === ""
-                ) {
-                  searchParams.delete("search");
-                  setSearchParams(searchParams);
-                }
-
-                if (event.key === "Enter" && event.currentTarget.value) {
-                  searchParams.set("search", event.currentTarget.value);
-                  setSearchParams(searchParams);
-                }
-              }}
-              defaultValue={searchParams.get("search") ?? ""}
-            />
-          </div>
+        <div className="flex-1 flex flex-col min-h-0 overflow-auto relative">
+          <Table
+            labels={[
+              "Vídeo",
+              "Data-Hora",
+              "Apresentador/Instrutor",
+              "Link do Vídeo",
+            ]}
+            data={paginate.data?.data ?? []}
+          />
         </div>
 
-        {paginate.status === "success" && (
-          <React.Fragment>
-            <div className="border rounded-lg">
-              <Table
-                labels={[
-                  "Vídeo",
-                  "Data-Hora",
-                  "Apresentador/Instrutor",
-                  "Link do Vídeo",
-                ]}
-                data={paginate.data?.data}
-              />
-            </div>
-            <Pagination meta={paginate.data?.meta} />
-          </React.Fragment>
-        )}
+        <div className="flex-shrink-0 border-t p-2">
+          <Pagination meta={paginate?.data?.meta ?? MetaBase} />
+        </div>
+        <Sheet.Create ref={createButtonRef} />
       </div>
-      <Sheet.Create ref={videoCreateButtonRef} />
     </React.Fragment>
   );
 }

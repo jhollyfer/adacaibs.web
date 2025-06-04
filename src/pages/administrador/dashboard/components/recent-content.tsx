@@ -82,7 +82,7 @@ export function RecentContent(): React.JSX.Element {
       </CardHeader>
       <CardContent>
         <Table>
-          <TableHeader>
+          <TableHeader className="sticky top-0 bg-background">
             <TableRow>
               <TableHead>Título</TableHead>
               <TableHead>Tipo</TableHead>

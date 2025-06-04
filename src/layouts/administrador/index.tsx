@@ -1,4 +1,5 @@
-// import { useAuthentication } from "@/hooks/use-authentication";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { Header } from "./header";
@@ -6,14 +7,14 @@ import { Sidebar } from "./sidebar";
 
 export function Administrator(): React.ReactElement {
   return (
-    <React.Fragment>
-      <Sidebar />
-      <main className="flex-1 h-screen overflow-hidden">
-        <Header />
-        <section className="flex-1 h-full p-8 overflow-y-auto">
+    <TooltipProvider>
+      <SidebarProvider>
+        <Sidebar />
+        <SidebarInset className="relative flex flex-col h-screen w-full overflow-hidden">
+          <Header />
           <Outlet />
-        </section>
-      </main>
-    </React.Fragment>
+        </SidebarInset>
+      </SidebarProvider>
+    </TooltipProvider>
   );
 }

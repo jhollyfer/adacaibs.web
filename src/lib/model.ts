@@ -94,10 +94,12 @@ export interface Podcast extends Base {
   presenters: string[];
   guests: string[];
   description: string;
-  content: string | null;
 
   cover: Storage | null;
   coverId: string | null;
+
+  audio: Storage | null;
+  audioId: string | null;
 }
 
 export interface Video extends Base {
@@ -117,9 +119,13 @@ export interface Album extends Base {
   title: string;
   date: string;
   description: string;
-  cover: string | null;
-  images: string[];
-  imageCount: number; // TODO: adicionar isso no back
+
+  coverId: string | null;
+  cover: Storage | null;
+
+  imageIds: string[];
+  images: Storage[];
+  // imageCount: number; // TODO: adicionar isso no back
 }
 
 export interface Testimonial extends Base {

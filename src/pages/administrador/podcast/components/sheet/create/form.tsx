@@ -3,6 +3,8 @@ import { Input } from "@/components/ui/input";
 import { SheetFooter } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
 
+import { Data } from "@/components/data";
+import { MultipleSelector } from "@/components/multi-selector";
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -12,33 +14,25 @@ import {
   FormMessage,
   Form as Root,
 } from "@/components/ui/form";
+import { addedPodcastToPagination } from "@/lib/tanstack/actions/podcast";
 import { usePodcastCreateMutation } from "@/lib/tanstack/mutation/podcast/create";
-import {
-  PodcastCreatePayload,
-  PodcastSchema,
-  PodcastTransformedSchema,
-} from "@/schemas/podcast";
+import { cn } from "@/lib/utils";
+import { PodcastCreatePayload, PodcastSchema } from "@/schemas/podcast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircleIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useLocation, useSearchParams } from "react-router-dom";
-import { ACTION } from "../action";
 
 export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
   const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams(
-    new URLSearchParams(location.search)
-  );
+  const [searchParams] = useSearchParams(new URLSearchParams(location.search));
 
   const create = usePodcastCreateMutation({
     onError(error) {
       console.log(error);
     },
     onSuccess(response) {
-      searchParams.set("page", "1");
-      searchParams.set("perPage", "10");
-      setSearchParams(searchParams);
-      ACTION["PAGINATE"]["ADDED"](response, {
+      addedPodcastToPagination(response, {
         page: Number(searchParams.get("page") ?? 1),
         perPage: Number(searchParams.get("perPage") ?? 10),
         ...(searchParams.has("search") && {
@@ -53,18 +47,8 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
     resolver: zodResolver(PodcastSchema["create"]),
   });
 
-  // voltar aqui essa é a forma de arrumar o tags das noticias
-  const onSubmit = form.handleSubmit((rawData) => {
-    const transformed = PodcastTransformedSchema.parse(rawData);
-
-    console.log(rawData);
-    console.log(transformed);
-
-    create.mutateAsync({
-      ...transformed,
-      presenters: transformed.presenters.join(", "), // <-- transforma string[]
-      guests: transformed.guests.join(", "), // <-- transforma string[]
-    });
+  const onSubmit = form.handleSubmit((payload) => {
+    create.mutateAsync(payload);
   });
 
   return (
@@ -87,21 +71,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
         />
 
         <div className="flex-1 w-full gap-2 inline-flex">
-          <FormField
-            control={form.control}
-            name="date"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel className="data-[error=true]:text-destructive">
-                  Data <span className="text-destructive">*</span>
-                </FormLabel>
-                <FormControl>
-                  <Input type="date" placeholder="00/00/0000" {...field} />
-                </FormControl>
-                <FormMessage className="text-right text-destructive" />
-              </FormItem>
-            )}
-          />
+          <Data name="date" label="Data" required />
 
           <FormField
             control={form.control}
@@ -112,7 +82,7 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
                   Duração <span className="text-destructive">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input type="time" placeholder="00:00:00" {...field} />
+                  <Input placeholder="Ex: 15 min" {...field} />
                 </FormControl>
                 <FormMessage className="text-right text-destructive" />
               </FormItem>
@@ -123,33 +93,69 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
         <FormField
           control={form.control}
           name="presenters"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel className="data-[error=true]:text-destructive">
-                Apresentadores <span className="text-destructive">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input placeholder="João Silva, Maria Silva" {...field} />
-              </FormControl>
-              <FormMessage className="text-right text-destructive" />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            const hasError = !!form.formState.errors[field.name];
+
+            return (
+              <FormItem>
+                <FormLabel className="data-[error=true]:text-destructive">
+                  Apresentadores
+                </FormLabel>
+                <FormControl>
+                  <MultipleSelector
+                    onChange={(value) => {
+                      field.onChange(value.flatMap((v) => v.value));
+                      // field.onChange(value);
+                    }}
+                    defaultOptions={[]}
+                    value={
+                      field.value?.map((v) => ({ value: v, label: v })) || []
+                    }
+                    creatable
+                    triggerSearchOnFocus
+                    placeholder="Escreva e adicione"
+                    emptyIndicator={null}
+                    className={cn("w-full", hasError && "border-destructive")}
+                  />
+                </FormControl>
+                <FormMessage className="text-right text-destructive" />
+              </FormItem>
+            );
+          }}
         />
 
         <FormField
           control={form.control}
           name="guests"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel className="data-[error=true]:text-destructive">
-                Convidados <span className="text-destructive">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input placeholder="João Silva, Maria Silva" {...field} />
-              </FormControl>
-              <FormMessage className="text-right text-destructive" />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            const hasError = !!form.formState.errors[field.name];
+
+            return (
+              <FormItem>
+                <FormLabel className="data-[error=true]:text-destructive">
+                  Convidados
+                </FormLabel>
+                <FormControl>
+                  <MultipleSelector
+                    onChange={(value) => {
+                      field.onChange(value.flatMap((v) => v.value));
+                      // field.onChange(value);
+                    }}
+                    defaultOptions={[]}
+                    value={
+                      field.value?.map((v) => ({ value: v, label: v })) || []
+                    }
+                    creatable
+                    triggerSearchOnFocus
+                    placeholder="Escreva e adicione"
+                    emptyIndicator={null}
+                    className={cn("w-full", hasError && "border-destructive")}
+                  />
+                </FormControl>
+                <FormMessage className="text-right text-destructive" />
+              </FormItem>
+            );
+          }}
         />
 
         <FormField
@@ -174,22 +180,22 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
 
         <Arquivo
           dropzoneOptions={{
-            multiple: true,
+            multiple: false,
             maxFiles: 1,
-            maxSize: 4 * 1024 * 1024,
+            maxSize: 20 * 1024 * 1024,
             accept: {
               "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
               "audio/*": [".mp3", ".wav", ".ogg", ".flac"],
             },
           }}
-          fieldName="audio_id"
+          fieldName="audioId"
           label="Audio"
           required
         />
 
         <Arquivo
           dropzoneOptions={{
-            multiple: true,
+            multiple: false,
             maxFiles: 1,
             maxSize: 4 * 1024 * 1024,
             accept: {
@@ -203,7 +209,6 @@ export function Form({ onClose }: { onClose: () => void }): React.JSX.Element {
 
         <SheetFooter className="inline-flex flex-1 justify-end w-full px-0">
           <Button type="submit" disabled={create.status === "pending"}>
-            Adicionar
             {create.status === "pending" && (
               <LoaderCircleIcon className="w-4 h-4 animate-spin" />
             )}

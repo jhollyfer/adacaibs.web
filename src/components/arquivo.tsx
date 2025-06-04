@@ -77,7 +77,8 @@ export function Arquivo({
           return (
             <FormItem>
               <FormLabel className="data-[error=true]:text-destructive">
-                {label} {required && <span className="text-destructive">*</span>}
+                {label}{" "}
+                {required && <span className="text-destructive">*</span>}
               </FormLabel>
               <FileUploader
                 orientation="horizontal"

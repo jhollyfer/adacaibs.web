@@ -6,8 +6,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { usePodcastShowQuery } from "@/lib/tanstack/query/podcast/show";
 import React from "react";
+
+import { useAlbumShowQuery } from "@/lib/tanstack/query/album/show";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Form } from "./form";
 
@@ -23,12 +24,12 @@ export function Update({
 
   const enabled =
     searchParams.has("id") &&
-    location?.pathname.includes("/podcast") &&
+    location?.pathname.includes("/galeria") &&
     /[?&]id=/.test(location.search);
 
   const id = searchParams.get("id") || "";
 
-  const podcast = usePodcastShowQuery({
+  const user = useAlbumShowQuery({
     enabled,
     id,
   });
@@ -47,19 +48,23 @@ export function Update({
       <SheetTrigger className="hidden" {...props} />
       <SheetContent className="py-4 px-6 sm:max-w-2xl overflow-y-auto">
         <SheetHeader className="px-0">
-          <SheetTitle className="text-lg font-medium">Atualizar</SheetTitle>
+          <SheetTitle className="text-lg font-medium">
+            Atualizar registro
+          </SheetTitle>
 
-          <SheetDescription>Atualizar um podcast</SheetDescription>
+          <SheetDescription>
+            Atualize as informações do usuário
+          </SheetDescription>
         </SheetHeader>
 
-        {podcast?.status === "success" && (
+        {user?.status === "success" && (
           <Form
             onClose={() => {
               searchParams.delete("id");
               setSearchParams(searchParams);
               setOpen(false);
             }}
-            data={podcast.data}
+            data={user.data}
           />
         )}
       </SheetContent>

@@ -1,8 +1,8 @@
 import { Pagination } from "@/components/pagination";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { MetaBase } from "@/lib/constant";
 import { usePodcastPaginateQuery } from "@/lib/tanstack/query/podcast/paginate";
-import { Plus, Search } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 import React from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Sheet } from "./components/sheet";
@@ -12,7 +12,7 @@ export function Podcast(): React.JSX.Element {
   const location = useLocation();
   const [searchParams] = useSearchParams(new URLSearchParams(location.search));
 
-  const podcastCreateButtonRef = React.useRef<HTMLButtonElement | null>(null);
+  const createButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
   const paginate = usePodcastPaginateQuery({
     page: Number(searchParams.get("page") ?? 1),
@@ -21,47 +21,37 @@ export function Podcast(): React.JSX.Element {
   });
 
   return (
-    <React.Fragment>
-      <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold">Podcasts</h1>
-          <Button
-            disabled={paginate.status === "pending"}
-            onClick={() => podcastCreateButtonRef.current?.click()}
-          >
-            <Plus className="mr-2 h-4 w-4" /> Novo Podcast
-          </Button>
-        </div>
+    <div className="flex flex-col h-full overflow-hidden">
+      <div className="flex-shrink-0 p-2 flex flex-row justify-between gap-1 border-b">
+        <h1 className="text-2xl font-medium ">Podcasts</h1>
 
-        <div className="mb-6 flex justify-between items-center">
-          <div className="relative max-w-sm">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-            <Input
-              placeholder="Buscar podcasts..."
-              className="pl-8"
-              disabled={paginate.status === "pending"}
-            />
-          </div>
-        </div>
-
-        {paginate.status === "success" && (
-          <React.Fragment>
-            <div className="border rounded-lg">
-              <Table
-                labels={[
-                  "Título",
-                  "Apresentadores",
-                  "Estatísticas",
-                  "Data de submissão",
-                ]}
-                data={paginate.data?.data}
-              />
-            </div>
-            <Pagination meta={paginate.data?.meta} />
-          </React.Fragment>
-        )}
+        <Button
+          type="button"
+          onClick={() => createButtonRef.current?.click()}
+          disabled={paginate.status === "pending"}
+          className="py-1 px-2  h-auto inline-flex gap-1 cursor-pointer"
+        >
+          <PlusIcon className="w-5 h-5" />
+          <span>Novo podcast</span>
+        </Button>
       </div>
-      <Sheet.Create ref={podcastCreateButtonRef} />
-    </React.Fragment>
+
+      <div className="flex-1 flex flex-col min-h-0 overflow-auto relative">
+        <Table
+          labels={[
+            "Título",
+            "Apresentadores",
+            "Estatísticas",
+            "Data de submissão",
+          ]}
+          data={paginate.data?.data ?? []}
+        />
+      </div>
+
+      <div className="flex-shrink-0 border-t p-2">
+        <Pagination meta={paginate?.data?.meta ?? MetaBase} />
+      </div>
+      <Sheet.Create ref={createButtonRef} />
+    </div>
   );
 }

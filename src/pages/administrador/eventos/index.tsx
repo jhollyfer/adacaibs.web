@@ -1,8 +1,8 @@
 import { Pagination } from "@/components/pagination";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { MetaBase } from "@/lib/constant";
 import { useEventsPaginateQuery } from "@/lib/tanstack/query/eventos/paginate";
-import { Plus, Search } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 import React from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Sheet } from "./components/sheet";
@@ -10,12 +10,9 @@ import { Table } from "./components/table";
 
 export function Events(): React.JSX.Element {
   const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams(
-    new URLSearchParams(location.search)
-  );
+  const [searchParams] = useSearchParams(new URLSearchParams(location.search));
 
   const createButtonRef = React.useRef<HTMLButtonElement | null>(null);
-  const [filter, setFilter] = React.useState<string>("all");
 
   const paginate = useEventsPaginateQuery({
     page: Number(searchParams.get("page") ?? 1),
@@ -24,87 +21,33 @@ export function Events(): React.JSX.Element {
   });
 
   return (
-    <React.Fragment>
-      <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold">Eventos</h1>
-          <Button
-            disabled={paginate.status === "pending"}
-            onClick={() => createButtonRef.current?.click()}
-          >
-            <Plus className="mr-2 h-4 w-4" /> Novo Evento
-          </Button>
-        </div>
+    <div className="flex flex-col h-full overflow-hidden">
+      <div className="flex-shrink-0 p-2 flex flex-row justify-between gap-1 border-b">
+        <h1 className="text-2xl font-medium ">Eventos</h1>
 
-        <div className="mb-6 flex justify-between items-center">
-          <div className="relative max-w-sm">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-            <Input
-              placeholder="Buscar cargo ou nome..."
-              className="pl-8"
-              disabled={paginate.status === "pending"}
-              onKeyDown={(event) => {
-                if (
-                  (event.key === "Backspace" &&
-                    event.currentTarget.value?.length === 1) ||
-                  event.currentTarget.value === ""
-                ) {
-                  searchParams.delete("search");
-                  setSearchParams(searchParams);
-                }
-
-                if (event.key === "Enter" && event.currentTarget.value) {
-                  searchParams.set("search", event.currentTarget.value);
-                  setSearchParams(searchParams);
-                }
-              }}
-              defaultValue={searchParams.get("search") ?? ""}
-            />
-          </div>
-          <div className="flex gap-2">
-            <Button
-              variant={filter === "all" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setFilter("all")}
-            >
-              Todos
-            </Button>
-            <Button
-              variant={filter === "upcoming" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setFilter("upcoming")}
-            >
-              Próximos
-            </Button>
-            <Button
-              variant={filter === "past" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setFilter("past")}
-            >
-              Passados
-            </Button>
-          </div>
-        </div>
-
-        {paginate.status === "success" && (
-          <React.Fragment>
-            <div className="border rounded-lg">
-              <Table
-                labels={[
-                  "Evento",
-                  "Data - Hora",
-                  "Local",
-                  "Capacidade",
-                  "Status",
-                ]}
-                data={paginate.data?.data}
-              />
-            </div>
-            <Pagination meta={paginate.data?.meta} />
-          </React.Fragment>
-        )}
+        <Button
+          type="button"
+          onClick={() => createButtonRef.current?.click()}
+          disabled={paginate.status === "pending"}
+          className="py-1 px-2  h-auto inline-flex gap-1 cursor-pointer"
+        >
+          <PlusIcon className="w-5 h-5" />
+          <span>Novo depoimento</span>
+        </Button>
       </div>
+
+      <div className="flex-1 flex flex-col min-h-0 overflow-auto relative">
+        <Table
+          labels={["Evento", "Data - Hora", "Local", "Capacidade", "Status"]}
+          data={paginate.data?.data ?? []}
+        />
+      </div>
+
+      <div className="flex-shrink-0 border-t p-2">
+        <Pagination meta={paginate?.data?.meta ?? MetaBase} />
+      </div>
+
       <Sheet.Create ref={createButtonRef} />
-    </React.Fragment>
+    </div>
   );
 }
