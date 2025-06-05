@@ -71,3 +71,26 @@ export function updatedPodcastToPagination(
     }
   );
 }
+
+export function removePodcastFromPagination(
+  payload: Pick<Podcast, "id">,
+  query: PaginateMetaQuery
+): void {
+  TanstackQuery.setQueryData<PaginateMetaResponse<Podcast[]>>(
+    [QUERY.PODCAST_PAGINATE, query],
+    (old) => {
+      if (!old)
+        return {
+          meta: MetaBase,
+          data: [],
+        };
+
+      return {
+        meta: old.meta,
+        data: old.data.filter((podcast) => {
+          return podcast.id?.toString() !== payload.id?.toString();
+        }),
+      };
+    }
+  );
+}

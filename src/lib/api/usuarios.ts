@@ -35,4 +35,8 @@ export class User {
     const { data } = await AXIOS_INSTANCE.get("/user/".concat(id));
     return data;
   }
+
+  public static async delete(id: string): Promise<void> {
+    return await AXIOS_INSTANCE.delete("/user/".concat(id));
+  }
 }

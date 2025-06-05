@@ -68,3 +68,26 @@ export function updatedAlbumToPagination(
     }
   );
 }
+
+export function removeAlbumFromPagination(
+  payload: Pick<Album, "id">,
+  query: PaginateMetaQuery
+): void {
+  TanstackQuery.setQueryData<PaginateMetaResponse<Album[]>>(
+    [QUERY.ALBUM_PAGINATE, query],
+    (old) => {
+      if (!old)
+        return {
+          meta: MetaBase,
+          data: [],
+        };
+
+      return {
+        meta: old.meta,
+        data: old.data.filter((album) => {
+          return album.id?.toString() !== payload.id?.toString();
+        }),
+      };
+    }
+  );
+}

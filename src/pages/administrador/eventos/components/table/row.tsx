@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import React from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
+import { Modal } from "../modal";
 import { Sheet } from "../sheet";
 
 interface Props {
@@ -31,6 +32,7 @@ interface Props {
 
 export function Row({ data }: Props): React.ReactElement {
   const updateButtonRef = React.useRef<HTMLButtonElement | null>(null);
+  const removeButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
   const location = useLocation();
   const [, setSearchParams] = useSearchParams(
@@ -135,11 +137,21 @@ export function Row({ data }: Props): React.ReactElement {
               <span>Editar</span>
             </DropdownMenuItem>
 
-            <DropdownMenuItem className="inline-flex space-x-1 w-full">
+            <DropdownMenuItem
+              className="inline-flex space-x-1 w-full"
+              onClick={() => {
+                setSearchParams((state) => {
+                  state.set("id", data.id!);
+                  return state;
+                });
+                removeButtonRef?.current?.click();
+              }}
+            >
               <TrashIcon className="w-4 h-4" />
               <span>Remover</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
+          <Modal.Remove ref={removeButtonRef} />
           <Sheet.Update ref={updateButtonRef} />
         </DropdownMenu>
       </TableCell>

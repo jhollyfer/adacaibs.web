@@ -68,3 +68,26 @@ export function updatedUserToPagination(
     }
   );
 }
+
+export function removeUserFromPagination(
+  payload: Pick<User, "id">,
+  query: PaginateMetaQuery
+): void {
+  TanstackQuery.setQueryData<PaginateMetaResponse<User[]>>(
+    [QUERY.USER_PAGINATE, query],
+    (old) => {
+      if (!old)
+        return {
+          meta: MetaBase,
+          data: [],
+        };
+
+      return {
+        meta: old.meta,
+        data: old.data.filter((user) => {
+          return user.id?.toString() !== payload.id?.toString();
+        }),
+      };
+    }
+  );
+}

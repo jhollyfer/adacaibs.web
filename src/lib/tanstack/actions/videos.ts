@@ -68,3 +68,26 @@ export function updatedVideoToPagination(
     }
   );
 }
+
+export function removeVideoFromPagination(
+  payload: Pick<Video, "id">,
+  query: PaginateMetaQuery
+): void {
+  TanstackQuery.setQueryData<PaginateMetaResponse<Video[]>>(
+    [QUERY.VIDEO_PAGINATE, query],
+    (old) => {
+      if (!old)
+        return {
+          meta: MetaBase,
+          data: [],
+        };
+
+      return {
+        meta: old.meta,
+        data: old.data.filter((video) => {
+          return video.id?.toString() !== payload.id?.toString();
+        }),
+      };
+    }
+  );
+}

@@ -35,4 +35,8 @@ export class Notice {
     const { data } = await AXIOS_INSTANCE.get("/notice/".concat(id));
     return data;
   }
+
+  public static async delete(id: string): Promise<void> {
+    return await AXIOS_INSTANCE.delete("/notice/".concat(id));
+  }
 }

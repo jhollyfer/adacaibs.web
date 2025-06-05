@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import React from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { Modal } from "../modal";
 import { Sheet } from "../sheet";
 
 interface Props {
@@ -25,9 +26,10 @@ interface Props {
 
 export function Row({ data }: Props): React.ReactElement {
   const updateButtonRef = React.useRef<HTMLButtonElement | null>(null);
+  const removeButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
   const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams(
+  const [, setSearchParams] = useSearchParams(
     new URLSearchParams(location?.search)
   );
 
@@ -66,13 +68,7 @@ export function Row({ data }: Props): React.ReactElement {
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem
-              className="inline-flex space-x-1 w-full"
-              onClick={() => {
-                searchParams.set("id", data.id!);
-                setSearchParams(searchParams);
-              }}
-            >
+            <DropdownMenuItem className="inline-flex space-x-1 w-full">
               <EyeIcon className="w-4 h-4" />
               <span>Visualizar</span>
             </DropdownMenuItem>
@@ -93,18 +89,19 @@ export function Row({ data }: Props): React.ReactElement {
 
             <DropdownMenuItem
               className="inline-flex space-x-1 w-full"
-              // onClick={() => {
-              // 	setSearchParams((state) => {
-              // 		state.set('data_id', data._id);
-              // 		return state;
-              // 	});
-              // 	removeButtonRef?.current?.click();
-              // }}
+              onClick={() => {
+                setSearchParams((state) => {
+                  state.set("id", data.id!);
+                  return state;
+                });
+                removeButtonRef?.current?.click();
+              }}
             >
               <TrashIcon className="w-4 h-4" />
               <span>Remover</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
+          <Modal.Remove ref={removeButtonRef} />
           <Sheet.Update ref={updateButtonRef} />
         </DropdownMenu>
       </TableCell>

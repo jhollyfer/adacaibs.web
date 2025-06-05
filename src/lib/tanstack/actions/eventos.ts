@@ -68,3 +68,26 @@ export function updatedEventToPagination(
     }
   );
 }
+
+export function removeEventFromPagination(
+  payload: Pick<Events, "id">,
+  query: PaginateMetaQuery
+): void {
+  TanstackQuery.setQueryData<PaginateMetaResponse<Events[]>>(
+    [QUERY.EVENT_PAGINATE, query],
+    (old) => {
+      if (!old)
+        return {
+          meta: MetaBase,
+          data: [],
+        };
+
+      return {
+        meta: old.meta,
+        data: old.data.filter((event) => {
+          return event.id?.toString() !== payload.id?.toString();
+        }),
+      };
+    }
+  );
+}

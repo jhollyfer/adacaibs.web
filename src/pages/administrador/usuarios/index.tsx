@@ -1,5 +1,4 @@
 import { EmptyState } from "@/components/empty-state";
-import { Loading } from "@/components/loading";
 import { Pagination } from "@/components/pagination";
 import { Button } from "@/components/ui/button";
 import { MetaBase } from "@/lib/constant";
@@ -38,13 +37,8 @@ export function Users(): React.JSX.Element {
         </Button>
       </div>
 
-      {paginate.status === "pending" && <Loading />}
-
       <div className="flex-1 flex flex-col min-h-0 overflow-auto relative">
-        <Table
-          labels={["Usuário", "E-mail", "Função", "Status"]}
-          data={paginate.data?.data ?? []}
-        />
+        <Table labels={["Usuário", "E-mail", "Função", "Status"]} />
       </div>
 
       <div className="flex-shrink-0 border-t p-2">

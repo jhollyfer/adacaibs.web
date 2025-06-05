@@ -35,4 +35,8 @@ export class Events {
     const { data } = await AXIOS_INSTANCE.get("/event/".concat(id));
     return data;
   }
+
+  public static async delete(id: string): Promise<void> {
+    return await AXIOS_INSTANCE.delete("/event/".concat(id));
+  }
 }

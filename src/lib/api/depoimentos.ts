@@ -38,4 +38,8 @@ export class Testimonial {
     const { data } = await AXIOS_INSTANCE.get("/testimonial/".concat(id));
     return data;
   }
+
+  public static async delete(id: string): Promise<void> {
+    return await AXIOS_INSTANCE.delete("/testimonial/".concat(id));
+  }
 }

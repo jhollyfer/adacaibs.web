@@ -35,4 +35,8 @@ export class Video {
     const { data } = await AXIOS_INSTANCE.get("/video/".concat(id));
     return data;
   }
+
+  public static async delete(id: string): Promise<void> {
+    return await AXIOS_INSTANCE.delete("/video/".concat(id));
+  }
 }

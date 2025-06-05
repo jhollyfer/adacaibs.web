@@ -75,3 +75,26 @@ export function updatedTestimonialToPagination(
     }
   );
 }
+
+export function removeTestimonialFromPagination(
+  payload: Pick<Testimonial, "id">,
+  query: PaginateMetaQuery
+): void {
+  TanstackQuery.setQueryData<PaginateMetaResponse<Testimonial[]>>(
+    [QUERY.TESTIMONIAL_PAGINATE, query],
+    (old) => {
+      if (!old)
+        return {
+          meta: MetaBase,
+          data: [],
+        };
+
+      return {
+        meta: old.meta,
+        data: old.data.filter((testimonial) => {
+          return testimonial.id?.toString() !== payload.id?.toString();
+        }),
+      };
+    }
+  );
+}

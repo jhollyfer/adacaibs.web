@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import React from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
+import { Modal } from "../modal";
 import { Sheet } from "../sheet";
 
 interface Props {
@@ -37,12 +38,13 @@ const RoleColorMapper = {
 
 export function Row({ data }: Props): React.JSX.Element {
   const updateButtonRef = React.useRef<HTMLButtonElement | null>(null);
+  const remoteButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams(
     new URLSearchParams(location?.search)
   );
-  
+
   return (
     <TableRow key={data.id}>
       <TableCell className="font-medium">
@@ -125,18 +127,19 @@ export function Row({ data }: Props): React.JSX.Element {
 
             <DropdownMenuItem
               className="inline-flex space-x-1 w-full text-red-600"
-              // onClick={() => {
-              // 	setSearchParams((state) => {
-              // 		state.set('id', user.id);
-              // 		return state;
-              // 	});
-              // 	removeUserButtonRef?.current?.click();
-              // }}
+              onClick={() => {
+                setSearchParams((state) => {
+                  state.set("id", data.id!);
+                  return state;
+                });
+                remoteButtonRef?.current?.click();
+              }}
             >
               <TrashIcon className="w-4 h-4" />
               <span>Remover</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
+          <Modal.Remove ref={remoteButtonRef} />
           <Sheet.Update ref={updateButtonRef} />
         </DropdownMenu>
       </TableCell>

@@ -12,6 +12,7 @@ import { Notice } from "@/lib/model";
 import { EllipsisIcon, EyeIcon, PencilIcon, TrashIcon } from "lucide-react";
 import React from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
+import { Modal } from "../modal";
 import { Sheet } from "../sheet";
 
 interface Props {
@@ -20,6 +21,7 @@ interface Props {
 
 export function Row({ data }: Props): React.ReactElement {
   const updateButtonRef = React.useRef<HTMLButtonElement | null>(null);
+  const removeButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams(
@@ -47,8 +49,8 @@ export function Row({ data }: Props): React.ReactElement {
       <TableCell>
         {data.createdAt
           ? new Intl.DateTimeFormat("pt-BR", {
-            dateStyle: "long",
-          }).format(new Date(data.createdAt))
+              dateStyle: "long",
+            }).format(new Date(data.createdAt))
           : "Data não disponível"}
       </TableCell>
 
@@ -86,18 +88,19 @@ export function Row({ data }: Props): React.ReactElement {
 
             <DropdownMenuItem
               className="inline-flex space-x-1 w-full"
-            // onClick={() => {
-            // 	setSearchParams((state) => {
-            // 		state.set('id', row.id);
-            // 		return state;
-            // 	});
-            // 	removeTestimonialButtonRef?.current?.click();
-            // }}
+              onClick={() => {
+                setSearchParams((state) => {
+                  state.set("id", data.id!);
+                  return state;
+                });
+                removeButtonRef?.current?.click();
+              }}
             >
               <TrashIcon className="w-4 h-4" />
               <span>Remover</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
+          <Modal.Remove ref={removeButtonRef} />
           <Sheet.Update ref={updateButtonRef} />
         </DropdownMenu>
       </TableCell>
